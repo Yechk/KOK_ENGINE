@@ -1,0 +1,41 @@
+KOK Engine
+
+C++ optimization:
+	-All functions in a class that dont access non-static members should be declared as static
+	-Templates?
+	-inline functions
+	-memset
+	-cache line
+	-cache blocking -> loop nest optimization
+	-bit shift divide/multiply
+
+	OPTIMIZERS CHECKLIST
+		1. inline functions used when practical
+		2. All functions in a class that don't access non-static members should be declared as static
+		3. memset used when practical
+		4. members made protected or private as necessary
+		5. getters and setters
+		6. const references used instead of copying function parameters
+		7. strict name conventions
+			A. underscore in front of private/protected class members
+			B. no alter names for same variables
+			C. lowercase first word member names
+			D. Uppercase for functions
+			E. all caps for const and define
+		8. reduce "pointer chasing"
+		9. reduce variable sizes
+		10. delete function used at ends of functions that use new keyword
+		11. GLuint used for all unsigned
+
+
+MORE OPTIMIZATIONS
+	1. create class to store list of meshes includes "draw all"
+	2. memory union blocks
+	3. memory pools
+	4. remove skeletalmesh inheritance and replace with skeleton component
+	5. make internal functions private and make use of Friend
+	6. use library namespace
+
+KOK_Skeleton
+	//1. create overload of transformbone in animation to interpolate
+	3. create "bone groups" and use this for masking anims

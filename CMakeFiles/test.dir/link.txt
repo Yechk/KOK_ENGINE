@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++17  -lm -lSOIL -lGL -lglfw -lGLEW -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lXinerama -lXcursor -ldl -lrt -lassimp -lnanogui -rdynamic CMakeFiles/test.dir/tests/skeltalTest_main.cpp.o  -o test -lfreetype -Wl,-Bstatic -lKOKg -Wl,-Bdynamic 
