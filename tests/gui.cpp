@@ -227,11 +227,6 @@ int main()
 
 		sphere0->Draw(modelShader, projection, camera->View());
 
-		//draw shit
-		glBindFramebuffer(GL_FRAMEBUFFER, lightBuffer.lightsFBO);
-		glClear( GL_COLOR_BUFFER_BIT);
-		glViewport(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
-
 		float glossValue = (float)stoi(testLabel->label) / 100.0f;
 
 		DrawScreenQuad(quad, ssaoShader, ppShader, lightShader, shadowData, lightBuffer, &skyBox, pointLights, projection, camera->View(), camera->Position(),

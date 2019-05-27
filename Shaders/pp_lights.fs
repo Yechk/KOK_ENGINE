@@ -16,21 +16,13 @@ uniform sampler2D gColor;
 uniform sampler2D gSpecularGloss;
 
 //cube reflection map
-uniform samplerCube skyBox;
+uniform samplerCube radiance;
 uniform samplerCube irradiance;
-
-//testing values
-uniform vec3 testSpecular;
-uniform float testGloss;
-uniform vec3 testEmissive;
 
 
 //shadow depth texture
 uniform sampler2D shadowTex;
 uniform mat4 lightSpaceMatrix;
-
-//texture for cel map
-uniform sampler2D gCel;
 
 uniform vec3 viewPos;
 
@@ -179,7 +171,7 @@ float Squish(float value, float inMin, float inMax, float outMin, float outMax)
 }
 
 //computes directional light
-vec3 DirectionalLight(vec3 normal, vec3 direction, vec3 sketch, vec3 sint, vec3 viewDir, vec3 pos, vec3 env)
+vec3 DirectionalLight(vec3 normal, vec3 direction, vec3 sint, vec3 viewDir, vec3 pos, vec3 env)
 {
 
 	float wCalc = 1.0 - w;
@@ -226,7 +218,6 @@ void main()
 	vec4 specularGloss = texture(gSpecularGloss, TexCoords);
 	vec4 emissiveAmbient = texture(gEmissiveAmbient, TexCoords);
 	vec3 position = texture(gPosition, TexCoords).rgb;
-  vec3 sketch = texture(gCel, TexCoords*8.0).rgb;
 
   //final lighting based on all maps
   //finalColor = (1.0 - f)*fogColor + f * lightColor
@@ -235,10 +226,10 @@ void main()
 
 	w= min(1.0, specularGloss.a);
 
-	vec3 env = texture(skyBox, rVector).rgb;
+	vec3 env = texture(radiance, rVector).rgb;
 	vec3 envLight = texture(irradiance, rVector).rgb;
 
-  vec3 dl = DirectionalLight(normal, dirDirection, sketch, specularGloss.rgb, viewDir, position, envLight);
+  vec3 dl = DirectionalLight(normal, dirDirection, specularGloss.rgb, viewDir, position, envLight);
   vec3 pl = LightLevel(normal, position, sketch, viewDir, specularGloss.rgb);
   float fg = attenuation(distance(viewPos, position), 20.0, 2.0);
 	float reflectAmount = pow(w, 1.5);
