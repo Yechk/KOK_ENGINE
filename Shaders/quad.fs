@@ -25,17 +25,17 @@ vec3 ReinHard(float exposure, vec3 hdrColor)
 }
 
 //simple blur function
-vec3 Blur(sampler2D tex, int kernelSize)
+float Blur(sampler2D tex, int kernelSize)
 {
 	vec2 texelSize = 1.0 / vec2(textureSize(tex, 0));
-	vec3 result = vec3(0.0);
+	float result = 0.0;
 
 	for (int x = -kernelSize/2; x < kernelSize/2; x++)
 	{
 		for(int y = -kernelSize/2; y < kernelSize/2; y++)
 		{
 			vec2 offset = vec2(float(x), float(y)) * texelSize;
-			result += texture(tex, TexCoords + offset).rgb;
+			result += texture(tex, TexCoords + offset).r;
 		}
 	}
 
@@ -70,12 +70,12 @@ void main()
 {
   //load all texture info for fragment
   //vec3 ssao = texture(tex_ssao, TexCoords).rgb;
-	vec4 lighting = vec4(blurV() * 2.0f, 0.0f) + texture(tex_lighting, TexCoords);
+	vec4 lighting = vec4(blurV() * 2.0f, 0.0) + texture(tex_lighting, TexCoords);
 
-	vec3 ambient = Blur(tex_ssao, 4) * vec3(lighting.a) * 0.1f;
+	vec3 ambient = vec3(Blur(tex_ssao, 4) * lighting.a) * 0.1;
 
 
   color = vec4(ReinHard(1.8, lighting.rgb + ambient), 1.0f);
-	//color = vec4(Blur(tex_ssao, 4), 1.0f);
+	//color = vec4(Blur(tex_ssao, 4), 0.0, 0.0, 1.0);
 	gl_FragDepth = 1.0 - texture(tex_depth, TexCoords).r;
 }

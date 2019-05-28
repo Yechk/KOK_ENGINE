@@ -6,7 +6,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <GLFW/glfw3.h>
-#include "Camera.h"
 
 #include "KOK_TextConsole.h"
 #include "KOK_TextManager.h"

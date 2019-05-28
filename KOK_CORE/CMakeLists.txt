@@ -1,7 +1,9 @@
 cmake_minimum_required (VERSION 2.6)
 project(KOK_CORE)
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -Ofast -mfma -mavx")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -mfma4 -mavx")
 
 add_library(KOKc SHARED ./src/KOK_Message.cpp)
 

@@ -3,7 +3,7 @@
 //draws on a full screen quad.
 #version 460 core
 
-out vec4 color;
+out float color;
 
 in vec2 TexCoords;
 
@@ -16,7 +16,7 @@ uniform mat4 projection;
 
 //noise texture and SSAO data
 uniform sampler2D gNoise;
-const vec2 noiseScale = vec2(1280.0/4.0, 720.0/4.0); //TODO: get screen resolution into shader
+uniform vec2 noiseScale;
 int kernelSize = 32;
 float radius = 0.00115f;
 float total_strength = 0.1f;
@@ -122,5 +122,5 @@ void main()
 	}
 	float ao = 1.0 - (occlusion / kernelSize);
 
-  color = vec4(vec3(clamp(ao, 0, 1)), 1.0f);
+  color = clamp(ao, 0.0, 1.0);
 }

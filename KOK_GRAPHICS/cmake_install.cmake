@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "")
+    set(CMAKE_INSTALL_CONFIG_NAME "RelWithDebInfo")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -55,7 +55,6 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
-    "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/./src/Camera.h"
     "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/./src/KOK_Imager.h"
     "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/./src/KOK_Camera.h"
     "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/./src/KOK_Director.h"

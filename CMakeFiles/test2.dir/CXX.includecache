@@ -70,18 +70,6 @@ KOK_CORE/src/KOK_Actor.h
 queue
 -
 
-KOK_GRAPHICS/src/Camera.h
-iostream
--
-math.h
--
-GLFW/glfw3.h
--
-glm/glm.hpp
--
-glm/gtc/matrix_transform.hpp
--
-
 KOK_GRAPHICS/src/KOK_Camera.h
 vector
 -
@@ -109,8 +97,14 @@ KOK_Light.h
 KOK_GRAPHICS/src/KOK_Light.h
 glm/glm.hpp
 KOK_GRAPHICS/src/glm/glm.hpp
+glm/gtc/type_ptr.hpp
+-
 glm/gtc/matrix_transform.hpp
 KOK_GRAPHICS/src/glm/gtc/matrix_transform.hpp
+shader.h
+KOK_GRAPHICS/src/shader.h
+KOK_Camera.h
+KOK_GRAPHICS/src/KOK_Camera.h
 string
 -
 
@@ -151,6 +145,8 @@ shader.h
 KOK_GRAPHICS/src/shader.h
 glm/gtx/quaternion.hpp
 -
+KOK_Actor.h
+KOK_GRAPHICS/src/KOK_Actor.h
 
 KOK_GRAPHICS/src/KOK_Model.h
 glm/glm.hpp
@@ -171,6 +167,8 @@ assimp/postprocess.h
 -
 glm/gtx/quaternion.hpp
 -
+KOK_Actor.h
+KOK_GRAPHICS/src/KOK_Actor.h
 
 KOK_GRAPHICS/src/KOK_ParticleSystem.h
 glm/glm.hpp
@@ -255,8 +253,6 @@ glm/gtc/matrix_transform.hpp
 -
 GLFW/glfw3.h
 -
-Camera.h
-KOK_GRAPHICS/src/Camera.h
 KOK_TextConsole.h
 KOK_GRAPHICS/src/KOK_TextConsole.h
 KOK_TextManager.h

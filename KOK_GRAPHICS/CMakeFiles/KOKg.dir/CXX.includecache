@@ -6,28 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.cpp
-Camera.h
-/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.h
-glm/glm.hpp
--
-glm/gtc/matrix_transform.hpp
--
-GLFW/glfw3.h
--
-
-/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.h
-iostream
--
-math.h
--
-GLFW/glfw3.h
--
-glm/glm.hpp
--
-glm/gtc/matrix_transform.hpp
--
-
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Camera.cpp
 vector
 -
@@ -91,8 +69,14 @@ KOK_Light.h
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Light.h
 glm/glm.hpp
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/glm/glm.hpp
+glm/gtc/type_ptr.hpp
+-
 glm/gtc/matrix_transform.hpp
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/glm/gtc/matrix_transform.hpp
+shader.h
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/shader.h
+KOK_Camera.h
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Camera.h
 string
 -
 
@@ -191,6 +175,8 @@ shader.h
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/shader.h
 glm/gtx/quaternion.hpp
 -
+KOK_Actor.h
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Actor.h
 
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Model.cpp
 glm/glm.hpp
@@ -241,6 +227,8 @@ assimp/postprocess.h
 -
 glm/gtx/quaternion.hpp
 -
+KOK_Actor.h
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Actor.h
 
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_ParticleSystem.cpp
 glm/glm.hpp
@@ -441,8 +429,6 @@ iostream
 -
 string
 -
-Camera.h
-/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.h
 KOK_TextConsole.h
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_TextConsole.h
 KOK_TextManager.h
@@ -463,8 +449,6 @@ glm/gtc/matrix_transform.hpp
 -
 GLFW/glfw3.h
 -
-Camera.h
-/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.h
 KOK_TextConsole.h
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_TextConsole.h
 KOK_TextManager.h

@@ -29,9 +29,9 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-using namespace KOK_Director;
-
 #define SWITCH_TIMER 1.0f
+
+using namespace KOK_Graphics;
 
 //some color presets
 const glm::vec3 K_COLOR_GREEN = glm::vec3(0.8f,1.0f,0.6f);
@@ -92,8 +92,8 @@ class MyGUI : public KOK_Actor
 
 int main()
 {
-	const GLuint WINDOW_WIDTH = 1280;
-	const GLuint WINDOW_HEIGHT = 720;
+	const GLuint WINDOW_WIDTH = 1920;
+	const GLuint WINDOW_HEIGHT = 1080;
 	const std::string VERSION = "0.0 (test)";
 
 	KOK_Camera * camera = new KOK_Camera(glm::vec3(2.0f,0.5f,5.0f), glm::vec3(0.005f,0.0f,-0.01f));
@@ -119,17 +119,12 @@ int main()
 	window = InitWindow(WINDOW_WIDTH,WINDOW_HEIGHT,"KOK Animation Viewer", false);
 
 	//setup all default shaders
-	GLuint modelShader = 0;
-	GLuint particleShader = 0;
-	GLuint ssaoShader = 0;
-	GLuint ppShader = 0;
-	GLuint lightShader = 0;
-	GLuint textFrameBuffer = 0;
-	GLuint textRenderTexture = 0;
+
 	//init gl and load shaders
-	InitGL(WINDOW_WIDTH, WINDOW_HEIGHT, ssaoShader, ppShader, lightShader, modelShader, particleShader, textFrameBuffer, textRenderTexture);
+	InitGL();
 
 	GLuint cubeShader = LoadShaders("./Shaders/cubeVertex.vs","./Shaders/cubeFragment.fs");
+	GLuint ppShader = LoadShaders("./Shaders/quad.vs","./Shaders/quad.fs");
 
 	KOK_WindowManager windowTester;
 
@@ -140,9 +135,14 @@ int main()
 	windowTester.AddWidget("Shader Tester", "Gloss", LABEL, 0.0f, 0.0f, true);
 	KOK_Actor * testSlider = windowTester.AddWidget("Shader Tester", "MySlider", SLIDER, 1.0f, 0.0f, true);
 
-	LightBuffer lightBuffer;
-	ShadowData shadowData;
-	InitLightBuffer(lightBuffer, shadowData, WINDOW_WIDTH, WINDOW_HEIGHT);
+	//structs for holding FBO data
+	LightProcessData * lightData = new LightProcessData(WINDOW_WIDTH, WINDOW_HEIGHT);
+	TextProcessData * textData = new TextProcessData(WINDOW_WIDTH, WINDOW_HEIGHT);
+	ParticleProcessData * particleData = new ParticleProcessData();
+	DeferredLightingData * deferredData = new DeferredLightingData(WINDOW_WIDTH, WINDOW_HEIGHT);
+	SSAOData * ssaoData = new SSAOData(WINDOW_WIDTH, WINDOW_HEIGHT);
+	ShadowData * shadowData = new ShadowData(WINDOW_WIDTH, WINDOW_HEIGHT);
+	AAProcessData * aaData = new AAProcessData(MSAA, 2, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	float startTime = glfwGetTime();
 
@@ -150,12 +150,12 @@ int main()
   float switchStamp = 0.0f;
 
 	//skybox texture
-	KOK_SkyBox skyBox = KOK_SkyBox("./Textures/CubeMaps/Field/");
+	KOK_SkyBox * skyBox = new KOK_SkyBox("./Textures/CubeMaps/Field/");
 
 
 	//splash screen buffers
-	GLuint splashBuffer0 = KOK_Imager::BlankPNG(1280, 720);
-	GLuint splashBuffer1 = KOK_Imager::BlankPNG(1280, 720);
+	GLuint splashBuffer0 = KOK_Imager::BlankPNG(WINDOW_WIDTH, WINDOW_HEIGHT);
+	GLuint splashBuffer1 = KOK_Imager::BlankPNG(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//quad meshes
 	KOK_Mesh quadMesh = KOK_Model::GenerateQuad();
@@ -206,10 +206,7 @@ int main()
 		office.Update(MARCH);
 		windowTester.UpdateGUI();
 
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, lightBuffer.mapFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, deferredData->FBO);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glViewport(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
 
@@ -223,28 +220,14 @@ int main()
 		glCullFace(GL_CCW);
 		glPolygonMode( GL_FRONT, GL_FILL );
 
-		glUseProgram(modelShader);
+		glUseProgram(deferredData->shader);
 
-		sphere0->Draw(modelShader, projection, camera->View());
+		sphere0->Draw(deferredData->shader, projection, camera->GetView());
 
 		float glossValue = (float)stoi(testLabel->label) / 100.0f;
 
-		DrawScreenQuad(quad, ssaoShader, ppShader, lightShader, shadowData, lightBuffer, &skyBox, pointLights, projection, camera->View(), camera->Position(),
-			glossValue, textManager);
-
-		//draw particle system./
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glUseProgram(particleShader);
-		glEnable(GL_DEPTH_TEST);
-		glDepthMask (GL_FALSE);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glDepthFunc (GL_LEQUAL);
-
-		//put particles hereeeee
-
-		//skybox
-		//skyBox.Draw(cubeShader, projection, camera->View());
+		DrawScreenQuad(quad, lightData, deferredData, ssaoData, shadowData, skyBox,
+			projection, camera, textManager, ppShader, cubeShader, aaData);
 
 		if ( GLFW_PRESS == glfwGetKey( window, GLFW_KEY_ESCAPE ) )
 		{
@@ -260,10 +243,10 @@ int main()
 
 		//textManager->DrawSplash(1280.0f, 720.0f, splash_screen_test, splashBuffer0, splashBuffer1);
 		//textManager->DrawBox(520.0f, 570.0f, 520.0f, 160.0f, K_COLOR_GREY_LIGHT);
-		textManager->DrawText("KOK ENGINE\nVERSION: " + VERSION,25.0f, 690.0f, 0.5f, K_COLOR_WHITE);
-		textManager->DrawText(str, 25.0f, 620.0f, 0.5f, K_COLOR_WHITE);
+		//textManager->DrawText("KOK ENGINE\nVERSION: " + VERSION,25.0f, 690.0f, 0.5f, K_COLOR_WHITE);
+		//textManager->DrawText(str, 25.0f, 620.0f, 0.5f, K_COLOR_WHITE);
 
-		windowTester.DrawGUI();
+		//windowTester.DrawGUI();
 
 
 		glfwSwapBuffers(window);

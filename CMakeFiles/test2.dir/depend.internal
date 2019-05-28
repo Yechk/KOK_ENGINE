@@ -7,7 +7,6 @@ CMakeFiles/test2.dir/tests/gui.cpp.o
  /usr/include/freetype2/ft2build.h
  KOK_CORE/src/KOK_Actor.h
  KOK_CORE/src/KOK_Message.h
- KOK_GRAPHICS/src/Camera.h
  KOK_GRAPHICS/src/KOK_Camera.h
  KOK_GRAPHICS/src/KOK_Director.h
  KOK_GRAPHICS/src/KOK_Imager.h

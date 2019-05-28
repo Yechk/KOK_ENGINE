@@ -60,15 +60,6 @@ float LinearizeDepth(float depth)
     return (2.0 * near * far) / (far + near - z * (far - near));
 }
 
-//cel shades a float
-//read from cel map-corresponds to values 0-1
-float CelLight(float init, vec3 sketch)
-{
-  float cel = step(0.4, init);
-  cel += step(0.2, init) * 0.4 * sketch.b;
-  return clamp(cel,0.0,1.0);
-}
-
 float attenuation(float dist, float radius, float power)
 {
 
@@ -103,7 +94,7 @@ vec3 SpecLight(vec3 direction, vec3 normal, vec3 viewDir, vec3 sint, vec3 color)
 }
 
 //call this function to look through all point lights and get final light value
-vec3 LightLevel(vec3 normal, vec3 position, vec3 sketch, vec3 viewDir, vec3 sint)
+vec3 LightLevel(vec3 normal, vec3 position, vec3 viewDir, vec3 sint)
 {
 	//if (numLights > MAX_LIGHTS) return vec3(0,1,0);
 
@@ -224,13 +215,13 @@ void main()
 	vec3 viewDir = normalize(viewPos - position);
 	vec3 rVector = reflect(-viewDir, normal);
 
-	w= min(1.0, specularGloss.a);
+	w = specularGloss.a;
 
 	vec3 env = texture(radiance, rVector).rgb;
 	vec3 envLight = texture(irradiance, rVector).rgb;
 
   vec3 dl = DirectionalLight(normal, dirDirection, specularGloss.rgb, viewDir, position, envLight);
-  vec3 pl = LightLevel(normal, position, sketch, viewDir, specularGloss.rgb);
+  vec3 pl = LightLevel(normal, position, viewDir, specularGloss.rgb);
   float fg = attenuation(distance(viewPos, position), 20.0, 2.0);
 	float reflectAmount = pow(w, 1.5);
   vec3 lt = mix(diffuse.rgb, env, reflectAmount) * (dl + pl);

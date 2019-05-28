@@ -67,7 +67,7 @@ CMakeFiles/test2.dir/all: KOK_GRAPHICS/CMakeFiles/KOKg.dir/all
 CMakeFiles/test2.dir/all: KOK_CORE/CMakeFiles/KOKc.dir/all
 	$(MAKE) -f CMakeFiles/test2.dir/build.make CMakeFiles/test2.dir/depend
 	$(MAKE) -f CMakeFiles/test2.dir/build.make CMakeFiles/test2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=18,19 "Built target test2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=17,18 "Built target test2"
 .PHONY : CMakeFiles/test2.dir/all
 
 # Include target in all.
@@ -77,7 +77,7 @@ all: CMakeFiles/test2.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 18
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test2.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 0
 .PHONY : CMakeFiles/test2.dir/rule
@@ -122,7 +122,7 @@ KOK_GRAPHICS/preinstall:
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/all:
 	$(MAKE) -f KOK_GRAPHICS/CMakeFiles/KOKg.dir/build.make KOK_GRAPHICS/CMakeFiles/KOKg.dir/depend
 	$(MAKE) -f KOK_GRAPHICS/CMakeFiles/KOKg.dir/build.make KOK_GRAPHICS/CMakeFiles/KOKg.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=3,4,5,6,7,8,9,10,11,12,13,14,15,16,17 "Built target KOKg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=3,4,5,6,7,8,9,10,11,12,13,14,15,16 "Built target KOKg"
 .PHONY : KOK_GRAPHICS/CMakeFiles/KOKg.dir/all
 
 # Include target in all.
@@ -132,7 +132,7 @@ all: KOK_GRAPHICS/CMakeFiles/KOKg.dir/all
 
 # Build rule for subdir invocation for target.
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 15
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 14
 	$(MAKE) -f CMakeFiles/Makefile2 KOK_GRAPHICS/CMakeFiles/KOKg.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 0
 .PHONY : KOK_GRAPHICS/CMakeFiles/KOKg.dir/rule

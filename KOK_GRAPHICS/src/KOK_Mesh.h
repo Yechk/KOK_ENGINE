@@ -12,6 +12,7 @@ using namespace std;
 #include <vector>
 #include "shader.h"
 #include <glm/gtx/quaternion.hpp>
+#include "KOK_Actor.h"
 
 //definitions for vertex and texture
 struct Vertex
@@ -48,7 +49,7 @@ struct MeshData
 };
 
 //class for kok mesh
-class KOK_Mesh
+class KOK_Mesh : public KOK_Actor
 {
 public:
 
@@ -60,6 +61,9 @@ public:
 	void Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation);
 	void Draw();
 	void DrawShadowPass(const GLuint& shader, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation);
+
+	void Update(double time) {};
+	void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
 
 	void SetShaderProperties(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation);
 	void SetupMesh(const vector<Vertex>& vertices, const vector<GLuint>& indices);

@@ -1,1 +1,1 @@
-/usr/bin/c++ -fPIC -std=c++17 -Ofast -mfma -mavx  -shared -Wl,-soname,libKOKc.so -o libKOKc.so CMakeFiles/KOKc.dir/src/KOK_Message.cpp.o 
+/usr/bin/c++ -fPIC -Ofast -mfma4 -mavx  -shared -Wl,-soname,libKOKc.so -o libKOKc.so CMakeFiles/KOKc.dir/src/KOK_Message.cpp.o 

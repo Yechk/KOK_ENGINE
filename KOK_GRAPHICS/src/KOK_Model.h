@@ -15,19 +15,25 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <glm/gtx/quaternion.hpp>
+
+#include "KOK_Actor.h"
 using namespace std;
 
 //class for model
 
-class KOK_Model
+class KOK_Model : public KOK_Actor
 {
 public:
 	KOK_Model();
 	KOK_Model(string path);
 	KOK_Model(KOK_Mesh mesh);
 	KOK_Model(int divisions);
+	void Draw() {};
 	void Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view);
 	void DrawShadowPass(const GLuint& shader);
+
+	void Update(double time) {};
+	void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
 
 	void SetPosition(const glm::vec3& position);
 	void SetScale(const glm::vec3& scale);

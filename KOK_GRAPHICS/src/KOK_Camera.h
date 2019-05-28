@@ -5,36 +5,54 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-
-//point camera class
-class KOK_Camera
+namespace KOK_Graphics
 {
-protected:
-	glm::vec3 _position;
-	glm::vec3 _target;
-	glm::vec3 _up;
 
-	glm::mat4 _view;
+	//point camera class
+	class KOK_Camera
+	{
+	protected:
+		enum CameraFunction //different algorithms for camera control
+		{
+			TARGET,
+			DIRECTIONAL
+		} cameraFunction = DIRECTIONAL;
 
-	inline glm::mat4 GetTargetViewMatrix();
+		glm::vec3 _position;
+		glm::vec3 _target;
+		glm::vec3 _up;
 
-public:
-	KOK_Camera(const glm::vec3& position, const glm::vec3& target);
+		glm::mat4 _view;
 
-	void Update();
+		glm::mat4 GetTargetViewMatrix()
+		{
+			if(cameraFunction == DIRECTIONAL)
+		  	return glm::lookAt(_position, _position + _target, _up);
 
-	//camera position
-	const glm::vec3& Position() const;
-	void Position(const glm::vec3& position);
-	void TranslatePosition(const glm::vec3& translation);
+			return glm::mat4(1.0);
+		};
 
-	//camera target
-	const glm::vec3& Target() const;
-	void Target(const glm::vec3& target);
-	
-	//camera view
-	const glm::mat4& View() const;
-};
+	public:
+		KOK_Camera(glm::vec3 position, glm::vec3 target);
 
+		void Update();
+
+		//camera position
+		glm::vec3 GetPosition() const {return _position;};
+		void SetPosition(glm::vec3 position) {_position = position;};
+
+		void TranslatePosition(glm::vec3 translation)
+		{
+			_position += translation;
+		};
+
+		//camera target
+		glm::vec3 GetTarget() const {return _target;};
+		void SetTarget(glm::vec3 target) {_target = target;};
+
+		//camera view
+		glm::mat4 GetView() const {return _view;};
+	};
+}
 
 #endif

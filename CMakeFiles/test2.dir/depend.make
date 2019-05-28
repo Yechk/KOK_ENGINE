@@ -6,7 +6,6 @@ CMakeFiles/test2.dir/tests/gui.cpp.o: /usr/include/freetype2/freetype/config/fth
 CMakeFiles/test2.dir/tests/gui.cpp.o: /usr/include/freetype2/ft2build.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_CORE/src/KOK_Actor.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_CORE/src/KOK_Message.h
-CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/Camera.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/KOK_Camera.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/KOK_Director.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/KOK_Imager.h

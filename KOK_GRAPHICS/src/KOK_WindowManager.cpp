@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include "Camera.h"
 
 using namespace std;
 #include "KOK_TextConsole.h"

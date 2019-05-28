@@ -4,7 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.cpp" "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o"
   "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Camera.cpp" "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o"
   "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Director.cpp" "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o"
   "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Imager.cpp" "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o"

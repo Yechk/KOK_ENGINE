@@ -57,33 +57,9 @@ include KOK_GRAPHICS/CMakeFiles/KOKg.dir/progress.make
 # Include the compile flags for this target's objects.
 include KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 
-KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
-KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o: KOK_GRAPHICS/src/Camera.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o"
-	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/Camera.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.cpp
-
-KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KOKg.dir/src/Camera.cpp.i"
-	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.cpp > CMakeFiles/KOKg.dir/src/Camera.cpp.i
-
-KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KOKg.dir/src/Camera.cpp.s"
-	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/Camera.cpp -o CMakeFiles/KOKg.dir/src/Camera.cpp.s
-
-KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o.requires:
-
-.PHONY : KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o.requires
-
-KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o.provides: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o.requires
-	$(MAKE) -f KOK_GRAPHICS/CMakeFiles/KOKg.dir/build.make KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o.provides.build
-.PHONY : KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o.provides
-
-KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o.provides.build: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o
-
-
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o: KOK_GRAPHICS/src/KOK_Imager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Imager.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.i: cmake_force
@@ -107,7 +83,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o.provides.build: KOK_GRAPHI
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o: KOK_GRAPHICS/src/KOK_Camera.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Camera.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.i: cmake_force
@@ -131,7 +107,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o.provides.build: KOK_GRAPHI
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/KOK_Director.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Director.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.i: cmake_force
@@ -155,7 +131,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o.provides.build: KOK_GRAP
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o: KOK_GRAPHICS/src/KOK_Light.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Light.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.i: cmake_force
@@ -179,7 +155,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o.provides.build: KOK_GRAPHIC
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Picker.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Picker.cpp.o: KOK_GRAPHICS/src/KOK_Picker.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Picker.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Picker.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_Picker.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Picker.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Picker.cpp.i: cmake_force
@@ -203,7 +179,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Picker.cpp.o.provides.build: KOK_GRAPHI
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: KOK_GRAPHICS/src/KOK_TextManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_TextManager.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.i: cmake_force
@@ -227,7 +203,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o.provides.build: KOK_G
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: KOK_GRAPHICS/src/KOK_TextConsole.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_TextConsole.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.i: cmake_force
@@ -251,7 +227,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o.provides.build: KOK_G
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/shader.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/shader.cpp.o: KOK_GRAPHICS/src/shader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/shader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/shader.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/shader.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/shader.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/shader.cpp.i: cmake_force
@@ -275,7 +251,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/shader.cpp.o.provides.build: KOK_GRAPHICS/C
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/src/KOK_WindowManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_WindowManager.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.i: cmake_force
@@ -299,7 +275,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o.provides.build: KOK
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/src/KOK_Mesh.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Mesh.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.i: cmake_force
@@ -323,7 +299,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o.provides.build: KOK_GRAPHICS
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Skeleton.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Skeleton.cpp.o: KOK_GRAPHICS/src/KOK_Skeleton.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Skeleton.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Skeleton.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_Skeleton.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Skeleton.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Skeleton.cpp.i: cmake_force
@@ -347,7 +323,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Skeleton.cpp.o.provides.build: KOK_GRAP
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/src/KOK_Model.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Model.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.i: cmake_force
@@ -371,7 +347,7 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o.provides.build: KOK_GRAPHIC
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_ParticleSystem.cpp.o: KOK_GRAPHICS/CMakeFiles/KOKg.dir/flags.make
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_ParticleSystem.cpp.o: KOK_GRAPHICS/src/KOK_ParticleSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_ParticleSystem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_ParticleSystem.cpp.o"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/KOKg.dir/src/KOK_ParticleSystem.cpp.o -c /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_ParticleSystem.cpp
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_ParticleSystem.cpp.i: cmake_force
@@ -395,7 +371,6 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_ParticleSystem.cpp.o.provides.build: KO
 
 # Object files for target KOKg
 KOKg_OBJECTS = \
-"CMakeFiles/KOKg.dir/src/Camera.cpp.o" \
 "CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o" \
 "CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o" \
 "CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o" \
@@ -413,7 +388,6 @@ KOKg_OBJECTS = \
 # External object files for target KOKg
 KOKg_EXTERNAL_OBJECTS =
 
-KOK_GRAPHICS/libKOKg.so: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o
 KOK_GRAPHICS/libKOKg.so: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o
 KOK_GRAPHICS/libKOKg.so: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o
 KOK_GRAPHICS/libKOKg.so: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o
@@ -430,7 +404,7 @@ KOK_GRAPHICS/libKOKg.so: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_ParticleSystem
 KOK_GRAPHICS/libKOKg.so: KOK_GRAPHICS/CMakeFiles/KOKg.dir/build.make
 KOK_GRAPHICS/libKOKg.so: /usr/lib/x86_64-linux-gnu/libfreetype.so
 KOK_GRAPHICS/libKOKg.so: KOK_GRAPHICS/CMakeFiles/KOKg.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX shared library libKOKg.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX shared library libKOKg.so"
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/KOKg.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -438,7 +412,6 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/build: KOK_GRAPHICS/libKOKg.so
 
 .PHONY : KOK_GRAPHICS/CMakeFiles/KOKg.dir/build
 
-KOK_GRAPHICS/CMakeFiles/KOKg.dir/requires: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o.requires
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/requires: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o.requires
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/requires: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o.requires
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/requires: KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o.requires

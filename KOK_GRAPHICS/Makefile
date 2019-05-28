@@ -171,33 +171,6 @@ KOKg/fast:
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f KOK_GRAPHICS/CMakeFiles/KOKg.dir/build.make KOK_GRAPHICS/CMakeFiles/KOKg.dir/build
 .PHONY : KOKg/fast
 
-src/Camera.o: src/Camera.cpp.o
-
-.PHONY : src/Camera.o
-
-# target to build an object file
-src/Camera.cpp.o:
-	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f KOK_GRAPHICS/CMakeFiles/KOKg.dir/build.make KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.o
-.PHONY : src/Camera.cpp.o
-
-src/Camera.i: src/Camera.cpp.i
-
-.PHONY : src/Camera.i
-
-# target to preprocess a source file
-src/Camera.cpp.i:
-	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f KOK_GRAPHICS/CMakeFiles/KOKg.dir/build.make KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.i
-.PHONY : src/Camera.cpp.i
-
-src/Camera.s: src/Camera.cpp.s
-
-.PHONY : src/Camera.s
-
-# target to generate assembly for a file
-src/Camera.cpp.s:
-	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f KOK_GRAPHICS/CMakeFiles/KOKg.dir/build.make KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/Camera.cpp.s
-.PHONY : src/Camera.cpp.s
-
 src/KOK_Camera.o: src/KOK_Camera.cpp.o
 
 .PHONY : src/KOK_Camera.o
@@ -562,9 +535,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... list_install_components"
 	@echo "... install/local"
-	@echo "... src/Camera.o"
-	@echo "... src/Camera.i"
-	@echo "... src/Camera.s"
 	@echo "... src/KOK_Camera.o"
 	@echo "... src/KOK_Camera.i"
 	@echo "... src/KOK_Camera.s"

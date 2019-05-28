@@ -1,5 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/KOKg.dir/src/Camera.cpp.o"
   "CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o"
   "CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o"
   "CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o"

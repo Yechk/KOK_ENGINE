@@ -17,7 +17,7 @@
 #include <string>
 using namespace std;
 
-namespace KOK_Director
+namespace KOK_Graphics
 {
 
 	void InitGL()
@@ -51,7 +51,7 @@ namespace KOK_Director
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-		glfwWindowHint(GLFW_SAMPLES, 1);
+
 		glEnable(GL_MULTISAMPLE);
 
 		int count;
@@ -76,14 +76,15 @@ namespace KOK_Director
 		DeferredLightingData * deferredData, SSAOData * ssaoData,
 		ShadowData * shadowData, KOK_SkyBox * cubeMap, glm::mat4 projection,
 		KOK_Camera * camera, KOK_TextManager * tManager,
-		GLuint ppShader)
+		GLuint ppShader, GLuint cubeShader, AAProcessData * aaData)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, lightData->FBO);
-		glClear( GL_COLOR_BUFFER_BIT);
+		glClear( GL_COLOR_BUFFER_BIT );
 		glViewport(0,0, lightData->screenWidth, lightData->screenHeight);
 
 		//draw the lights first
 		GLuint lightShader = lightData->shader;
+		glm::vec3 camPosition = camera->GetPosition();
 		glUseProgram(lightShader);
 
 		SetUniformTexture(lightShader,"gPosition", 0);
@@ -134,21 +135,27 @@ namespace KOK_Director
 		SetUniformTexture(ssaoShader,"ssaoPosition", 1);
 		SetUniformTexture(ssaoShader,"ssaoNormal", 2);
 		SetUniformMat4(ssaoShader, "projection", projection);
+		SetUniformVec2(ssaoShader, "noiseScale", lightData->screenWidth, lightData->screenHeight);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, ssaoData->tex_noise);
+		glBindTexture(GL_TEXTURE_2D, ssaoData->noise);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, deferredData->ssaoPosition);
+		glBindTexture(GL_TEXTURE_2D, deferredData->textures.ssaoPosition);
 		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, deferredData->ssaoNormal);
+		glBindTexture(GL_TEXTURE_2D, deferredData->textures.ssaoNormal);
 
 		quad->Draw();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		//glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//calculate final process
 
+		if(aaData != NULL)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, aaData->FBO);
+			glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		}
 
 		glUseProgram(ppShader);
 
@@ -168,6 +175,34 @@ namespace KOK_Director
 		glBindTexture(GL_TEXTURE_2D, deferredData->textures.depth);
 
 		quad->Draw();
+
+		//draw particle system./
+		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		//glUseProgram(particleData->shader);
+		glEnable(GL_DEPTH_TEST);
+		glDepthMask (GL_FALSE);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDepthFunc (GL_LEQUAL);
+
+		//put particles hereeeee
+
+		//skybox
+		cubeMap->Draw(cubeShader, projection, camera->GetView());
+
+		if(aaData != NULL)
+		{
+			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+			glBindFramebuffer(GL_READ_FRAMEBUFFER, aaData->FBO);
+
+			glReadBuffer(GL_COLOR_ATTACHMENT0);
+			glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+			glBlitFramebuffer(0, 0, lightData->screenWidth, lightData->screenHeight, 0, 0,
+				lightData->screenWidth, lightData->screenHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		}
 
 	}
 }
