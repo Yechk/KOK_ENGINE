@@ -77,6 +77,8 @@ shader.h
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/shader.h
 KOK_Camera.h
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Camera.h
+KOK_Actor.h
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Actor.h
 string
 -
 

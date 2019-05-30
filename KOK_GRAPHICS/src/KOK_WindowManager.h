@@ -201,7 +201,7 @@ GLuint KOK_WindowManager::Textures::circle16 = 0;
 inline void InitWindowTextures()
 {
 	bool success;
-	KOK_WindowManager::Textures::circle16 = KOK_Imager::LoadPNG("./Textures/UI/circle16.png", false, success);
+	KOK_WindowManager::Textures::circle16 = KOK_Imager::LoadPNG("./Textures/UI/circle16.png", false, false, success);
 };
 
 #endif

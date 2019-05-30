@@ -13,7 +13,7 @@ using namespace std;
 namespace KOK_Imager
 {
 
-GLuint LoadPNG(string path, bool gamma, bool &success);
+GLuint LoadPNG(string path, bool gamma, bool compress, bool &success);
 
 GLuint LoadCubeMap(string path);
 
@@ -28,7 +28,7 @@ struct DefaultTexture
   {
     bool success = false;
 
-    texture = LoadPNG("../Textures/Default/diffuse.png", false, success);
+    texture = LoadPNG("../Textures/Default/diffuse.png", false, true, success);
     cout << "DEFAULT LOADED: " << success << endl;
 
   };

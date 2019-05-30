@@ -26,6 +26,7 @@ class KOK_Model : public KOK_Actor
 public:
 	KOK_Model();
 	KOK_Model(string path);
+	KOK_Model(string path, glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation);
 	KOK_Model(KOK_Mesh mesh);
 	KOK_Model(int divisions);
 	void Draw() {};
@@ -55,6 +56,7 @@ protected:
 	string texturePath;
 
 	void InitTransforms();
+	void InitTransforms(glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation);
 
 	glm::vec3 _position;
 	glm::vec3 _scale;

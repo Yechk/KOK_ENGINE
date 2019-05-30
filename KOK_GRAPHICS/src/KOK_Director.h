@@ -18,6 +18,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "shader.h"
 #include "KOK_Camera.h"
+#include "KOK_Actor.h"
 
 #include <string>
 using namespace std;
@@ -38,10 +39,17 @@ namespace KOK_Graphics
 		GLuint FBO, RBO;           //frame buffer
 		GLuint texture;       //texture for color attachment
 		GLuint magnitude;     //holds # of samples for MSAA or scale of SSAA
+		int screenWidth;
+		int screenHeight;
+
+		AAProcessData() {};
 
 		//technique must be defined in constructor fo FBO creation
 		AAProcessData(AATechnique t, GLuint m, int width, int height) : technique{t}, magnitude{m}
 		{
+			screenWidth = width;
+			screenHeight = height;
+
 			glGenFramebuffers(1, &FBO);
 			glGenRenderbuffers(1, &RBO);
 			glBindFramebuffer(GL_FRAMEBUFFER, FBO);
@@ -68,6 +76,23 @@ namespace KOK_Graphics
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		};
+
+		void Draw()
+		{
+			if(technique == MSAA)
+			{
+				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+				glBindFramebuffer(GL_READ_FRAMEBUFFER, FBO);
+
+				glReadBuffer(GL_COLOR_ATTACHMENT0);
+				glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+				glBlitFramebuffer(0, 0, screenWidth, screenHeight, 0, 0,
+					screenWidth, screenHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			}
+		};
 	};
 
 	struct SSAOData
@@ -78,11 +103,13 @@ namespace KOK_Graphics
 			GLuint output;      //calculated ssao output texture
 			GLuint noise;       //noise texture for ssao
 
+			SSAOData() {};
+
 			SSAOData(int width, int height)
 			{
 				bool success = false;
 				shader = LoadShaders("./Shaders/quad.vs","./Shaders/pp_ssao.fs");
-				noise = KOK_Imager::LoadPNG("./Textures/noise.png", false, success);
+				noise = KOK_Imager::LoadPNG("./Textures/noise.png", false, false, success);
 
 				//generate frame buffer and texture
 				glGenFramebuffers(1, &FBO);
@@ -118,6 +145,8 @@ namespace KOK_Graphics
 
 		vector<KOK_PointLight*> pointLights;
 
+		LightProcessData() {};
+
 		LightProcessData(int width, int height)
 		{
 			screenWidth = width;
@@ -133,7 +162,7 @@ namespace KOK_Graphics
 			// - color buffer for lighting calculation (16F for HDR light data)
 			glGenTextures(1, &color);
 			glBindTexture(GL_TEXTURE_2D, color);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, color, 0);
@@ -252,6 +281,8 @@ namespace KOK_Graphics
 
 			} textures;
 
+			DeferredLightingData() {};
+
 			DeferredLightingData(int width, int height)
 			{
 				//load deferredShader shader
@@ -359,6 +390,8 @@ namespace KOK_Graphics
 		glm::mat4 lightView;
 		glm::mat4 lightSpaceMatrix;
 
+		ShadowData() {};
+
 		ShadowData(int width, int height)
 		{
 			shadowShader = LoadShaders("./Shaders/shadowDraw.vs","./Shaders/shadowDraw.fs");
@@ -416,13 +449,59 @@ namespace KOK_Graphics
 	void InitGL();
 	bool KillGL();
 
-	GLFWwindow* InitWindow(const int& width, const int& height, const char * name, bool fullScreen=true);
+	GLFWwindow* InitWindow(int width, int height, const char * name, bool fullScreen=true);
 
-	void DrawScreenQuad(KOK_Mesh *quad, LightProcessData * lightData,
-		DeferredLightingData * deferredData, SSAOData * ssaoData,
-		ShadowData * shadowData, KOK_SkyBox * cubeMap, glm::mat4 projection,
-		KOK_Camera * camera, KOK_TextManager * tManager,
-		GLuint ppShader, GLuint cubeShader,  AAProcessData * aaData);
-	}
+	class KOK_RenderProcess : public KOK_Actor
+	{
+	private:
+		KOK_Mesh _quad;
+		LightProcessData _lightData;
+		DeferredLightingData _deferredData;
+		SSAOData _ssaoData;
+		ShadowData _shadowData;
+		AAProcessData _aaData;
+
+		GLuint _ppShader;
+		GLuint _skyBoxShader;
+
+		//vector to store all models to be drawn
+		vector<KOK_Model> models;
+
+	public:
+		KOK_RenderProcess(int WINDOW_WIDTH, int WINDOW_HEIGHT) //default values
+		{
+			//structs for holding FBO data
+			_lightData = LightProcessData(WINDOW_WIDTH, WINDOW_HEIGHT);
+			_deferredData = DeferredLightingData(WINDOW_WIDTH, WINDOW_HEIGHT);
+			_ssaoData = SSAOData(WINDOW_WIDTH, WINDOW_HEIGHT);
+			_shadowData = ShadowData(WINDOW_WIDTH, WINDOW_HEIGHT);
+			_aaData = AAProcessData(MSAA, 2, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+			_ppShader = LoadShaders("./Shaders/quad.vs","./Shaders/quad.fs");
+			_skyBoxShader = LoadShaders("./Shaders/cubeVertex.vs","./Shaders/cubeFragment.fs");
+
+			_quad = KOK_Model::GenerateQuad();
+		}
+
+		void Update(double time) {};
+	  void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
+	  void Draw() {};
+
+		void DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap);
+
+		KOK_Model * AddModel(string name)
+		{
+			models.push_back(KOK_Model(name));
+			return &models.back();
+		}
+
+		KOK_Model * AddModel(string name, glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation)
+		{
+			models.push_back(KOK_Model(name, position, scale, orientation, rotation));
+			return &models.back();
+		}
+	};
+
+}
 
 #endif //KOK_Director.h

@@ -15,6 +15,9 @@ uniform sampler2D gEmissiveAmbient;
 uniform sampler2D gColor;
 uniform sampler2D gSpecularGloss;
 
+//ssao texture
+uniform sampler2D tex_ssao;
+
 //cube reflection map
 uniform samplerCube radiance;
 uniform samplerCube irradiance;
@@ -50,8 +53,26 @@ layout (std140, binding = 2) uniform lightData
 float near = 0.1;
 float far = 50.0;
 float w = 1.0; //hardness of light-this one should be a hardness map
-vec3 dirDirection = normalize(vec3(0.0,0.0,1.0)); //for directional light
+vec3 dirDirection = normalize(vec3(1.0,0.0,0.0)); //for directional light
 vec3 dirColor = vec3(1.0f,1.0f,0.88f);
+
+//simple blur function
+float Blur(sampler2D tex, int kernelSize)
+{
+	vec2 texelSize = 1.0 / vec2(textureSize(tex, 0));
+	float result = 0.0;
+
+	for (int x = -kernelSize/2; x < kernelSize/2; x++)
+	{
+		for(int y = -kernelSize/2; y < kernelSize/2; y++)
+		{
+			vec2 offset = vec2(float(x), float(y)) * texelSize;
+			result += texture(tex, TexCoords + offset).r;
+		}
+	}
+
+	return result / (kernelSize * kernelSize);
+}
 
 //unused function to visualize depth map
 float LinearizeDepth(float depth)
@@ -76,7 +97,7 @@ float ggxSpecular(vec3 N, vec3 V, vec3 L, float roughness, float F0)
   float dotNL = max(0.0, dot(N,L));
   float alphaSqr = alpha * alpha;
   float denom = dotNH * dotNH * (alphaSqr - 1.0) + 1.0;
-  float D = alphaSqr / (3.141592653589793 * denom * denom);
+  float D = alphaSqr / (3.14159 * denom * denom);
   float F = F0 + (1.0 - F0) * pow(1.0 - dotLH, 5.0);
   float k = 0.5 * alpha;
   float k2 = k * k;
@@ -120,23 +141,6 @@ vec3 LightLevel(vec3 normal, vec3 position, vec3 viewDir, vec3 sint)
 	return diff;
 }
 
-float Blur(sampler2D tex, int kernelSize, vec2 coords)
-{
-	vec2 texelSize = 1.0 / vec2(textureSize(tex, 0));
-	float result = 0.0;
-
-	for (int x = -kernelSize/2; x < kernelSize/2; x++)
-	{
-		for(int y = -kernelSize/2; y < kernelSize/2; y++)
-		{
-			vec2 offset = vec2(float(x), float(y)) * texelSize;
-			result += texture(tex, coords + offset).r;
-		}
-	}
-
-	return result / (kernelSize * kernelSize);
-}
-
 float ShadowValue(vec3 pos, vec3 normal, vec3 direction)
 {
 	vec4 fragPosLightSpace = lightSpaceMatrix * vec4(pos, 1.0);
@@ -162,25 +166,27 @@ float Squish(float value, float inMin, float inMax, float outMin, float outMax)
 }
 
 //computes directional light
-vec3 DirectionalLight(vec3 normal, vec3 direction, vec3 sint, vec3 viewDir, vec3 pos, vec3 env)
+vec3 DirectionalLight(vec3 normal, vec3 direction, vec3 sint, vec3 viewDir, vec3 pos, vec3 env, vec3 envLight, vec3 diffuse)
 {
 
 	float wCalc = 1.0 - w;
-	float wAdjust = Squish(wCalc, 0.0, 1.0, 0.0, 0.3);
-	float absorption = Squish(w, 0.0, 1.0, 0.4, 1.0);
-  float intensity =
-		max((dot(normal,direction) + wAdjust) / (1.0 + wAdjust), 0.05); //light should never be absolute zero
+	//float wAdjust = Squish(wCalc, 0.0, 1.0, 0.0, 0.3);
+	//float absorption = Squish(w, 0.0, 1.0, 0.4, 1.0);
+  //float intensity =
+	//	(dot(normal,direction) + wAdjust) / (1.0 + wAdjust); //TODO: bake wrap lighting to textures
 
-	vec3 diff = absorption * intensity * dirColor;
-	vec3 envColor = absorption * env;
+	vec3 specular = sint * ggxSpecular(normal, viewDir, direction, max(0.17, wCalc), 0.1);
+	float reflectPower = pow(w, 2.0);
+	vec3 reflectAmount = mix((diffuse * envLight) + specular, env, reflectPower);
 
-	diff = mix(diff, envColor, litByEnvironment);
+	//vec3 diff = absorption * intensity * dirColor;
+	vec3 envColor = reflectAmount;
 
-	vec3 specular = sint * ggxSpecular(normal, viewDir, direction, max(0.17, wCalc), 0.9);
+	//diff = mix(diff, envColor, litByEnvironment);
 
 	float shade = ShadowValue(pos, normal, direction);
 
-	return ((diff*shade) + (specular*shade));
+	return envColor*shade;
 }
 
 vec3 blurH()
@@ -213,18 +219,21 @@ void main()
   //final lighting based on all maps
   //finalColor = (1.0 - f)*fogColor + f * lightColor
 	vec3 viewDir = normalize(viewPos - position);
-	vec3 rVector = reflect(-viewDir, normal);
+	vec3 rVector = normalize(reflect(-viewDir, normal));
 
 	w = specularGloss.a;
 
 	vec3 env = texture(radiance, rVector).rgb;
-	vec3 envLight = texture(irradiance, rVector).rgb;
+	vec3 envLight = texture(irradiance, normal).rgb;
 
-  vec3 dl = DirectionalLight(normal, dirDirection, specularGloss.rgb, viewDir, position, envLight);
+  vec3 dl = DirectionalLight(normal, dirDirection, specularGloss.rgb, viewDir, position, env, envLight, diffuse.rgb);
   vec3 pl = LightLevel(normal, position, viewDir, specularGloss.rgb);
-  float fg = attenuation(distance(viewPos, position), 20.0, 2.0);
-	float reflectAmount = pow(w, 1.5);
-  vec3 lt = mix(diffuse.rgb, env, reflectAmount) * (dl + pl);
-  color = vec4(lt + emissiveAmbient.rgb, emissiveAmbient.a);
+  //float fg = attenuation(distance(viewPos, position), 20.0, 2.0);
+
+	vec3 ambient = vec3(0.05) * Blur(tex_ssao, 4) * emissiveAmbient.a * diffuse.rgb;
+
+  vec3 lt = dl + pl;
+  color = vec4(lt + emissiveAmbient.rgb + ambient, 1.0);
+
 	horizontalEmission = blurH();
 }

@@ -116,15 +116,12 @@ int main()
 
 	//start up opengl
 	GLFWwindow * window;
-	window = InitWindow(WINDOW_WIDTH,WINDOW_HEIGHT,"KOK Animation Viewer", false);
+	window = InitWindow(WINDOW_WIDTH,WINDOW_HEIGHT,"KOK Animation Viewer", true);
 
 	//setup all default shaders
 
 	//init gl and load shaders
 	InitGL();
-
-	GLuint cubeShader = LoadShaders("./Shaders/cubeVertex.vs","./Shaders/cubeFragment.fs");
-	GLuint ppShader = LoadShaders("./Shaders/quad.vs","./Shaders/quad.fs");
 
 	KOK_WindowManager windowTester;
 
@@ -136,13 +133,12 @@ int main()
 	KOK_Actor * testSlider = windowTester.AddWidget("Shader Tester", "MySlider", SLIDER, 1.0f, 0.0f, true);
 
 	//structs for holding FBO data
-	LightProcessData * lightData = new LightProcessData(WINDOW_WIDTH, WINDOW_HEIGHT);
 	TextProcessData * textData = new TextProcessData(WINDOW_WIDTH, WINDOW_HEIGHT);
 	ParticleProcessData * particleData = new ParticleProcessData();
-	DeferredLightingData * deferredData = new DeferredLightingData(WINDOW_WIDTH, WINDOW_HEIGHT);
-	SSAOData * ssaoData = new SSAOData(WINDOW_WIDTH, WINDOW_HEIGHT);
-	ShadowData * shadowData = new ShadowData(WINDOW_WIDTH, WINDOW_HEIGHT);
-	AAProcessData * aaData = new AAProcessData(MSAA, 2, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	KOK_RenderProcess * renderProcess = new KOK_RenderProcess(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	renderProcess->AddModel("spider0", glm::vec3(3.2f, -0.4f, -1.0f), glm::vec3(0.9f), glm::vec3(0.1f,-0.15, 3.14f), glm::vec3(0));
 
 	float startTime = glfwGetTime();
 
@@ -151,21 +147,6 @@ int main()
 
 	//skybox texture
 	KOK_SkyBox * skyBox = new KOK_SkyBox("./Textures/CubeMaps/Field/");
-
-
-	//splash screen buffers
-	GLuint splashBuffer0 = KOK_Imager::BlankPNG(WINDOW_WIDTH, WINDOW_HEIGHT);
-	GLuint splashBuffer1 = KOK_Imager::BlankPNG(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-	//quad meshes
-	KOK_Mesh quadMesh = KOK_Model::GenerateQuad();
-	KOK_Mesh * quad = &quadMesh;
-
-	KOK_Model * sphere0 = new KOK_Model("spider0");
-	sphere0->SetPosition(glm::vec3(3.2f, -0.4f, -1.0f));
-	sphere0->SetScale(glm::vec3(0.9f));
-	sphere0->SetEulerOrientation(0.1f,-0.15, -0.5f);
-	sphere0->SetStatic(true);
 
 
 	KOK_TextManager * textManager = new KOK_TextManager("Fonts/DejaVuSans.ttf", WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -206,28 +187,9 @@ int main()
 		office.Update(MARCH);
 		windowTester.UpdateGUI();
 
-		glBindFramebuffer(GL_FRAMEBUFFER, deferredData->FBO);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glViewport(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
-
-		//glEnable(GL_STENCIL_TEST);
-		glEnable(GL_TEXTURE_2D);
-		glDisable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc (GL_LESS);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		glCullFace(GL_CCW);
-		glPolygonMode( GL_FRONT, GL_FILL );
-
-		glUseProgram(deferredData->shader);
-
-		sphere0->Draw(deferredData->shader, projection, camera->GetView());
-
 		float glossValue = (float)stoi(testLabel->label) / 100.0f;
 
-		DrawScreenQuad(quad, lightData, deferredData, ssaoData, shadowData, skyBox,
-			projection, camera, textManager, ppShader, cubeShader, aaData);
+		renderProcess->DrawScreenQuad(projection, camera, skyBox);
 
 		if ( GLFW_PRESS == glfwGetKey( window, GLFW_KEY_ESCAPE ) )
 		{

@@ -8,43 +8,24 @@ out vec4 color;
 in vec2 TexCoords;
 
 //input textures from gBuffer
-uniform sampler2D tex_ssao;
 uniform sampler2D tex_lighting;
 uniform sampler2D tex_depth;
 
 //bloom input for first half
 uniform sampler2D tex_bloomH;
 
+vec3 Gamma(vec3 scrColor)
+{
+	return pow(scrColor, vec3(1.0 / 2.2));
+
+}
+
 vec3 ReinHard(float exposure, vec3 hdrColor)
 {
 	// reinhard tone mapping
 	vec3 mapped = vec3(1.0) - exp(-hdrColor * exposure);
 	// gamma correction
-	return mapped;//pow(mapped, vec3(1.0 / 2.2));
-
-}
-
-//simple blur function
-float Blur(sampler2D tex, int kernelSize)
-{
-	vec2 texelSize = 1.0 / vec2(textureSize(tex, 0));
-	float result = 0.0;
-
-	for (int x = -kernelSize/2; x < kernelSize/2; x++)
-	{
-		for(int y = -kernelSize/2; y < kernelSize/2; y++)
-		{
-			vec2 offset = vec2(float(x), float(y)) * texelSize;
-			result += texture(tex, TexCoords + offset).r;
-		}
-	}
-
-	return result / (kernelSize * kernelSize);
-}
-
-vec3 Gamma(vec3 scrColor)
-{
-	return pow(scrColor, vec3(1.0 / 2.2));
+	return pow(mapped, vec3(1.0 / 1.6));
 
 }
 
@@ -72,10 +53,7 @@ void main()
   //vec3 ssao = texture(tex_ssao, TexCoords).rgb;
 	vec4 lighting = vec4(blurV() * 2.0f, 0.0) + texture(tex_lighting, TexCoords);
 
-	vec3 ambient = vec3(Blur(tex_ssao, 4) * lighting.a) * 0.1;
-
-
-  color = vec4(ReinHard(1.8, lighting.rgb + ambient), 1.0f);
+  color = vec4(ReinHard(2.0, lighting.rgb), 1.0f);
 	//color = vec4(Blur(tex_ssao, 4), 0.0, 0.0, 1.0);
 	gl_FragDepth = 1.0 - texture(tex_depth, TexCoords).r;
 }

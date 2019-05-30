@@ -105,6 +105,8 @@ shader.h
 KOK_GRAPHICS/src/shader.h
 KOK_Camera.h
 KOK_GRAPHICS/src/KOK_Camera.h
+KOK_Actor.h
+KOK_GRAPHICS/src/KOK_Actor.h
 string
 -
 

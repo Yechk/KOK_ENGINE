@@ -33,6 +33,14 @@ void KOK_Model::InitTransforms()
 	SetEulerRotation(0.0f,0.0f,0.0f);
 }
 
+void KOK_Model::InitTransforms(glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation)
+{
+	_position = position;
+	_scale = scale;
+	_orientation = glm::toQuat( glm::orientate3( orientation ) );
+	SetEulerRotation(rotation.x, rotation.y, rotation.z);
+}
+
 void KOK_Model::SetStatic(bool isStatic)
 {
 	for (GLint i = 0; i < meshes.size(); i++)
@@ -45,6 +53,12 @@ void KOK_Model::SetStatic(bool isStatic)
 KOK_Model::KOK_Model(string path)
 {
 	InitTransforms();
+	LoadModel(path);
+}
+
+KOK_Model::KOK_Model(string path, glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation)
+{
+	InitTransforms(position, scale, orientation, rotation);
 	LoadModel(path);
 }
 
@@ -216,16 +230,16 @@ KOK_Mesh KOK_Model::ProcessMesh(aiMesh * mesh, const aiScene * scene)
 	bool success = false;
 
 	//diffuse
-	GLuint diffuse = KOK_Imager::LoadPNG(texturePath + "Diffuse.png", true, success);
+	GLuint diffuse = KOK_Imager::LoadPNG(texturePath + "Diffuse.png", true, false, success);
 
 	//normal
-	GLuint normal = KOK_Imager::LoadPNG(texturePath + "Normal.png", false, success);
+	GLuint normal = KOK_Imager::LoadPNG(texturePath + "Normal.png", false, false, success);
 
 	//emissiveAmbient
-	GLuint emissiveAmbient = KOK_Imager::LoadPNG(texturePath + "EmissiveAmbient.png", false, success);
+	GLuint emissiveAmbient = KOK_Imager::LoadPNG(texturePath + "EmissiveAmbient.png", true, false, success);
 
 	//specularGloss
-	GLuint specularGloss = KOK_Imager::LoadPNG(texturePath + "SpecularGloss.png", false, success);
+	GLuint specularGloss = KOK_Imager::LoadPNG(texturePath + "SpecularGloss.png", true, false, success);
 
 
 	KOK_Mesh newMesh = KOK_Mesh(vertices, indices, _position, _scale, _rotation * _orientation);

@@ -41,7 +41,7 @@ namespace KOK_Graphics
 		glfwTerminate();
 	}
 
-	GLFWwindow* InitWindow(const int& width, const int& height, const char * name, bool fullScreen)
+	GLFWwindow* InitWindow(int width, int height, const char * name, bool fullScreen)
 	{
 		if (!glfwInit())
 		{
@@ -72,18 +72,68 @@ namespace KOK_Graphics
 		return window;
 	}
 
-	void DrawScreenQuad(KOK_Mesh *quad, LightProcessData * lightData,
-		DeferredLightingData * deferredData, SSAOData * ssaoData,
-		ShadowData * shadowData, KOK_SkyBox * cubeMap, glm::mat4 projection,
-		KOK_Camera * camera, KOK_TextManager * tManager,
-		GLuint ppShader, GLuint cubeShader, AAProcessData * aaData)
+	void KOK_RenderProcess::DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap)
 	{
-		glBindFramebuffer(GL_FRAMEBUFFER, lightData->FBO);
-		glClear( GL_COLOR_BUFFER_BIT );
-		glViewport(0,0, lightData->screenWidth, lightData->screenHeight);
+		int screenWidth = _lightData.screenWidth;
+		int screenHeight = _lightData.screenHeight;
 
-		//draw the lights first
-		GLuint lightShader = lightData->shader;
+
+		//draw models
+		glBindFramebuffer(GL_FRAMEBUFFER, _deferredData.FBO);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glViewport(0,0,screenWidth,screenHeight);
+
+		//glEnable(GL_STENCIL_TEST);
+		glEnable(GL_TEXTURE_2D);
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc (GL_LESS);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glCullFace(GL_CCW);
+		glPolygonMode( GL_FRONT, GL_FILL );
+
+		glUseProgram(_deferredData.shader);
+
+		//loop through models and draw
+		for(GLuint i = 0; i < models.size(); i++)
+		{
+			models[i].Draw(_deferredData.shader, projection, camera->GetView());
+		}
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		DeferredLightingData::Textures textures = _deferredData.textures;
+
+		//calculate ssao
+		glBindFramebuffer(GL_FRAMEBUFFER, _ssaoData.FBO);
+		glClear( GL_COLOR_BUFFER_BIT);
+
+		GLuint ssaoShader = _ssaoData.shader;
+		glUseProgram(ssaoShader);
+
+
+		SetUniformTexture(ssaoShader,"gNoise", 0);
+		SetUniformTexture(ssaoShader,"ssaoPosition", 1);
+		SetUniformTexture(ssaoShader,"ssaoNormal", 2);
+		SetUniformMat4(ssaoShader, "projection", projection);
+		SetUniformVec2(ssaoShader, "noiseScale", screenWidth, screenHeight);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, _ssaoData.noise);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, textures.ssaoPosition);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, textures.ssaoNormal);
+
+		_quad.Draw();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, _lightData.FBO);
+		glClear( GL_COLOR_BUFFER_BIT );
+		glViewport(0,0, screenWidth, screenHeight);
+
+		//draw the lights
+		GLuint lightShader = _lightData.shader;
 		glm::vec3 camPosition = camera->GetPosition();
 		glUseProgram(lightShader);
 
@@ -95,86 +145,58 @@ namespace KOK_Graphics
 		SetUniformTexture(lightShader,"radiance", 5);
 		SetUniformTexture(lightShader, "irradiance", 6);
 		SetUniformTexture(lightShader,"shadowTex", 7);
+		SetUniformTexture(lightShader,"tex_ssao", 8);
 		SetUniformVec3(lightShader, "viewPos", camPosition.x, camPosition.y, camPosition.z);
-		SetUniformMat4(lightShader, "lightSpaceMatrix", shadowData->lightSpaceMatrix);
+		SetUniformMat4(lightShader, "lightSpaceMatrix", _shadowData.lightSpaceMatrix);
 
 
 
-		lightData->DrawPointLights();
+		_lightData.DrawPointLights();
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, deferredData->textures.position);
+		glBindTexture(GL_TEXTURE_2D, textures.position);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, deferredData->textures.normal);
+		glBindTexture(GL_TEXTURE_2D, textures.normal);
 		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, deferredData->textures.color);
+		glBindTexture(GL_TEXTURE_2D, textures.color);
 		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, deferredData->textures.emissiveAmbient);
+		glBindTexture(GL_TEXTURE_2D, textures.emissiveAmbient);
 		glActiveTexture(GL_TEXTURE4);
-		glBindTexture(GL_TEXTURE_2D, deferredData->textures.specularGloss);
+		glBindTexture(GL_TEXTURE_2D, textures.specularGloss);
 		glActiveTexture(GL_TEXTURE5);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->GetRadiance());
 		glActiveTexture(GL_TEXTURE6);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->GetIrradiance());
 		glActiveTexture(GL_TEXTURE7);
-		glBindTexture(GL_TEXTURE_2D, shadowData->depthMapTex);
+		glBindTexture(GL_TEXTURE_2D, _shadowData.depthMapTex);
+		glActiveTexture(GL_TEXTURE8);
+		glBindTexture(GL_TEXTURE_2D, _ssaoData.output);
 
-		quad->Draw();
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		//calculate ssao
-		glBindFramebuffer(GL_FRAMEBUFFER, ssaoData->FBO);
-		glClear( GL_COLOR_BUFFER_BIT);
-
-		GLuint ssaoShader = ssaoData->shader;
-		glUseProgram(ssaoShader);
-
-
-		SetUniformTexture(ssaoShader,"gNoise", 0);
-		SetUniformTexture(ssaoShader,"ssaoPosition", 1);
-		SetUniformTexture(ssaoShader,"ssaoNormal", 2);
-		SetUniformMat4(ssaoShader, "projection", projection);
-		SetUniformVec2(ssaoShader, "noiseScale", lightData->screenWidth, lightData->screenHeight);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, ssaoData->noise);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, deferredData->textures.ssaoPosition);
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, deferredData->textures.ssaoNormal);
-
-		quad->Draw();
+		_quad.Draw();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//calculate final process
 
-		if(aaData != NULL)
-		{
-			glBindFramebuffer(GL_FRAMEBUFFER, aaData->FBO);
-			glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		}
+		glBindFramebuffer(GL_FRAMEBUFFER, _aaData.FBO);
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glUseProgram(ppShader);
+		glUseProgram(_ppShader);
 
 
-		SetUniformTexture(ppShader,"tex_ssao", 0);
-		SetUniformTexture(ppShader,"tex_lighting", 1);
-		SetUniformTexture(ppShader,"tex_bloomH", 2);
-		SetUniformTexture(ppShader,"tex_depth", 3);
+		SetUniformTexture(_ppShader,"tex_lighting", 0);
+		SetUniformTexture(_ppShader,"tex_bloomH", 1);
+		SetUniformTexture(_ppShader,"tex_depth", 2);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, ssaoData->output);
+		glBindTexture(GL_TEXTURE_2D, _lightData.color);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, lightData->color);
+		glBindTexture(GL_TEXTURE_2D, _lightData.bloom);
 		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, lightData->bloom);
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, deferredData->textures.depth);
+		glBindTexture(GL_TEXTURE_2D, textures.depth);
 
-		quad->Draw();
+		_quad.Draw();
 
 		//draw particle system./
 		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -188,21 +210,9 @@ namespace KOK_Graphics
 		//put particles hereeeee
 
 		//skybox
-		cubeMap->Draw(cubeShader, projection, camera->GetView());
+		//cubeMap->Draw(_skyBoxShader, projection, camera->GetView());
 
-		if(aaData != NULL)
-		{
-			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-			glBindFramebuffer(GL_READ_FRAMEBUFFER, aaData->FBO);
-
-			glReadBuffer(GL_COLOR_ATTACHMENT0);
-			glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-			glBlitFramebuffer(0, 0, lightData->screenWidth, lightData->screenHeight, 0, 0,
-				lightData->screenWidth, lightData->screenHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		}
+		_aaData.Draw();
 
 	}
 }
