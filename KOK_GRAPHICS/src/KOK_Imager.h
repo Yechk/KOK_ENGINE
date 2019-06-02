@@ -15,7 +15,8 @@ namespace KOK_Imager
 
 GLuint LoadPNG(string path, bool gamma, bool compress, bool &success);
 
-GLuint LoadCubeMap(string path);
+void LoadCubeMap(string path, string sidesNames[6], GLuint lod, GLuint cubeMap, bool usesMips);
+void LoadEnvironment(string path, GLuint& sky, GLuint& irradiance, GLuint& radiance);
 
 GLuint BlankPNG(GLuint width, GLuint height);
 GLuint BlankPNG16(GLuint width, GLuint height);

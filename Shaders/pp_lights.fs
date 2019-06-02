@@ -42,6 +42,9 @@ const int MAX_LIGHTS = 10;
 float litByEnvironment = 1.0;
 uniform int numLights;
 
+uniform float specTest;
+uniform float glossTest;
+
 
 //light information in uniform buffer binding 2
 layout (std140, binding = 2) uniform lightData
@@ -88,7 +91,7 @@ float attenuation(float dist, float radius, float power)
   return att;
 }
 
-float ggxSpecular(vec3 N, vec3 V, vec3 L, float roughness, float F0)
+vec2 ggxSpecular(vec3 N, vec3 V, vec3 L, float roughness, float F0)
 {
   float alpha = roughness*roughness;
   vec3 H = normalize(L + V);
@@ -101,7 +104,7 @@ float ggxSpecular(vec3 N, vec3 V, vec3 L, float roughness, float F0)
   float F = F0 + (1.0 - F0) * pow(1.0 - dotLH, 5.0);
   float k = 0.5 * alpha;
   float k2 = k * k;
-  return max(0.001, dotNL * D * F / (dotLH*dotLH*(1.0-k2)+k2));
+  return vec2(max(0.001, dotNL * D * F / (dotLH*dotLH*(1.0-k2)+k2)), F);
 }
 
 vec3 SpecLight(vec3 direction, vec3 normal, vec3 viewDir, vec3 sint, vec3 color)
@@ -170,23 +173,20 @@ vec3 DirectionalLight(vec3 normal, vec3 direction, vec3 sint, vec3 viewDir, vec3
 {
 
 	float wCalc = 1.0 - w;
-	//float wAdjust = Squish(wCalc, 0.0, 1.0, 0.0, 0.3);
-	//float absorption = Squish(w, 0.0, 1.0, 0.4, 1.0);
-  //float intensity =
-	//	(dot(normal,direction) + wAdjust) / (1.0 + wAdjust); //TODO: bake wrap lighting to textures
+	float wAdjust = Squish(wCalc, 0.0, 1.0, 0.0, 0.3);
+  float intensity =
+		(dot(normal,direction) + wAdjust) / (1.0 + wAdjust); //TODO: bake wrap lighting to textures
 
-	vec3 specular = sint * ggxSpecular(normal, viewDir, direction, max(0.17, wCalc), 0.1);
-	float reflectPower = pow(w, 2.0);
-	vec3 reflectAmount = mix((diffuse * envLight) + specular, env, reflectPower);
 
-	//vec3 diff = absorption * intensity * dirColor;
-	vec3 envColor = reflectAmount;
+	vec3 albedo = diffuse;
 
-	//diff = mix(diff, envColor, litByEnvironment);
+	vec2 ggx = ggxSpecular(normal, viewDir, direction, wCalc, 0.5);
+
+	vec3 reflectAmount = (wCalc * albedo / 3.14159 + (env * sint * ggx.y)) * envLight;
 
 	float shade = ShadowValue(pos, normal, direction);
 
-	return envColor*shade;
+	return reflectAmount*shade;
 }
 
 vec3 blurH()
@@ -223,14 +223,14 @@ void main()
 
 	w = specularGloss.a;
 
-	vec3 env = texture(radiance, rVector).rgb;
+	vec3 env = textureLod(radiance, rVector, (1.0 - w) * 6.0).rgb;
 	vec3 envLight = texture(irradiance, normal).rgb;
 
   vec3 dl = DirectionalLight(normal, dirDirection, specularGloss.rgb, viewDir, position, env, envLight, diffuse.rgb);
   vec3 pl = LightLevel(normal, position, viewDir, specularGloss.rgb);
   //float fg = attenuation(distance(viewPos, position), 20.0, 2.0);
 
-	vec3 ambient = vec3(0.05) * Blur(tex_ssao, 4) * emissiveAmbient.a * diffuse.rgb;
+	vec3 ambient = 0.1 * Blur(tex_ssao, 4) * emissiveAmbient.a * diffuse.rgb;
 
   vec3 lt = dl + pl;
   color = vec4(lt + emissiveAmbient.rgb + ambient, 1.0);

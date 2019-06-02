@@ -25,7 +25,7 @@ vec3 ReinHard(float exposure, vec3 hdrColor)
 	// reinhard tone mapping
 	vec3 mapped = vec3(1.0) - exp(-hdrColor * exposure);
 	// gamma correction
-	return pow(mapped, vec3(1.0 / 1.6));
+	return pow(mapped, vec3(1.0 / 2.0));
 
 }
 

@@ -34,6 +34,8 @@ namespace KOK_Graphics
 
 		glEnable (GL_DEPTH_TEST);
 		glDepthFunc (GL_LESS);
+
+		glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 	}
 
 	bool KillGL()
@@ -72,7 +74,7 @@ namespace KOK_Graphics
 		return window;
 	}
 
-	void KOK_RenderProcess::DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap)
+	void KOK_RenderProcess::DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap, float glossTest, float specTest)
 	{
 		int screenWidth = _lightData.screenWidth;
 		int screenHeight = _lightData.screenHeight;
@@ -149,6 +151,9 @@ namespace KOK_Graphics
 		SetUniformVec3(lightShader, "viewPos", camPosition.x, camPosition.y, camPosition.z);
 		SetUniformMat4(lightShader, "lightSpaceMatrix", _shadowData.lightSpaceMatrix);
 
+		SetUniformFloat(lightShader, "specTest", specTest);
+		SetUniformFloat(lightShader, "glossTest", glossTest);
+
 
 
 		_lightData.DrawPointLights();
@@ -210,7 +215,7 @@ namespace KOK_Graphics
 		//put particles hereeeee
 
 		//skybox
-		//cubeMap->Draw(_skyBoxShader, projection, camera->GetView());
+		cubeMap->Draw(_skyBoxShader, projection, camera->GetView());
 
 		_aaData.Draw();
 

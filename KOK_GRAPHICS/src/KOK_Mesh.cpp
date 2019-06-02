@@ -133,9 +133,7 @@ void KOK_Mesh::SetTexScale(const float& scale)
 
 KOK_SkyBox::KOK_SkyBox(string path)
 {
-	_texture = KOK_Imager::LoadCubeMap(path);
-	_radiance = KOK_Imager::LoadCubeMap(path+"Radiance/");
-	_irradiance = KOK_Imager::LoadCubeMap(path+"Irradiance/");
+	KOK_Imager::LoadEnvironment(path, _texture, _irradiance, _radiance);
 
 	glGenVertexArrays(1, &_VAO);
 	glGenBuffers(1, &_VBO);

@@ -129,8 +129,11 @@ int main()
 	InitWindowTextures();
 	windowTester.CreateWindow(1280.0f, 360.0f, 512.0f, 360.0f, true, "Shader Tester");
 	KOK_Actor * testLabel = windowTester.AddWidget("Shader Tester", "MOUSE POSITION:", LABEL, 2.0f, 0.0f, true);
+	KOK_Actor * testLabel2 = windowTester.AddWidget("Shader Tester", "MOUSE POSITION:", LABEL, 2.0f, 1.0f, true);
 	windowTester.AddWidget("Shader Tester", "Gloss", LABEL, 0.0f, 0.0f, true);
+	windowTester.AddWidget("Shader Tester", "Specular", LABEL, 0.0f, 1.0f, true);
 	KOK_Actor * testSlider = windowTester.AddWidget("Shader Tester", "MySlider", SLIDER, 1.0f, 0.0f, true);
+	KOK_Actor * testSlider2 = windowTester.AddWidget("Shader Tester", "MySlider", SLIDER, 1.0f, 1.0f, true);
 
 	//structs for holding FBO data
 	TextProcessData * textData = new TextProcessData(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -138,7 +141,7 @@ int main()
 
 	KOK_RenderProcess * renderProcess = new KOK_RenderProcess(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	renderProcess->AddModel("spider0", glm::vec3(3.2f, -0.4f, -1.0f), glm::vec3(0.9f), glm::vec3(0.1f,-0.15, 3.14f), glm::vec3(0));
+	renderProcess->AddModel("spider0", glm::vec3(3.2f, -0.5f, -1.0f), glm::vec3(0.9f), glm::vec3(0.1f,-0.15, -0.5f), glm::vec3(0));
 
 	float startTime = glfwGetTime();
 
@@ -179,6 +182,7 @@ int main()
 		glfwGetCursorPos(window, &posX, &posY);
 
 		office.QueueMessage(5, 0, testSlider, testLabel, EXPRESS);
+		office.QueueMessage(5, 0, testSlider2, testLabel2, EXPRESS);
 
 
 		//update shit
@@ -188,8 +192,9 @@ int main()
 		windowTester.UpdateGUI();
 
 		float glossValue = (float)stoi(testLabel->label) / 100.0f;
+		float specValue = (float)stoi(testLabel2->label) / 100.0f;
 
-		renderProcess->DrawScreenQuad(projection, camera, skyBox);
+		renderProcess->DrawScreenQuad(projection, camera, skyBox, glossValue, specValue);
 
 		if ( GLFW_PRESS == glfwGetKey( window, GLFW_KEY_ESCAPE ) )
 		{

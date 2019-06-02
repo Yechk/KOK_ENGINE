@@ -487,7 +487,7 @@ namespace KOK_Graphics
 	  void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
 	  void Draw() {};
 
-		void DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap);
+		void DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap, float glossTest, float specTest);
 
 		KOK_Model * AddModel(string name)
 		{
