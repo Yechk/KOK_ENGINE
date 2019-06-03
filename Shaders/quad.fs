@@ -25,7 +25,7 @@ vec3 ReinHard(float exposure, vec3 hdrColor)
 	// reinhard tone mapping
 	vec3 mapped = vec3(1.0) - exp(-hdrColor * exposure);
 	// gamma correction
-	return pow(mapped, vec3(1.0 / 2.0));
+	return pow(mapped, vec3(1.0 / 2.2));
 
 }
 
@@ -53,7 +53,9 @@ void main()
   //vec3 ssao = texture(tex_ssao, TexCoords).rgb;
 	vec4 lighting = vec4(blurV() * 2.0f, 0.0) + texture(tex_lighting, TexCoords);
 
-  color = vec4(ReinHard(2.0, lighting.rgb), 1.0f);
+
+
+  color = vec4(ReinHard(2.5, lighting.rgb) * lighting.a, 1.0f);
 	//color = vec4(Blur(tex_ssao, 4), 0.0, 0.0, 1.0);
 	gl_FragDepth = 1.0 - texture(tex_depth, TexCoords).r;
 }

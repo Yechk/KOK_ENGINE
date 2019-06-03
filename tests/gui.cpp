@@ -141,7 +141,8 @@ int main()
 
 	KOK_RenderProcess * renderProcess = new KOK_RenderProcess(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	renderProcess->AddModel("spider0", glm::vec3(3.2f, -0.5f, -1.0f), glm::vec3(0.9f), glm::vec3(0.1f,-0.15, -0.5f), glm::vec3(0));
+	renderProcess->AddModel("belair", glm::vec3(2.5f, 0.5f, 1.5f), glm::vec3(0.5f), glm::vec3(0.1f,-0.05f, 0.0f), glm::vec3(0));
+	renderProcess->AddModel("spider0", glm::vec3(5.0f, -0.5f, 1.0f), glm::vec3(0.5f), glm::vec3(0.1f,-0.05f, -0.1f), glm::vec3(0));
 
 	float startTime = glfwGetTime();
 

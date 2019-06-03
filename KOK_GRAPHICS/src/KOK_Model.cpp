@@ -230,16 +230,16 @@ KOK_Mesh KOK_Model::ProcessMesh(aiMesh * mesh, const aiScene * scene)
 	bool success = false;
 
 	//diffuse
-	GLuint diffuse = KOK_Imager::LoadPNG(texturePath + "Diffuse.png", true, false, success);
+	GLuint diffuse = KOK_Imager::LoadPNG(texturePath + "Diffuse.png", false, false, success);
 
 	//normal
 	GLuint normal = KOK_Imager::LoadPNG(texturePath + "Normal.png", false, false, success);
 
 	//emissiveAmbient
-	GLuint emissiveAmbient = KOK_Imager::LoadPNG(texturePath + "EmissiveAmbient.png", true, false, success);
+	GLuint emissiveAmbient = KOK_Imager::LoadPNG(texturePath + "EmissiveAmbient.png", false, false, success);
 
 	//specularGloss
-	GLuint specularGloss = KOK_Imager::LoadPNG(texturePath + "SpecularGloss.png", true, false, success);
+	GLuint specularGloss = KOK_Imager::LoadPNG(texturePath + "SpecularGloss.png", false, false, success);
 
 
 	KOK_Mesh newMesh = KOK_Mesh(vertices, indices, _position, _scale, _rotation * _orientation);
