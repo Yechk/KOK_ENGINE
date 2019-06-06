@@ -12,11 +12,13 @@ using namespace std;
 #define STBI_ONLY_PNG
 #define STBI_ONLY_TGA
 #define STB_IMAGE_IMPLEMENTAION
+#define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include "stb_image.h"
+#include "stb_image_resize.h"
 #include <stdio.h>
 #include <iostream>
 
-namespace KOK_Imager
+namespace KOK_Graphics
 {
 	void LoadCubeMap(string path, string sidesNames[6], GLuint lod, GLuint cubeMap, bool usesMips)
 	{
@@ -170,18 +172,45 @@ namespace KOK_Imager
 
 	}
 
-	GLuint LoadPNG(string path, bool gamma, bool compress, bool &success)
+	GLuint LoadPNG(string path, TextureLoadFlags detail, bool &success)
 	{
 		cout << "LOADING TEXTURE : " + path << endl;
-
-		//load defaults
-		//DefaultTexture defaultTex = DefaultTexture();
 
 		GLuint tex_2d;
 		glGenTextures(1, &tex_2d);
 		glBindTexture(GL_TEXTURE_2D, tex_2d);
-		int width, height, nrChannels;
-		unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha);
+		int width, height, newWidth, newHeight, nrChannels;
+
+		unsigned char *data;
+		unsigned char *loadData = stbi_load(path.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha);
+
+		if(detail & TEX_DETAIL_HIGH)
+		{
+			newWidth = width;
+			newHeight = height;
+
+			data = loadData;
+		}
+
+		if(detail & TEX_DETAIL_MED)
+		{
+			newWidth = width / 2;
+			newHeight = height / 2;
+
+			data = (unsigned char*) malloc(newWidth * newHeight * nrChannels);
+			stbir_resize(loadData, width, height, 0, data, newWidth, newHeight, 0, STBIR_TYPE_UINT8, nrChannels, 0, 0, STBIR_EDGE_CLAMP, STBIR_EDGE_CLAMP,
+				STBIR_FILTER_DEFAULT, STBIR_FILTER_DEFAULT, STBIR_COLORSPACE_SRGB, NULL);
+		};
+
+		if(detail & TEX_DETAIL_LOW)
+		{
+			newWidth = width / 4;
+			newHeight = height / 4;
+
+			data = (unsigned char*) malloc(newWidth * newHeight * nrChannels);
+			stbir_resize(loadData, width, height, 0, data, newWidth, newHeight, 0, STBIR_TYPE_UINT8, nrChannels, 0, 0, STBIR_EDGE_CLAMP, STBIR_EDGE_CLAMP,
+				STBIR_FILTER_DEFAULT, STBIR_FILTER_DEFAULT, STBIR_COLORSPACE_SRGB, NULL);
+		};
 
 		glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -192,12 +221,19 @@ namespace KOK_Imager
 		{
 			GLenum internalFormat = GL_RGBA8;
 
-			if(gamma) internalFormat = GL_SRGB8_ALPHA8;
-			if(compress) internalFormat = GL_COMPRESSED_RGBA_BPTC_UNORM;
-			if(compress && gamma) internalFormat = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM;
+			if(detail & TEX_GAMMA_CORRECT) internalFormat = GL_SRGB8_ALPHA8;
+			if(detail & TEX_COMPRESS) {internalFormat = GL_COMPRESSED_RGBA_BPTC_UNORM; cout << "ehhhhh" << endl;};
+			if(detail & (TEX_COMPRESS | TEX_GAMMA_CORRECT)) internalFormat = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM;
 
-			glTexStorage2D(GL_TEXTURE_2D, 3, internalFormat, width, height);
-			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			//TODO: for compression separate alpha channel to seperate texture
+
+		  if(detail & TEX_4BITLOAD)
+			{
+				internalFormat = GL_RGBA4;
+			}
+
+			glTexStorage2D(GL_TEXTURE_2D, 5, internalFormat, newWidth, newHeight);
+			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, newWidth, newHeight, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
 			glGenerateMipmap(GL_TEXTURE_2D);
 			cout << "LOADED: " << tex_2d << endl;
@@ -207,11 +243,11 @@ namespace KOK_Imager
 		{
 			cout << "FUCKING IMAGE LOAD ERROR" << endl;
 			success = false;
-			//stbi_image_free(data);
-			//return defaultTex.texture;
+
 		}
 
-		stbi_image_free(data);
+		if(sizeof data != sizeof loadData) stbi_image_free(data);
+		stbi_image_free(loadData);
 
 		return tex_2d;
 	}

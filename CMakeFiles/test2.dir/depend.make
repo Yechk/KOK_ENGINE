@@ -18,4 +18,6 @@ CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/KOK_TextConsole.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/KOK_TextManager.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/KOK_WindowManager.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/shader.h
+CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/stb_image.h
+CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/stb_image_resize.h
 

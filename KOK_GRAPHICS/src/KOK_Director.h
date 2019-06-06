@@ -84,8 +84,8 @@ namespace KOK_Graphics
 				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 				glBindFramebuffer(GL_READ_FRAMEBUFFER, FBO);
 
-				glReadBuffer(GL_COLOR_ATTACHMENT0);
-				glDrawBuffer(GL_COLOR_ATTACHMENT0);
+				//glReadBuffer(GL_COLOR_ATTACHMENT0);
+				//glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
 				glBlitFramebuffer(0, 0, screenWidth, screenHeight, 0, 0,
 					screenWidth, screenHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
@@ -109,7 +109,7 @@ namespace KOK_Graphics
 			{
 				bool success = false;
 				shader = LoadShaders("./Shaders/quad.vs","./Shaders/pp_ssao.fs");
-				noise = KOK_Imager::LoadPNG("./Textures/noise.png", false, false, success);
+				noise = LoadPNG("./Textures/noise.png", TEX_DEFAULT, success);
 
 				//generate frame buffer and texture
 				glGenFramebuffers(1, &FBO);
@@ -162,7 +162,7 @@ namespace KOK_Graphics
 			// - color buffer for lighting calculation (16F for HDR light data)
 			glGenTextures(1, &color);
 			glBindTexture(GL_TEXTURE_2D, color);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, color, 0);
@@ -212,7 +212,7 @@ namespace KOK_Graphics
 			for (int i = 0; i < pointLights.size(); i++)
 			{
 				pointLights[i]->GetPointLightInfo(active, radius, power, color);
-				position = pointLights[i]->Position();
+				position = pointLights[i]->GetPosition();
 
 			  if (!active) continue;
 				int off = i * 48;
@@ -327,7 +327,7 @@ namespace KOK_Graphics
 				// - SSAO position color buffer
 				glGenTextures(1, &textures.ssaoPosition);
 				glBindTexture(GL_TEXTURE_2D, textures.ssaoPosition);
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, textures.ssaoPosition, 0);
@@ -464,9 +464,11 @@ namespace KOK_Graphics
 		GLuint _ppShader;
 		GLuint _skyBoxShader;
 
+		TextureLoadFlags _defaultTextureFlags;
+
 		//vector to store all models to be drawn
 		vector<KOK_Model> models;
-
+//
 	public:
 		KOK_RenderProcess(int WINDOW_WIDTH, int WINDOW_HEIGHT) //default values
 		{
@@ -481,6 +483,8 @@ namespace KOK_Graphics
 			_skyBoxShader = LoadShaders("./Shaders/cubeVertex.vs","./Shaders/cubeFragment.fs");
 
 			_quad = KOK_Model::GenerateQuad();
+
+			_defaultTextureFlags = (TEX_DETAIL_LOW);
 		}
 
 		void Update(double time) {};
@@ -491,13 +495,13 @@ namespace KOK_Graphics
 
 		KOK_Model * AddModel(string name)
 		{
-			models.push_back(KOK_Model(name));
+			models.push_back(KOK_Model(name, _defaultTextureFlags));
 			return &models.back();
 		}
 
 		KOK_Model * AddModel(string name, glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation)
 		{
-			models.push_back(KOK_Model(name, position, scale, orientation, rotation));
+			models.push_back(KOK_Model(name, position, scale, orientation, rotation, _defaultTextureFlags));
 			return &models.back();
 		}
 	};

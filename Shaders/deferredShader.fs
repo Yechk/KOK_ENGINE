@@ -46,9 +46,4 @@ void main()
 
 	ssNormal = vec4(normalize(ssaoNormal), 1.0);
 	ssPosition = vec4(ssaoPosition, 1.0);
-
-
-
-
-
 }

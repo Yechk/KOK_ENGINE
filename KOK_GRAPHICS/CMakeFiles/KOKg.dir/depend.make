@@ -13,20 +13,27 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/KOK_Me
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/KOK_Model.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/KOK_TextManager.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/shader.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/stb_image.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/stb_image_resize.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: /usr/include/freetype2/freetype/config/ftheader.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: /usr/include/freetype2/ft2build.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/../KOK_CORE/src/KOK_Actor.h
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o: KOK_GRAPHICS/src/KOK_Imager.cpp
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o: KOK_GRAPHICS/src/KOK_Imager.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o: KOK_GRAPHICS/src/stb_image.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Imager.cpp.o: KOK_GRAPHICS/src/stb_image_resize.h
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o: KOK_GRAPHICS/src/KOK_Light.cpp
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o: KOK_GRAPHICS/src/KOK_Light.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Light.cpp.o: KOK_GRAPHICS/src/stb_image.h
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/src/KOK_Imager.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/src/KOK_Mesh.cpp
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/src/KOK_Mesh.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/src/shader.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/src/stb_image.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/src/stb_image_resize.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Mesh.cpp.o: KOK_GRAPHICS/../KOK_CORE/src/KOK_Actor.h
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/src/KOK_Imager.h
@@ -34,6 +41,8 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/src/KOK_Mesh.
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/src/KOK_Model.cpp
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/src/KOK_Model.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/src/shader.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/src/stb_image.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/src/stb_image_resize.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Model.cpp.o: KOK_GRAPHICS/../KOK_CORE/src/KOK_Actor.h
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_ParticleSystem.cpp.o: KOK_GRAPHICS/src/KOK_ParticleSystem.cpp
@@ -54,6 +63,8 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: KOK_GRAPHICS/src/KOK
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: KOK_GRAPHICS/src/KOK_TextConsole.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: KOK_GRAPHICS/src/KOK_TextManager.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: KOK_GRAPHICS/src/shader.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: KOK_GRAPHICS/src/stb_image.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: KOK_GRAPHICS/src/stb_image_resize.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: /usr/include/freetype2/freetype/config/ftheader.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextConsole.cpp.o: /usr/include/freetype2/ft2build.h
 
@@ -61,6 +72,8 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: KOK_GRAPHICS/src/KOK
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: KOK_GRAPHICS/src/KOK_TextManager.cpp
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: KOK_GRAPHICS/src/KOK_TextManager.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: KOK_GRAPHICS/src/shader.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: KOK_GRAPHICS/src/stb_image.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: KOK_GRAPHICS/src/stb_image_resize.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: /usr/include/freetype2/freetype/config/ftheader.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_TextManager.cpp.o: /usr/include/freetype2/ft2build.h
 
@@ -70,6 +83,8 @@ KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/src/K
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/src/KOK_WindowManager.cpp
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/src/KOK_WindowManager.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/src/shader.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/src/stb_image.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/src/stb_image_resize.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: /usr/include/freetype2/freetype/config/ftheader.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: /usr/include/freetype2/ft2build.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_WindowManager.cpp.o: KOK_GRAPHICS/../KOK_CORE/src/KOK_Actor.h

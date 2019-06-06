@@ -1,3 +1,4 @@
+
 #define GLM_ENABLE_EXPERIMENTAL
 
 #include <GL/glew.h>
@@ -42,7 +43,7 @@ namespace KOK_Graphics
 	{
 		glfwTerminate();
 	}
-
+//
 	GLFWwindow* InitWindow(int width, int height, const char * name, bool fullScreen)
 	{
 		if (!glfwInit())
@@ -85,15 +86,12 @@ namespace KOK_Graphics
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glViewport(0,0,screenWidth,screenHeight);
 
-		//glEnable(GL_STENCIL_TEST);
-		glEnable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc (GL_LESS);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
-		glCullFace(GL_CCW);
-		glPolygonMode( GL_FRONT, GL_FILL );
+		glFrontFace(GL_CCW);
 
 		glUseProgram(_deferredData.shader);
 

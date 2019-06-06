@@ -25,12 +25,17 @@
 #include "KOK_Message.h"
 #include "KOK_Actor.h"
 
+#include "stb_image.h"
+#include "stb_image_resize.h"
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
 #define SWITCH_TIMER 1.0f
 
+#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
+#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
 using namespace KOK_Graphics;
 
 //some color presets
@@ -92,8 +97,8 @@ class MyGUI : public KOK_Actor
 
 int main()
 {
-	const GLuint WINDOW_WIDTH = 1920;
-	const GLuint WINDOW_HEIGHT = 1080;
+	const GLuint WINDOW_WIDTH = 1280;
+	const GLuint WINDOW_HEIGHT = 720;
 	const std::string VERSION = "0.0 (test)";
 
 	KOK_Camera * camera = new KOK_Camera(glm::vec3(2.0f,0.5f,5.0f), glm::vec3(0.005f,0.0f,-0.01f));
@@ -116,7 +121,7 @@ int main()
 
 	//start up opengl
 	GLFWwindow * window;
-	window = InitWindow(WINDOW_WIDTH,WINDOW_HEIGHT,"KOK Animation Viewer", true);
+	window = InitWindow(WINDOW_WIDTH,WINDOW_HEIGHT,"KOK Animation Viewer",false);
 
 	//setup all default shaders
 
@@ -209,10 +214,24 @@ int main()
 		ss << currentFrames;
 		string str = "Current MS per frame: " + ss.str();
 
+		GLint total_mem_kb = 0;
+		glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX,
+		              &total_mem_kb);
+
+		GLint cur_avail_mem_kb = 0;
+		glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX,
+		              &cur_avail_mem_kb);
+
+		stringstream ssm;
+		ssm << (total_mem_kb - cur_avail_mem_kb) / 1024;
+		string strm = "GPU Memory Used: " + ssm.str() + "/2048MB";
+
+
 		//textManager->DrawSplash(1280.0f, 720.0f, splash_screen_test, splashBuffer0, splashBuffer1);
-		//textManager->DrawBox(520.0f, 570.0f, 520.0f, 160.0f, K_COLOR_GREY_LIGHT);
-		//textManager->DrawText("KOK ENGINE\nVERSION: " + VERSION,25.0f, 690.0f, 0.5f, K_COLOR_WHITE);
-		//textManager->DrawText(str, 25.0f, 620.0f, 0.5f, K_COLOR_WHITE);
+		textManager->DrawBox(520.0f, 570.0f, 520.0f, 160.0f, K_COLOR_GREY_LIGHT);
+		textManager->DrawText("KOK ENGINE\nVERSION: " + VERSION,25.0f, 690.0f, 0.5f, K_COLOR_WHITE);
+		textManager->DrawText(str, 25.0f, 620.0f, 0.5f, K_COLOR_WHITE);
+		textManager->DrawText(strm, 25.0, 580.0, 0.5f, K_COLOR_WHITE);
 
 		//windowTester.DrawGUI();
 

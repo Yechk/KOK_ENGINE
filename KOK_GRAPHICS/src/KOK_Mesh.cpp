@@ -14,164 +14,169 @@ using namespace std;
 
 #include "KOK_Imager.h"
 
-KOK_Mesh::KOK_Mesh(const vector<Vertex>& vertices, const vector<GLuint>& indices, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
-{
-	SetupMesh(vertices, indices);
-	_isStatic = false;
-	ComputeModelMatrix(position, scale, rotation);
-}
-
-KOK_Mesh::KOK_Mesh()
+namespace KOK_Graphics
 {
 
-}
+	KOK_Mesh::KOK_Mesh(vector<Vertex>& vertices, vector<GLuint>& indices, glm::vec3 position, glm::vec3 scale, glm::quat rotation)
+	{
+		SetupMesh(vertices, indices);
+		_isStatic = false;
+		ComputeModelMatrix(position, scale, rotation);
+	}
 
-void KOK_Mesh::SetupMesh(const vector<Vertex>& vertices, const vector<GLuint>& indices)
-{
-	_meshData._vertices = vertices;
-	_meshData._indices = indices;
+	KOK_Mesh::KOK_Mesh()
+	{
 
-	_meshData._texScale = 1.0f;
+	}
 
-	glGenVertexArrays(1, &_meshData._VAO);
-	glGenBuffers(1, &_meshData._VBO);
-	glGenBuffers(1, &_meshData._EBO);
+	void KOK_Mesh::SetupMesh(vector<Vertex>& vertices, vector<GLuint>& indices)
+	{
+		_meshData._vertices = vertices;
+		_meshData._indices = indices;
 
-	glBindVertexArray(_meshData._VAO);
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, _meshData._VBO);
+		_meshData._texScale = 1.0f;
 
-	glBufferData(GL_SHADER_STORAGE_BUFFER, _meshData._vertices.size() * sizeof(Vertex), &_meshData._vertices[0], GL_STATIC_DRAW);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, _meshData._VBO); // Buffer Binding 0
+		glGenVertexArrays(1, &_meshData._VAO);
+		glGenBuffers(1, &_meshData._VBO);
+		glGenBuffers(1, &_meshData._EBO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, _meshData._VBO);
+		glBindVertexArray(_meshData._VAO);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, _meshData._VBO);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _meshData._EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _meshData._indices.size() * sizeof(GLuint), &_meshData._indices[0], GL_STATIC_DRAW);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, _meshData._vertices.size() * sizeof(Vertex), &_meshData._vertices[0], GL_STATIC_DRAW);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, _meshData._VBO); // Buffer Binding 0
 
-	//vertex positions
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-	//vertex normals
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
-	//vertex coords
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
-	//tangents
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+		glBindBuffer(GL_ARRAY_BUFFER, _meshData._VBO);
 
-	glBindVertexArray(0);
-}
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _meshData._EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, _meshData._indices.size() * sizeof(GLuint), &_meshData._indices[0], GL_STATIC_DRAW);
 
-void KOK_Mesh::ComputeModelMatrix(const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
-{
-	_MD = glm::mat4(1.0f) * glm::translate(position) * glm::toMat4(rotation) * glm::scale(scale);
-}
+		//vertex positions
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+		//vertex normals
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+		//vertex coords
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+		//tangents
+		glEnableVertexAttribArray(3);
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
 
-void KOK_Mesh::SetShaderProperties(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
-{
-	//set shader properties here
-	_MV = view * _MD;
-	SetUniformMat4(shader, "MVP", projection*_MV);
-	SetUniformMat4(shader, "MV", _MV);
-	SetUniformMat4(shader, "M", _MD);
+		glBindVertexArray(0);
+	}
 
-	SetUniformFloat(shader, "texScale", _meshData._texScale);
+	void KOK_Mesh::ComputeModelMatrix(glm::vec3 position, glm::vec3 scale, glm::quat rotation)
+	{
+		_MD = glm::mat4(1.0f) * glm::translate(position) * glm::toMat4(rotation) * glm::scale(scale);
+	}
 
-	SetUniformTexture(shader,"diffuseTex", 0);
-	SetUniformTexture(shader, "normalTex", 1);
-	SetUniformTexture(shader, "emissiveAmbientTex", 2);
-	SetUniformTexture(shader, "specularGlossTex", 3);
-}
+	void KOK_Mesh::SetShaderProperties(GLuint shader, glm::mat4 projection, glm::mat4 view, glm::vec3 position, glm::vec3 scale, glm::quat rotation)
+	{
+		//set shader properties here
+		_MV = view * _MD;
+		SetUniformMat4(shader, "MVP", projection*_MV);
+		SetUniformMat4(shader, "MV", _MV);
+		SetUniformMat4(shader, "M", _MD);
 
-void KOK_Mesh::BindDrawTex()
-{
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _meshData.diffuse);
+		SetUniformFloat(shader, "texScale", _meshData._texScale);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, _meshData.normal);
+		SetUniformTexture(shader,"diffuseTex", 0);
+		SetUniformTexture(shader, "normalTex", 1);
+		SetUniformTexture(shader, "emissiveAmbientTex", 2);
+		SetUniformTexture(shader, "specularGlossTex", 3);
+	}
 
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, _meshData.emissiveAmbient);
+	void KOK_Mesh::BindDrawTex()
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, _meshData.diffuse);
 
-	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, _meshData.specularGloss);
-}
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, _meshData.normal);
 
-void KOK_Mesh::Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
-{
-	if(!_isStatic) ComputeModelMatrix(position, scale, rotation);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, _meshData.emissiveAmbient);
 
-	SetShaderProperties(shader, projection, view, position, scale, rotation);
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, _meshData.specularGloss);
+	}
 
-	BindDrawTex();
+	void KOK_Mesh::Draw(GLuint shader, glm::mat4 projection, glm::mat4 view, glm::vec3 position, glm::vec3 scale, glm::quat rotation)
+	{
+		if(!_isStatic) ComputeModelMatrix(position, scale, rotation);
 
-	Draw();
-}
+		SetShaderProperties(shader, projection, view, position, scale, rotation);
 
-void KOK_Mesh::Draw()
-{
-	glBindVertexArray(_meshData._VAO);
-	glDrawElements(GL_TRIANGLES, _meshData._indices.size(), GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
-}
+		BindDrawTex();
 
-void KOK_Mesh::DrawShadowPass(const GLuint& shader, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
-{
-	if(!_isStatic) ComputeModelMatrix(position, scale, rotation);
-	SetUniformMat4(shader, "M", _MD);
+		Draw();
+	}
 
-	Draw();
-}
+	void KOK_Mesh::Draw()
+	{
+		glBindVertexArray(_meshData._VAO);
+		glDrawElements(GL_TRIANGLES, _meshData._indices.size(), GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+	}
 
-void KOK_Mesh::SetTexScale(const float& scale)
-{
-	_meshData._texScale = scale;
-}
+	void KOK_Mesh::DrawShadowPass(const GLuint& shader, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
+	{
+		if(!_isStatic) ComputeModelMatrix(position, scale, rotation);
+		SetUniformMat4(shader, "M", _MD);
 
-KOK_SkyBox::KOK_SkyBox(string path)
-{
-	KOK_Imager::LoadEnvironment(path, _texture, _irradiance, _radiance);
+		Draw();
+	}
 
-	glGenVertexArrays(1, &_VAO);
-	glGenBuffers(1, &_VBO);
-	//glGenBuffers(1, &_EBO);
+	void KOK_Mesh::SetTexScale(float scale)
+	{
+		_meshData._texScale = scale;
+	}
 
-	glBindVertexArray(_VAO);
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, _VBO);
+	KOK_SkyBox::KOK_SkyBox(string path)
+	{
+		LoadEnvironment(path, _texture, _irradiance, _radiance);
 
-	glBufferData(GL_SHADER_STORAGE_BUFFER, 108 * sizeof(float), &_vertices[0], GL_STATIC_DRAW);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, _VBO); // Buffer Binding 0
+		glGenVertexArrays(1, &_VAO);
+		glGenBuffers(1, &_VBO);
+		//glGenBuffers(1, &_EBO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, _VBO);
+		glBindVertexArray(_VAO);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, _VBO);
 
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLuint), &_indices[0], GL_STATIC_DRAW);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, 108 * sizeof(float), &_vertices[0], GL_STATIC_DRAW);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, _VBO); // Buffer Binding 0
 
-	//vertex positions
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
+		glBindBuffer(GL_ARRAY_BUFFER, _VBO);
 
-	glBindVertexArray(0);
-}
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
+		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLuint), &_indices[0], GL_STATIC_DRAW);
 
-void KOK_SkyBox::Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view)
-{
-	glUseProgram(shader);
+		//vertex positions
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 
-	//glm::quat rotation = glm::toQuat( glm::orientate3( glm::vec3(0.0f, 0.0f, -3.14159f/2.0f) ) );
+		glBindVertexArray(0);
+	}
 
-	//glm::mat4 MD = glm::mat4(1.0f) * glm::scale(glm::vec3(1.0f));
-	glm::mat4 MVP = projection * glm::mat4(glm::mat3(view));
-	SetUniformMat4(shader, "MVP", MVP);
-	SetUniformTexture(shader,"diffuseTex", 0);
+	void KOK_SkyBox::Draw(GLuint shader, glm::mat4 projection, glm::mat4 view)
+	{
+		glUseProgram(shader);
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
+		//glm::quat rotation = glm::toQuat( glm::orientate3( glm::vec3(0.0f, 0.0f, -3.14159f/2.0f) ) );
 
-	glBindVertexArray(_VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glBindVertexArray(0);
+		//glm::mat4 MD = glm::mat4(1.0f) * glm::scale(glm::vec3(1.0f));
+		glm::mat4 MVP = projection * glm::mat4(glm::mat3(view));
+		SetUniformMat4(shader, "MVP", MVP);
+		SetUniformTexture(shader,"diffuseTex", 0);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
+
+		glBindVertexArray(_VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+	}
+
 }

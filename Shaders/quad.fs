@@ -56,6 +56,7 @@ void main()
 
 
   color = vec4(ReinHard(2.5, lighting.rgb) * lighting.a, 1.0f);
+	//color = round(7.0 * color) * (1.0 / 7.0); //color reduction
 	//color = vec4(Blur(tex_ssao, 4), 0.0, 0.0, 1.0);
 	gl_FragDepth = 1.0 - texture(tex_depth, TexCoords).r;
 }

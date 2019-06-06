@@ -21,158 +21,162 @@ using namespace std;
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-glm::mat4 aiMatrixToGlm(aiMatrix4x4 from);
-
-struct VertexBoneData
+namespace KOK_Graphics
 {
-  GLuint boneID[NUM_BONES_PER_VERTEX] = {0};
-  float weights[NUM_BONES_PER_VERTEX] = {0.0f};
-};
 
-struct BoneInfo
-{
-  glm::mat4 boneOffset;
+  glm::mat4 aiMatrixToGlm(aiMatrix4x4 from);
 
-  glm::mat4 finalTransformation;
-
-  BoneInfo()
+  struct VertexBoneData
   {
-      boneOffset = glm::mat4(0.0);
-      finalTransformation = glm::mat4(0.0);
-  }
-};
-
-struct AnimationKey
-{
-  union
-  {
-    glm::vec3 value;
-    glm::quat qvalue;
+    GLuint boneID[NUM_BONES_PER_VERTEX] = {0};
+    float weights[NUM_BONES_PER_VERTEX] = {0.0f};
   };
 
+  struct BoneInfo
+  {
+    glm::mat4 boneOffset;
 
-  GLfloat time;
+    glm::mat4 finalTransformation;
 
-  AnimationKey(glm::vec3 v, GLfloat t) : value{v}, time{t} {};
-  AnimationKey(glm::quat v, GLfloat t) : qvalue{v}, time{t} {};
-  AnimationKey();
-};
+    BoneInfo()
+    {
+        boneOffset = glm::mat4(0.0);
+        finalTransformation = glm::mat4(0.0);
+    }
+  };
 
-struct NodeAnim
-{
-  string name;
-
-  glm::vec3 scaling;
-  glm::quat rotationQ;
-  glm::vec3 translation;
-
-  vector<AnimationKey> PositionKeys;
-  vector<AnimationKey> RotationKeys;
-  vector<AnimationKey> ScaleKeys;
-
-  NodeAnim(vector<AnimationKey> pos, vector<AnimationKey> rot, vector<AnimationKey> sca ) :
-    PositionKeys{pos}, RotationKeys{rot}, ScaleKeys{sca} {};
-};
-
-struct BoneNode
-{
-  string nodeName;
-
-  glm::mat4 transformation;
-
-  vector<BoneNode> children;
-
-  BoneNode() {};
-
-  BoneNode(const aiNode * node, const aiScene * m_Scene);
-};
-
-struct Animation
-{
-  map<string, NodeAnim*> nodeAnims;
-
-  GLfloat duration;
-  GLfloat ticksPerSecond;
+  struct AnimationKey
+  {
+    union
+    {
+      glm::vec3 value;
+      glm::quat qvalue;
+    };
 
 
-  GLfloat animationTime;
+    GLfloat time;
 
-  bool loop;
+    AnimationKey(glm::vec3 v, GLfloat t) : value{v}, time{t} {};
+    AnimationKey(glm::quat v, GLfloat t) : qvalue{v}, time{t} {};
+    AnimationKey();
+  };
 
-  Animation() :
-    duration{1.0f},
-    ticksPerSecond{30.0f},
-    animationTime{0.0f},
-    loop{true}{};
+  struct NodeAnim
+  {
+    string name;
 
-  Animation(const aiScene * m_Scene);
+    glm::vec3 scaling;
+    glm::quat rotationQ;
+    glm::vec3 translation;
 
-  void TransformBone(NodeAnim * nodeAnim, float animationTime);
+    vector<AnimationKey> PositionKeys;
+    vector<AnimationKey> RotationKeys;
+    vector<AnimationKey> ScaleKeys;
 
-  void TransformBone(const BoneNode& node, const glm::mat4& ParentTransform, glm::mat4 globalInverse,
-    vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping);
+    NodeAnim(vector<AnimationKey> pos, vector<AnimationKey> rot, vector<AnimationKey> sca ) :
+      PositionKeys{pos}, RotationKeys{rot}, ScaleKeys{sca} {};
+  };
 
-  void TransformBone(const BoneNode& node, const glm::mat4& ParentTransform, glm::mat4 globalInverse,
-    vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping, GLfloat factor, Animation * nextAnim);
-};
+  struct BoneNode
+  {
+    string nodeName;
 
-//class for kok mesh
-class KOK_Skeleton
-{
-public:
-	//functions
-	KOK_Skeleton(MeshData * meshData, GLuint computeShader, string path, string name);
-  KOK_Skeleton();
+    glm::mat4 transformation;
 
-  void AddAnimation(string path, string name);
+    vector<BoneNode> children;
 
-  void SwitchAnimation(string name, GLfloat timeInSeconds);
+    BoneNode() {};
 
-  void AddBoneData(const GLuint& boneID, const float& weight, const GLuint& vertexID);
-  void BoneTransform(GLfloat timeInSeconds);
-  static void CalcInterpolatedScaling(glm::vec3& out, float animationTime, NodeAnim * nodeAnim);
-  static void CalcInterpolatedRotation(glm::quat& out, float animationTime, NodeAnim * nodeAnim);
-  static void CalcInterpolatedPosition(glm::vec3& out, float animationTime, NodeAnim * nodeAnim);
+    BoneNode(const aiNode * node, const aiScene * m_Scene);
+  };
 
-  static GLuint FindRotation(const float& animationTime, NodeAnim * nodeAnim);
-  static GLuint FindScaling(const float& animationTime, NodeAnim * nodeAnim);
-  static GLuint FindPosition(const float& animationTime, NodeAnim * nodeAnim);
+  struct Animation
+  {
+    map<string, NodeAnim*> nodeAnims;
 
-  void VertexTransforms();
-
-  void LoadBones(aiMesh * mesh);
+    GLfloat duration;
+    GLfloat ticksPerSecond;
 
 
+    GLfloat animationTime;
 
-private:
-  //holds bone data
-  vector<VertexBoneData> _VBD;
-  vector<glm::mat4> _boneTransforms;
+    bool loop;
 
-  GLuint _m_NumBones;
-  vector<BoneInfo> _m_BoneInfo;
-  map<string,uint> _m_BoneMapping;
+    Animation() :
+      duration{1.0f},
+      ticksPerSecond{30.0f},
+      animationTime{0.0f},
+      loop{true}{};
 
-  BoneNode _rootNode;
+    Animation(const aiScene * m_Scene);
 
-  bool _blending;
-  GLfloat _blendLevel;
-  GLfloat _blendDuration;
-  GLfloat _blendTime;
+    void TransformBone(NodeAnim * nodeAnim, float animationTime);
 
-  map<string, Animation> _animations;
+    void TransformBone(const BoneNode& node, const glm::mat4& ParentTransform, glm::mat4 globalInverse,
+      vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping);
 
-  string _nextAnimation;
-  string _currentAnimation;
+    void TransformBone(const BoneNode& node, const glm::mat4& ParentTransform, glm::mat4 globalInverse,
+      vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping, GLfloat factor, Animation * nextAnim);
+  };
 
-  GLuint _boneUniformBuffer;
-  GLuint _VBDBuffer;
-  GLuint _computeShader;
+  //class for kok mesh
+  class KOK_Skeleton
+  {
+  public:
+  	//functions
+  	KOK_Skeleton(MeshData * meshData, GLuint computeShader, string path, string name);
+    KOK_Skeleton();
 
-  //pointer to vertex data
-  MeshData * _meshData;
+    void AddAnimation(string path, string name);
 
-};
-//
+    void SwitchAnimation(string name, GLfloat timeInSeconds);
+
+    void AddBoneData(const GLuint& boneID, const float& weight, const GLuint& vertexID);
+    void BoneTransform(GLfloat timeInSeconds);
+    static void CalcInterpolatedScaling(glm::vec3& out, float animationTime, NodeAnim * nodeAnim);
+    static void CalcInterpolatedRotation(glm::quat& out, float animationTime, NodeAnim * nodeAnim);
+    static void CalcInterpolatedPosition(glm::vec3& out, float animationTime, NodeAnim * nodeAnim);
+
+    static GLuint FindRotation(const float& animationTime, NodeAnim * nodeAnim);
+    static GLuint FindScaling(const float& animationTime, NodeAnim * nodeAnim);
+    static GLuint FindPosition(const float& animationTime, NodeAnim * nodeAnim);
+
+    void VertexTransforms();
+
+    void LoadBones(aiMesh * mesh);
+
+
+
+  private:
+    //holds bone data
+    vector<VertexBoneData> _VBD;
+    vector<glm::mat4> _boneTransforms;
+
+    GLuint _m_NumBones;
+    vector<BoneInfo> _m_BoneInfo;
+    map<string,uint> _m_BoneMapping;
+
+    BoneNode _rootNode;
+
+    bool _blending;
+    GLfloat _blendLevel;
+    GLfloat _blendDuration;
+    GLfloat _blendTime;
+
+    map<string, Animation> _animations;
+
+    string _nextAnimation;
+    string _currentAnimation;
+
+    GLuint _boneUniformBuffer;
+    GLuint _VBDBuffer;
+    GLuint _computeShader;
+
+    //pointer to vertex data
+    MeshData * _meshData;
+
+  };
+  //
+}
 
 #endif

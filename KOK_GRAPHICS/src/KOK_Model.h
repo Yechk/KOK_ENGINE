@@ -17,52 +17,60 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include "KOK_Actor.h"
+#include "KOK_Imager.h"
 using namespace std;
 
 //class for model
 
-class KOK_Model : public KOK_Actor
+namespace KOK_Graphics
 {
-public:
-	KOK_Model();
-	KOK_Model(string path);
-	KOK_Model(string path, glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation);
-	KOK_Model(KOK_Mesh mesh);
-	KOK_Model(int divisions);
-	void Draw() {};
-	void Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view);
-	void DrawShadowPass(const GLuint& shader);
 
-	void Update(double time) {};
-	void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
+	class KOK_Model : public KOK_Actor
+	{
+	public:
+		KOK_Model();
+		KOK_Model(string path, TextureLoadFlags defaultTextureFlags);
+		KOK_Model(string path, glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation, TextureLoadFlags defaultTextureFlags);
+		KOK_Model(KOK_Mesh mesh);
+		KOK_Model(int divisions);
+		void Draw() {};
+		void Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view);
+		void DrawShadowPass(const GLuint& shader);
 
-	void SetPosition(const glm::vec3& position);
-	void SetScale(const glm::vec3& scale);
-	void SetEulerRotation(const GLfloat& x, const GLfloat& y, const GLfloat& z);
-	void SetEulerOrientation(const GLfloat& x, const GLfloat& y, const GLfloat& z);
+		void Update(double time) {};
+		void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
 
-	void SetStatic(bool isStatic);
+		void SetPosition(const glm::vec3& position);
+		void SetScale(const glm::vec3& scale);
+		void SetEulerRotation(const GLfloat& x, const GLfloat& y, const GLfloat& z);
+		void SetEulerOrientation(const GLfloat& x, const GLfloat& y, const GLfloat& z);
 
-	vector<KOK_Mesh> meshes;
+		void SetStatic(bool isStatic);
 
-	static KOK_Mesh GenerateQuad();
+		vector<KOK_Mesh> meshes;
 
-protected:
-	void LoadModel(string path);
-	KOK_Mesh ProcessMesh(aiMesh * mesh, const aiScene * scene);
-	void ProcessNode(aiNode * node, const aiScene * scene);
-	static KOK_Mesh GeneratePlane(const GLint& divisions);
+		static KOK_Mesh GenerateQuad();
 
-	string texturePath;
+	protected:
+		void LoadModel(string path, TextureLoadFlags defaultTextureFlags);
+		KOK_Mesh ProcessMesh(aiMesh * mesh, const aiScene * scene);
+		void ProcessNode(aiNode * node, const aiScene * scene);
+		static KOK_Mesh GeneratePlane(const GLint& divisions);
 
-	void InitTransforms();
-	void InitTransforms(glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation);
+		string texturePath;
 
-	glm::vec3 _position;
-	glm::vec3 _scale;
-	glm::quat _rotation;
+		void InitTransforms();
+		void InitTransforms(glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation);
 
-	glm::quat _orientation;
-};
+		glm::vec3 _position;
+		glm::vec3 _scale;
+		glm::quat _rotation;
+
+		glm::quat _orientation;
+
+		TextureLoadFlags _defaultTextureFlags;
+	};
+
+}
 
 #endif

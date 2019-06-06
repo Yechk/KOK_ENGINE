@@ -4,7 +4,7 @@ if grep -qs '../KOK_RAM' /proc/mounts; then
   echo "RAM drive is mounted 512mb."
 else
   echo "Mounting 512mb RAM drive now."
-  if mount -t tmpfs -o size=512m tmpfs ../KOK_RAM; then
+  if sudo mount -t tmpfs -o size=512m tmpfs ../KOK_RAM; then
     echo "MOUNT SUCCESS"
   else
     exit
