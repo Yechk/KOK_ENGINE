@@ -9,6 +9,14 @@
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_CORE/src/KOK_Actor.h
 string
 -
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+glm/gtx/quaternion.hpp
+-
+glm/gtx/euler_angles.hpp
+-
 
 /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_CORE/src/KOK_Message.cpp
 KOK_Message.h

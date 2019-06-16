@@ -13,12 +13,14 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/freetype2"
   "KOK_GRAPHICS/src"
   "KOK_CORE/src"
+  "KOK_ANGEL/src"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
   "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/CMakeFiles/KOKg.dir/DependInfo.cmake"
   "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_CORE/CMakeFiles/KOKc.dir/DependInfo.cmake"
+  "/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_ANGEL/CMakeFiles/KOKa.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

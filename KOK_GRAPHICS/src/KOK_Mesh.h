@@ -66,7 +66,7 @@ namespace KOK_Graphics
 		void DrawShadowPass(const GLuint& shader, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation);
 
 		void Update(double time) {};
-		void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
+		void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender) {};
 
 		void SetShaderProperties(GLuint shader, glm::mat4 projection, glm::mat4 view, glm::vec3 position, glm::vec3 scale, glm::quat rotation);
 		void SetupMesh(vector<Vertex>& vertices, vector<GLuint>& indices);

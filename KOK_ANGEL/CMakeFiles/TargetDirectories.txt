@@ -1,0 +1,7 @@
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_ANGEL/CMakeFiles/edit_cache.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_ANGEL/CMakeFiles/install/strip.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_ANGEL/CMakeFiles/KOKa.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_ANGEL/CMakeFiles/rebuild_cache.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_ANGEL/CMakeFiles/list_install_components.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_ANGEL/CMakeFiles/install/local.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_ANGEL/CMakeFiles/install.dir

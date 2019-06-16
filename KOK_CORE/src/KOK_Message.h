@@ -8,12 +8,12 @@ using namespace std;
 
 struct KOK_Message
 {
-  unsigned long long subject; //what is this message about?
+  uint64_t subject; //what is this message about?
   MessageData data; //generic pointer to data
   KOK_Actor* target; //where to deliver
   KOK_Actor* sender; //return address
 
-  KOK_Message(unsigned long long s, MessageData d, KOK_Actor* t, KOK_Actor* sd) : subject{s}, data{d}, target{t}, sender{sd} {};
+  KOK_Message(uint64_t s, MessageData d, KOK_Actor* t, KOK_Actor* sd) : subject{s}, data{d}, target{t}, sender{sd} {};
 };
 
 class KOK_MailBox
@@ -50,12 +50,12 @@ public:
 
   KOK_PostOffice(unsigned int m) : maxMessagesPerFrame{m} {};
 
-  void QueueMessage(unsigned long long subject, MessageData data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
-  void QueueMessage(unsigned long long subject, float data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
-  void QueueMessage(unsigned long long subject, double data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
-  void QueueMessage(unsigned long long subject, int data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
-  void QueueMessage(unsigned long long subject, uint data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
-  void QueueMessage(unsigned long long subject, void* data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
+  void QueueMessage(uint64_t subject, MessageData data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
+  void QueueMessage(uint64_t subject, float data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
+  void QueueMessage(uint64_t subject, double data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
+  void QueueMessage(uint64_t subject, int data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
+  void QueueMessage(uint64_t subject, uint data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
+  void QueueMessage(uint64_t subject, void* data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags);
   void Update(DeliverFlag flag);
   void Broadcast(vector<KOK_Actor>& recipients);
 

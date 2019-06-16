@@ -11,6 +11,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.10.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.10.2/CMakeSystem.cmake"
   "CMakeLists.txt"
+  "KOK_ANGEL/CMakeLists.txt"
   "KOK_CORE/CMakeLists.txt"
   "KOK_GRAPHICS/CMakeLists.txt"
   "/usr/share/cmake-3.10/Modules/CMakeCInformation.cmake"
@@ -46,6 +47,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "KOK_GRAPHICS/CMakeFiles/CMakeDirectoryInformation.cmake"
   "KOK_CORE/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "KOK_ANGEL/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -53,4 +55,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/test2.dir/DependInfo.cmake"
   "KOK_GRAPHICS/CMakeFiles/KOKg.dir/DependInfo.cmake"
   "KOK_CORE/CMakeFiles/KOKc.dir/DependInfo.cmake"
+  "KOK_ANGEL/CMakeFiles/KOKa.dir/DependInfo.cmake"
   )

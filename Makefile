@@ -195,6 +195,19 @@ KOKc/fast:
 	$(MAKE) -f KOK_CORE/CMakeFiles/KOKc.dir/build.make KOK_CORE/CMakeFiles/KOKc.dir/build
 .PHONY : KOKc/fast
 
+#=============================================================================
+# Target rules for targets named KOKa
+
+# Build rule for target.
+KOKa: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 KOKa
+.PHONY : KOKa
+
+# fast build rule for target.
+KOKa/fast:
+	$(MAKE) -f KOK_ANGEL/CMakeFiles/KOKa.dir/build.make KOK_ANGEL/CMakeFiles/KOKa.dir/build
+.PHONY : KOKa/fast
+
 tests/gui.o: tests/gui.cpp.o
 
 .PHONY : tests/gui.o
@@ -237,6 +250,7 @@ help:
 	@echo "... install/local"
 	@echo "... KOKg"
 	@echo "... KOKc"
+	@echo "... KOKa"
 	@echo "... tests/gui.o"
 	@echo "... tests/gui.i"
 	@echo "... tests/gui.s"

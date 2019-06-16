@@ -484,11 +484,11 @@ namespace KOK_Graphics
 
 			_quad = KOK_Model::GenerateQuad();
 
-			_defaultTextureFlags = (TEX_DETAIL_LOW);
+			_defaultTextureFlags = (TEX_DETAIL_HIGH);
 		}
 
 		void Update(double time) {};
-	  void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
+	  void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender) {};
 	  void Draw() {};
 
 		void DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap, float glossTest, float specTest);

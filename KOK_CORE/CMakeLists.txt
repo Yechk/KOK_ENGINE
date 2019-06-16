@@ -8,4 +8,4 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -mfma4 -mavx")
 add_library(KOKc SHARED ./src/KOK_Message.cpp)
 
 install(TARGETS KOKc DESTINATION lib)
-install(FILES ./src/KOK_Message.h ./src/KOK_Actor.h DESTINATION include)
+install(FILES ./src/KOK_Message.h ./src/KOK_Actor.h ./src/KOK_Controller.h DESTINATION include)

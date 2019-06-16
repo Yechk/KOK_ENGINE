@@ -210,7 +210,7 @@ namespace KOK_Graphics
 		}
 	}
 
-	void KOK_WM_Window::DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender)
+	void KOK_WM_Window::DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
 	{
 		//prints message data
 
@@ -258,11 +258,11 @@ namespace KOK_Graphics
 
 	}
 
-	void KOK_WM_Widget::DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender)
+	void KOK_WM_Widget::DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
 	{
 		if(subject == 2) //change label to string
 		{
-			memcpy(&label, data.p, 32);
+			memcpy(&label, data.p, 64);
 		}
 	}
 
@@ -300,7 +300,7 @@ namespace KOK_Graphics
 		manager->DrawText(label, posX, posY, 0.5f, _parent->colorLight);
 	}
 
-	void KOK_WM_Widget_Label::DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender)
+	void KOK_WM_Widget_Label::DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
 	{
 		if(subject == 3) //change label to double
 		{
@@ -335,7 +335,7 @@ namespace KOK_Graphics
 			KOK_WindowManager::Textures::circle16, glm::vec4(_parent->colorLight, 1.0f));
 	}
 
-	void KOK_WM_Widget_Slider::DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender)
+	void KOK_WM_Widget_Slider::DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
 	{
 		if(subject == 3) //change value from uint
 		{

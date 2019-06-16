@@ -38,7 +38,7 @@ namespace KOK_Graphics
 		void DrawShadowPass(const GLuint& shader);
 
 		void Update(double time) {};
-		void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender) {};
+		void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender) {};
 
 		void SetPosition(const glm::vec3& position);
 		void SetScale(const glm::vec3& scale);

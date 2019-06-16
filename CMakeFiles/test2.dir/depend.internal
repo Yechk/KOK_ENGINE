@@ -5,7 +5,12 @@ CMakeFiles/test2.dir/tests/gui.cpp.o
  /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/tests/gui.cpp
  /usr/include/freetype2/freetype/config/ftheader.h
  /usr/include/freetype2/ft2build.h
+ KOK_ANGEL/src/angelscript.h
+ KOK_ANGEL/src/scriptbuilder.h
+ KOK_ANGEL/src/scripthandle.h
+ KOK_ANGEL/src/scriptstdstring.h
  KOK_CORE/src/KOK_Actor.h
+ KOK_CORE/src/KOK_Controller.h
  KOK_CORE/src/KOK_Message.h
  KOK_GRAPHICS/src/KOK_Camera.h
  KOK_GRAPHICS/src/KOK_Director.h

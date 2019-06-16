@@ -4,7 +4,12 @@
 CMakeFiles/test2.dir/tests/gui.cpp.o: tests/gui.cpp
 CMakeFiles/test2.dir/tests/gui.cpp.o: /usr/include/freetype2/freetype/config/ftheader.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: /usr/include/freetype2/ft2build.h
+CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_ANGEL/src/angelscript.h
+CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_ANGEL/src/scriptbuilder.h
+CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_ANGEL/src/scripthandle.h
+CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_ANGEL/src/scriptstdstring.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_CORE/src/KOK_Actor.h
+CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_CORE/src/KOK_Controller.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_CORE/src/KOK_Message.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/KOK_Camera.h
 CMakeFiles/test2.dir/tests/gui.cpp.o: KOK_GRAPHICS/src/KOK_Director.h

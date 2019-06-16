@@ -553,6 +553,14 @@ freetype/config/ftheader.h
 KOK_GRAPHICS/../KOK_CORE/src/KOK_Actor.h
 string
 -
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+glm/gtx/quaternion.hpp
+-
+glm/gtx/euler_angles.hpp
+-
 
 KOK_GRAPHICS/../KOK_CORE/src/KOK_Message.h
 KOK_Actor.h

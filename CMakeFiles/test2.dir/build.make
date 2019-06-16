@@ -93,6 +93,7 @@ test2: CMakeFiles/test2.dir/build.make
 test2: /usr/lib/x86_64-linux-gnu/libfreetype.so
 test2: KOK_GRAPHICS/libKOKg.so
 test2: KOK_CORE/libKOKc.so
+test2: KOK_ANGEL/libKOKa.so
 test2: /usr/lib/x86_64-linux-gnu/libfreetype.so
 test2: CMakeFiles/test2.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test2"

@@ -38,6 +38,14 @@
 #define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
 using namespace KOK_Graphics;
 
+#include "angelscript.h"
+#include "scriptstdstring.h"
+#include "scriptbuilder.h"
+
+#include "KOK_Controller.h"
+
+//TODO: create compile add ons seperately
+
 //some color presets
 const glm::vec3 K_COLOR_GREEN = glm::vec3(0.8f,1.0f,0.6f);
 const glm::vec3 K_COLOR_RED = glm::vec3(1.0f, 0.7f, 0.7f);
@@ -51,7 +59,13 @@ double runTime;
 //class to test actor. GUI class.
 class MyGUI : public KOK_Actor
 {
-	void DeliverMessage(unsigned long long subject, MessageData data, KOK_Actor* sender)
+public:
+	void TestThisObject(string test)
+	{
+		cout << "testing the object function: " << test << endl;
+	}
+
+	void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
 	{
 		//prints message data
 
@@ -97,14 +111,16 @@ class MyGUI : public KOK_Actor
 
 int main()
 {
+
+	//gui actor
+	MyGUI * gui = new MyGUI();
+
+
 	const GLuint WINDOW_WIDTH = 1280;
 	const GLuint WINDOW_HEIGHT = 720;
 	const std::string VERSION = "0.0 (test)";
 
 	KOK_Camera * camera = new KOK_Camera(glm::vec3(2.0f,0.5f,5.0f), glm::vec3(0.005f,0.0f,-0.01f));
-
-	//gui actor
-	MyGUI * gui = new MyGUI();
 
 	char dd[] = "An urgent message. Should come first.";
 	char ddd[64];
@@ -115,6 +131,10 @@ int main()
 	KOK_PostOffice office = KOK_PostOffice(1024);
 
 	MessageData tempData;
+
+	//////testing script controllers
+	KOK_ScriptContext * scriptContext = new KOK_ScriptContext();
+	KOK_ScriptedController myController = KOK_ScriptedController(scriptContext, &office, "test.as");
 
 	//projection and model matrix
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH/(float)WINDOW_HEIGHT, 0.01f, 100.0f);
