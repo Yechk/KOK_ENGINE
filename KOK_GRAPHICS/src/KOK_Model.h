@@ -34,16 +34,16 @@ namespace KOK_Graphics
 		KOK_Model(KOK_Mesh mesh);
 		KOK_Model(int divisions);
 		void Draw() {};
-		void Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view);
-		void DrawShadowPass(const GLuint& shader);
+		void Draw(GLuint shader, glm::mat4 projection, glm::mat4 view);
+		void DrawShadowPass(GLuint shader);
 
 		void Update(double time) {};
 		void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender) {};
 
-		void SetPosition(const glm::vec3& position);
-		void SetScale(const glm::vec3& scale);
-		void SetEulerRotation(const GLfloat& x, const GLfloat& y, const GLfloat& z);
-		void SetEulerOrientation(const GLfloat& x, const GLfloat& y, const GLfloat& z);
+		void SetPosition(glm::vec3 position);
+		void SetScale(glm::vec3 scale);
+		void SetEulerRotation(GLfloat x, GLfloat y, GLfloat z);
+		void SetEulerOrientation(GLfloat x, GLfloat y, GLfloat z);
 
 		void SetStatic(bool isStatic);
 
@@ -55,7 +55,7 @@ namespace KOK_Graphics
 		void LoadModel(string path, TextureLoadFlags defaultTextureFlags);
 		KOK_Mesh ProcessMesh(aiMesh * mesh, const aiScene * scene);
 		void ProcessNode(aiNode * node, const aiScene * scene);
-		static KOK_Mesh GeneratePlane(const GLint& divisions);
+		static KOK_Mesh GeneratePlane(GLint divisions);
 
 		string texturePath;
 

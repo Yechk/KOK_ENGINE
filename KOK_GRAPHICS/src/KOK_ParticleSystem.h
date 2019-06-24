@@ -51,7 +51,7 @@ struct ParticleData
   ParticleData(const ParticleData& old);
   void Init(const ParticleData& old);
 
-  void Update(GLdouble elapsedTime, GLuint &activeParticles, const ParticleData& old, glm::vec3 camPos);
+  void Update(GLdouble elapsedTime, GLuint & activeParticles, const ParticleData& old, glm::vec3 camPos);
 
   void RandVelocity(glm::vec3 min, glm::vec3 max);
 
@@ -67,16 +67,16 @@ class KOK_ParticleSystem
 {
 
 public:
-  KOK_ParticleSystem(const GLuint& maxParticles, const GLuint& texture, const GLdouble& spawnRate=0.0, const GLuint& burst=1);
+  KOK_ParticleSystem(GLuint maxParticles, GLuint texture, GLdouble spawnRate=0.0, GLuint burst=1);
 
-  void Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view, const GLdouble& elapsedTime);
+  void Draw(GLuint shader, glm::mat4 projection, glm::mat4 view, GLdouble elapsedTime);
 
   static inline float RandFloat(float min, float max)
   {
     return min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
   };
 
-  void SpawnParticle(const GLdouble& elapsedTime);
+  void SpawnParticle(GLdouble elapsedTime);
 
   const GLuint& ActiveParticles() const {return _activeParticles;};
 

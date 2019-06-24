@@ -17,7 +17,7 @@ using namespace std;
 #include "KOK_ParticleSystem.h"
 #include "shader.h"
 
-KOK_ParticleSystem::KOK_ParticleSystem(const GLuint& maxParticles, const GLuint& texture, const GLdouble& spawnRate, const GLuint& burst)
+KOK_ParticleSystem::KOK_ParticleSystem(GLuint maxParticles, GLuint texture, GLdouble spawnRate, GLuint burst)
 {
   _maxParticles = maxParticles;
   particleMesh = ParticleMesh();
@@ -77,7 +77,7 @@ KOK_ParticleSystem::KOK_ParticleSystem(const GLuint& maxParticles, const GLuint&
 
 }
 
-void KOK_ParticleSystem::SpawnParticle(const GLdouble& elapsedTime)
+void KOK_ParticleSystem::SpawnParticle(GLdouble elapsedTime)
 {
   _spawnTime = elapsedTime;
 
@@ -98,7 +98,7 @@ void KOK_ParticleSystem::SpawnParticle(const GLdouble& elapsedTime)
   }
 }
 
-void KOK_ParticleSystem::Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view, const GLdouble& elapsedTime)
+void KOK_ParticleSystem::Draw(GLuint shader, glm::mat4 projection, glm::mat4 view, GLdouble elapsedTime)
 {
   glm::mat4 camWorld = glm::inverse(view);
   glm::vec3 camPos = glm::vec3(camWorld[3][0], camWorld[3][1], camWorld[3][1]);

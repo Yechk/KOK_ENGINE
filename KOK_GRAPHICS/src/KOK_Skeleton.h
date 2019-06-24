@@ -119,7 +119,6 @@ namespace KOK_Graphics
       vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping, GLfloat factor, Animation * nextAnim);
   };
 
-  //class for kok mesh
   class KOK_Skeleton
   {
   public:

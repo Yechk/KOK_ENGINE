@@ -18,6 +18,10 @@
 #include "KOK_TextManager.h"
 #include "KOK_TextConsole.h"
 
+#define _DEBUG //tells phys x that this is a debug build. Switch to NDEBUG in a release
+
+#include "PxPhysicsAPI.h"
+
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
@@ -56,71 +60,16 @@ const glm::vec3 K_COLOR_BLACK = glm::vec3(0.0f);
 
 double runTime;
 
-//class to test actor. GUI class.
-class MyGUI : public KOK_Actor
-{
-public:
-	void TestThisObject(string test)
-	{
-		cout << "testing the object function: " << test << endl;
-	}
-
-	void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
-	{
-		//prints message data
-
-		if(subject == 0)
-		{
-			char derivedData[64];
-			memcpy(&derivedData, data.p, 64);
-
-			cout << "SUBJECT: " << subject << endl;
-			cout << derivedData << endl;
-		}
-
-		//integer data
-		if(subject == 1)
-		{
-			cout << "SUBJECT: " << subject << endl;
-			cout << data.i << endl;
-		}
-
-		//float data
-		if(subject == 2)
-		{
-			cout << "SUBJECT: " << subject << endl;
-			cout << data.f << endl;
-		}
-
-		if(subject == 10)
-		{
-			cout << "slider value: " << data.ui << endl;
-		}
-	}
-
-	void Update(double time)
-	{
-
-	}
-
-	void Draw()
-	{
-
-	}
-};
 
 int main()
 {
-
-	//gui actor
-	MyGUI * gui = new MyGUI();
 
 
 	const GLuint WINDOW_WIDTH = 1280;
 	const GLuint WINDOW_HEIGHT = 720;
 	const std::string VERSION = "0.0 (test)";
 
-	KOK_Camera * camera = new KOK_Camera(glm::vec3(2.0f,0.5f,5.0f), glm::vec3(0.005f,0.0f,-0.01f));
+	KOK_Camera * camera = new KOK_Camera(glm::vec3(10.0f,5.0f,10.0f), glm::vec3(0.0f,0.0f,0.0f));
 
 	char dd[] = "An urgent message. Should come first.";
 	char ddd[64];
@@ -166,8 +115,9 @@ int main()
 
 	KOK_RenderProcess * renderProcess = new KOK_RenderProcess(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	renderProcess->AddModel("belair", glm::vec3(2.5f, 0.5f, 1.5f), glm::vec3(0.5f), glm::vec3(0.1f,-0.05f, 0.0f), glm::vec3(0));
-	renderProcess->AddModel("spider0", glm::vec3(5.0f, -0.5f, 1.0f), glm::vec3(0.5f), glm::vec3(0.1f,-0.05f, -0.1f), glm::vec3(0));
+	//renderProcess->AddModel("belair", glm::vec3(2.5f, 0.5f, 1.5f), glm::vec3(0.5f), glm::vec3(0.1f,-0.05f, 0.0f), glm::vec3(0));
+	renderProcess->AddModel("spider0", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f), glm::vec3(0), glm::vec3(0));
+	renderProcess->AddModel("cubefarm", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2.0f), glm::vec3(0), glm::vec3(0));
 
 	float startTime = glfwGetTime();
 

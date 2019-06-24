@@ -77,7 +77,7 @@ namespace KOK_Graphics
 		meshes.push_back(GenerateQuad());
 	}
 
-	void KOK_Model::Draw(const GLuint& shader, const glm::mat4& projection, const glm::mat4& view)
+	void KOK_Model::Draw(GLuint shader, glm::mat4 projection, glm::mat4 view)
 	{
 		for (GLuint i = 0; i < meshes.size(); i++)
 		{
@@ -85,7 +85,7 @@ namespace KOK_Graphics
 		}
 	}
 
-	void KOK_Model::DrawShadowPass(const GLuint& shader)
+	void KOK_Model::DrawShadowPass(GLuint shader)
 	{
 		for (GLuint i = 0; i < meshes.size(); i++)
 		{
@@ -93,22 +93,22 @@ namespace KOK_Graphics
 		}
 	}
 
-	void KOK_Model::SetPosition(const glm::vec3& position)
+	void KOK_Model::SetPosition(glm::vec3 position)
 	{
 		_position = position;
 	}
 
-	void KOK_Model::SetScale(const glm::vec3& scale)
+	void KOK_Model::SetScale(glm::vec3 scale)
 	{
 		_scale = scale;
 	}
 
-	void KOK_Model::SetEulerRotation(const GLfloat& x, const GLfloat& y, const GLfloat& z)
+	void KOK_Model::SetEulerRotation(GLfloat x, GLfloat y, GLfloat z)
 	{
 		_rotation = glm::toQuat( glm::orientate3( glm::vec3(x, y, z) ) );
 	}
 
-	void KOK_Model::SetEulerOrientation(const GLfloat& x, const GLfloat& y, const GLfloat& z)
+	void KOK_Model::SetEulerOrientation(GLfloat x, GLfloat y, GLfloat z)
 	{
 		_orientation = glm::toQuat( glm::orientate3( glm::vec3(x, y, z) ) );
 	}
@@ -116,7 +116,7 @@ namespace KOK_Graphics
 	KOK_Mesh KOK_Model::GenerateQuad()
 	{
 		vector<Vertex> vertices;
-		vector<GLuint> indices;
+		vector<GLushort> indices;
 
 		vertices.push_back(Vertex(glm::vec3(0.0f,1.0f,0.0f), glm::vec3(-1.0f,-1.0f,0.1f), glm::vec2(0.0f,0.0f)));
 		vertices.push_back(Vertex(glm::vec3(0.0f,1.0f,0.0f), glm::vec3(1.0f,-1.0f,0.1f), glm::vec2(1.0f,0.0f)));
@@ -133,10 +133,10 @@ namespace KOK_Graphics
 		return KOK_Mesh(vertices, indices, glm::vec3(0), glm::vec3(0), glm::quat());
 	}
 
-	KOK_Mesh KOK_Model::GeneratePlane(const GLint& divisions)
+	KOK_Mesh KOK_Model::GeneratePlane(GLint divisions)
 	{
 		vector<Vertex> vertices;
-		vector<GLuint> indices;
+		vector<GLushort> indices;
 
 		vertices.push_back(Vertex(glm::vec3(0.00f,1.0f,0.00f), glm::vec3(-1.0f,0.0f,-1.0f), glm::vec2(0.0f,0.0f)));
 		vertices.push_back(Vertex(glm::vec3(0.00f,1.0f,0.00f), glm::vec3(1.0f,0.0f,-1.0f), glm::vec2(1.0f,0.0f)));
@@ -170,7 +170,7 @@ namespace KOK_Graphics
 	KOK_Mesh KOK_Model::ProcessMesh(aiMesh * mesh, const aiScene * scene)
 	{
 		vector<Vertex> vertices;
-		vector<GLuint> indices;
+		vector<GLushort> indices;
 
 		for(GLuint i = 0; i < mesh->mNumVertices; i++)
 		{
@@ -181,7 +181,6 @@ namespace KOK_Graphics
 			vector.y = mesh->mVertices[i].y;
 			vector.z = mesh->mVertices[i].z;
 			vertex.position = vector;
-			vertex.transPosition = vector;
 
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
@@ -243,7 +242,6 @@ namespace KOK_Graphics
 
 		//specularGloss
 		GLuint specularGloss = LoadPNG(texturePath + "SpecularGloss.png", _defaultTextureFlags, success);
-
 
 		KOK_Mesh newMesh = KOK_Mesh(vertices, indices, _position, _scale, _rotation * _orientation);
 		newMesh.SetMeshTextures(diffuse, normal, emissiveAmbient, specularGloss);

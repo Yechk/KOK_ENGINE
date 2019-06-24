@@ -30,17 +30,6 @@ using namespace std;
 
 */
 //struct to hold script execution info
-struct KOK_ScriptExecuteInfo
-{
-  asIScriptFunction * mainFunction;
-  asIScriptContext * scriptContext;
-
-  KOK_ScriptExecuteInfo() {};
-
-  KOK_ScriptExecuteInfo(asIScriptFunction * _mainFunction,
-    asIScriptContext * _scriptContext) :
-    mainFunction{_mainFunction}, scriptContext{_scriptContext} {};
-};
 
 class KOK_ScriptContext
 {
@@ -137,11 +126,13 @@ public:
       asMETHODPR(KOK_ScriptContext, RelayMessage, (MessageSubject,
         MessageComponentType, MessageFlag, int), void),
         asCALL_THISCALL_ASGLOBAL, this); assert(r>=0);
+
+    _context = _engine->CreateContext();
   };
 
   ~KOK_ScriptContext();
 
-  KOK_ScriptExecuteInfo LoadScript(string path)
+  asIScriptFunction * LoadScript(string path)
   {
     //test the script
     CScriptBuilder builder;
@@ -169,9 +160,7 @@ public:
       cout << "Yo homie you better add a main() function to that script." << endl;
     }
 
-    asIScriptContext *ctx = _engine->CreateContext();
-
-    return KOK_ScriptExecuteInfo(func, ctx);
+    return func;
   };
 
   void CacheComponents(KOK_Actor * cacheMesh, KOK_Actor * cacheSkeleton, KOK_Actor * cachePhysics)
@@ -181,19 +170,19 @@ public:
     _cacheComponents[3] = cachePhysics;
   }
 
-  void RunScript(KOK_ScriptExecuteInfo info, KOK_PostOffice * cacheOffice, KOK_Actor * cacheController)
+  void RunScript(asIScriptFunction * info, KOK_PostOffice * cacheOffice, KOK_Actor * cacheController)
   {
     _cacheOffice = cacheOffice;
     _cacheComponents[2] = cacheController;
 
-    info.scriptContext->Prepare(info.mainFunction);
+    _context->Prepare(info);
 
-    int rt = info.scriptContext->Execute();
+    int rt = _context->Execute();
     if(rt != asEXECUTION_FINISHED)
     {
       if(rt == asEXECUTION_EXCEPTION)
       {
-        cout << "aw shiiit. Script exception: " << info.scriptContext->GetExceptionString() << endl;
+        cout << "aw shiiit. Script exception: " << _context->GetExceptionString() << endl;
       }
     }
   };
@@ -232,7 +221,7 @@ class KOK_ScriptedController : public KOK_Controller
 {
 private:
   KOK_ScriptContext * _scriptContext;
-  KOK_ScriptExecuteInfo _initScript;
+  asIScriptFunction * _initScript;
 
 public:
 

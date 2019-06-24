@@ -17,7 +17,7 @@ using namespace std;
 namespace KOK_Graphics
 {
 
-	KOK_Mesh::KOK_Mesh(vector<Vertex>& vertices, vector<GLuint>& indices, glm::vec3 position, glm::vec3 scale, glm::quat rotation)
+	KOK_Mesh::KOK_Mesh(vector<Vertex>& vertices, vector<GLushort>& indices, glm::vec3 position, glm::vec3 scale, glm::quat rotation)
 	{
 		SetupMesh(vertices, indices);
 		_isStatic = false;
@@ -29,7 +29,7 @@ namespace KOK_Graphics
 
 	}
 
-	void KOK_Mesh::SetupMesh(vector<Vertex>& vertices, vector<GLuint>& indices)
+	void KOK_Mesh::SetupMesh(vector<Vertex>& vertices, vector<GLushort>& indices)
 	{
 		_meshData._vertices = vertices;
 		_meshData._indices = indices;
@@ -49,7 +49,7 @@ namespace KOK_Graphics
 		glBindBuffer(GL_ARRAY_BUFFER, _meshData._VBO);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _meshData._EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, _meshData._indices.size() * sizeof(GLuint), &_meshData._indices[0], GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, _meshData._indices.size() * sizeof(GLushort), &_meshData._indices[0], GL_STATIC_DRAW);
 
 		//vertex positions
 		glEnableVertexAttribArray(0);
@@ -117,11 +117,11 @@ namespace KOK_Graphics
 	void KOK_Mesh::Draw()
 	{
 		glBindVertexArray(_meshData._VAO);
-		glDrawElements(GL_TRIANGLES, _meshData._indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, _meshData._indices.size(), GL_UNSIGNED_SHORT, 0);
 		glBindVertexArray(0);
 	}
 
-	void KOK_Mesh::DrawShadowPass(const GLuint& shader, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation)
+	void KOK_Mesh::DrawShadowPass(GLuint shader, glm::vec3 position, glm::vec3 scale, glm::quat rotation)
 	{
 		if(!_isStatic) ComputeModelMatrix(position, scale, rotation);
 		SetUniformMat4(shader, "M", _MD);

@@ -20,8 +20,6 @@ namespace KOK_Graphics
 	//definitions for vertex and texture
 	struct Vertex
 	{
-		glm::vec3 transPosition;
-		GLfloat pad0;
 		glm::vec3 position;
 		GLfloat pad1;
 		glm::vec3 normal;
@@ -31,7 +29,7 @@ namespace KOK_Graphics
 		glm::vec3 tangent;
 		GLfloat pad4;
 
-		Vertex(glm::vec3 norm, glm::vec3 pos, glm::vec2 tex) : transPosition{pos}, position{pos}, normal{norm}, texCoords{tex} {};
+		Vertex(glm::vec3 norm, glm::vec3 pos, glm::vec2 tex) : position{pos}, normal{norm}, texCoords{tex} {};
 		Vertex() {};
 	};
 
@@ -39,7 +37,7 @@ namespace KOK_Graphics
 	{
 		//mesh data
 		vector<Vertex> _vertices;
-		vector<GLuint> _indices;
+		vector<GLushort> _indices;
 		GLuint diffuse;
 		GLuint normal;
 		GLuint emissiveAmbient;
@@ -57,19 +55,19 @@ namespace KOK_Graphics
 	public:
 
 		//functions
-		KOK_Mesh(vector<Vertex>& vertices, vector<GLuint>& indices, glm::vec3 position, glm::vec3 scale, glm::quat rotation);
+		KOK_Mesh(vector<Vertex>& vertices, vector<GLushort>& indices, glm::vec3 position, glm::vec3 scale, glm::quat rotation);
 		KOK_Mesh();
 		void BindDrawTex();
 		void ComputeModelMatrix(glm::vec3 position, glm::vec3 scale, glm::quat rotation);
 		void Draw(GLuint shader, glm::mat4 projection, glm::mat4 view, glm::vec3 position, glm::vec3 scale, glm::quat rotation);
 		void Draw();
-		void DrawShadowPass(const GLuint& shader, const glm::vec3& position, const glm::vec3& scale, const glm::quat& rotation);
+		void DrawShadowPass(GLuint shader, glm::vec3 position, glm::vec3 scale, glm::quat rotation);
 
 		void Update(double time) {};
 		void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender) {};
 
 		void SetShaderProperties(GLuint shader, glm::mat4 projection, glm::mat4 view, glm::vec3 position, glm::vec3 scale, glm::quat rotation);
-		void SetupMesh(vector<Vertex>& vertices, vector<GLuint>& indices);
+		void SetupMesh(vector<Vertex>& vertices, vector<GLushort>& indices);
 		void SetTexScale(float scale);
 
 		MeshData * GetMeshData();
@@ -140,7 +138,7 @@ namespace KOK_Graphics
 			        -1.0f, -1.0f,  1.0f,
 			         1.0f, -1.0f,  1.0f
 		};
-		GLuint _indices[36] = {
+		GLushort _indices[36] = {
 			1,4,3,
 			6,7,8,
 			2,6,5,

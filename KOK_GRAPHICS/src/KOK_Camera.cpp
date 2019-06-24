@@ -6,6 +6,7 @@
 
 namespace KOK_Graphics
 {
+
 	KOK_Camera::KOK_Camera(glm::vec3 position, glm::vec3 target)
 	{
 		_position = position;

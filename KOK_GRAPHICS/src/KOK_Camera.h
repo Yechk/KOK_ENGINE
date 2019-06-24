@@ -16,7 +16,7 @@ namespace KOK_Graphics
 		{
 			TARGET,
 			DIRECTIONAL
-		} cameraFunction = DIRECTIONAL;
+		} cameraFunction = TARGET;
 
 		glm::vec3 _position;
 		glm::vec3 _target;
@@ -26,10 +26,7 @@ namespace KOK_Graphics
 
 		glm::mat4 GetTargetViewMatrix()
 		{
-			if(cameraFunction == DIRECTIONAL)
-		  	return glm::lookAt(_position, _position + _target, _up);
-
-			return glm::mat4(1.0);
+		  return glm::lookAt(_position, _target, _up);
 		};
 
 	public:
