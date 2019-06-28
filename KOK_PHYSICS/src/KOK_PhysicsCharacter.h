@@ -26,6 +26,8 @@ namespace KOK_Physics
   private:
     KOK_PhysicsContext * _physicsContext;
     PxController * _controller;
+    double _currentTime;
+    double _lastMoveTime;
 
   public:
     KOK_PhysicsCharacter(KOK_PhysicsContext * physicsContext) : _physicsContext{physicsContext}
@@ -39,6 +41,8 @@ namespace KOK_Physics
 
       cDesc->material = physicsContext->defaultMaterial;
       cDesc->position = PxExtendedVec3(0.0f,1.0f,0.0f);
+
+      _lastMoveTime = 0.0;
 
       _controller = _physicsContext->characterManager->createController(*cDesc);
     };
@@ -54,14 +58,23 @@ namespace KOK_Physics
       return glm::vec3(position.x, position.y, position.z);
     };
 
+    void Move(glm::vec3 disp)
+    {
+      _controller->move(PxVec3(disp.x, disp.y, disp.z), 0.01f, (PxF32)(_currentTime - _lastMoveTime), PxControllerFilters());
+      _lastMoveTime = _currentTime;
+    };
+
     virtual void Update(double time)
     {
-
+      _currentTime = time;
     };
 
     virtual void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
     {
-
+      if (subject == KOK_SUBJECT_PHYSICS_MOVE)
+      {
+        Move(data.v3);
+      }
     };
 
     virtual void Draw()

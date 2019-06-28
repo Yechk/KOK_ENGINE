@@ -27,6 +27,8 @@ enum MessageSubject
 {
   KOK_SUBJECT_POKE                       = 0,
 
+  KOK_SUBJECT_PHYSICS_MOVE               = 1,
+
   KOK_SUBJECT_WIDGET_LABEL_STRING        = 2,
 
 	KOK_SUBJECT_WIDGET_LABEL_DOUBLE        = 3,

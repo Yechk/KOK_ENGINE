@@ -100,6 +100,7 @@ public:
     //enum for message subject
     _engine->RegisterEnum("MessageSubject");
     _engine->RegisterEnumValue("MessageSubject", "KOK_SUBJECT_POKE", 0);
+    _engine->RegisterEnumValue("MessageSubject", "KOK_SUBJECT_PHYSICS_MOVE", 1);
 
     _engine->RegisterEnum("MessageFlag");
     _engine->RegisterEnumValue("MessageFlag", "BROADCAST", 0);
@@ -149,7 +150,7 @@ public:
     string concatenatedPath = "./Scripts/" + path;
     if(headerModule != "")
     {
-      r = builder.AddSectionFromFile(headerModule.c_str());
+      r = builder.AddSectionFromMemory("header", headerModule.c_str(), headerModule.length());
       if(r < 0)
       {
         cout << "HEADER MODULE ERROR" << endl;
