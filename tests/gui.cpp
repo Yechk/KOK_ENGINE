@@ -1,3 +1,5 @@
+#include "KOK_EXT_CharacterBasic.h"
+
 #include "KOK_Director.h"
 #include "KOK_Model.h"
 #include "KOK_Skeleton.h"
@@ -18,10 +20,6 @@
 #include "KOK_TextManager.h"
 #include "KOK_TextConsole.h"
 
-#define _DEBUG //tells phys x that this is a debug build. Switch to NDEBUG in a release
-
-#include "PxPhysicsAPI.h"
-
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
@@ -41,12 +39,13 @@
 #define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
 #define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
 using namespace KOK_Graphics;
-
 #include "angelscript.h"
 #include "scriptstdstring.h"
 #include "scriptbuilder.h"
 
 #include "KOK_Controller.h"
+
+#include "KOK_PhysicsContext.h"
 
 //TODO: create compile add ons seperately
 
@@ -63,7 +62,6 @@ double runTime;
 
 int main()
 {
-
 
 	const GLuint WINDOW_WIDTH = 1280;
 	const GLuint WINDOW_HEIGHT = 720;
@@ -116,7 +114,6 @@ int main()
 	KOK_RenderProcess * renderProcess = new KOK_RenderProcess(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//renderProcess->AddModel("belair", glm::vec3(2.5f, 0.5f, 1.5f), glm::vec3(0.5f), glm::vec3(0.1f,-0.05f, 0.0f), glm::vec3(0));
-	renderProcess->AddModel("spider0", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f), glm::vec3(0), glm::vec3(0));
 	renderProcess->AddModel("cubefarm", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2.0f), glm::vec3(0), glm::vec3(0));
 
 	float startTime = glfwGetTime();
@@ -135,6 +132,12 @@ int main()
 	double currentFrames = 0.0;
 
 	vector<KOK_PointLight*> pointLights;
+
+	KOK_Physics::KOK_PhysicsContext * physicsContext = new KOK_Physics::KOK_PhysicsContext();
+
+	PxRigidDynamic * dynamicSphere = physicsContext->AddDynamicActor(0.5f);
+	KOK_EXT_CharacterBasic * mainCharacter = new KOK_EXT_CharacterBasic(renderProcess, physicsContext, scriptContext, &office);
+	mainCharacter->InitCharacter("spider0", glm::vec3(0), glm::vec3(0), glm::vec3(1.0f));
 
 	while(!glfwWindowShouldClose( window ) )
 	{
@@ -164,6 +167,15 @@ int main()
 		//update shit
 		glfwPollEvents();
 
+		//
+		physicsContext->StepPhysics(1.0f/60.0f);
+
+		//camera->SetTarget(glm::vec3(spiderT.p.x, spiderT.p.y +0.25f, spiderT.p.z));
+
+		mainCharacter->Update(currentTime);
+
+		camera->Update();
+
 		office.Update(MARCH);
 		windowTester.UpdateGUI();
 
@@ -179,6 +191,9 @@ int main()
 		glDepthFunc (GL_ALWAYS);
 		glDepthMask (GL_TRUE);
 		glDisable (GL_CULL_FACE);
+
+
+		physicsContext->DrawDebugPhysics(projection, camera->GetView());
 		//draw version
 		stringstream ss;
 		ss << currentFrames;

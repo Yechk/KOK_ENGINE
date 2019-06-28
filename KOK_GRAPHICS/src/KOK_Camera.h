@@ -15,8 +15,9 @@ namespace KOK_Graphics
 		enum CameraFunction //different algorithms for camera control
 		{
 			TARGET,
-			DIRECTIONAL
-		} cameraFunction = TARGET;
+			DIRECTIONAL,
+			ORBIT
+		} cameraFunction = ORBIT;
 
 		glm::vec3 _position;
 		glm::vec3 _target;
@@ -26,6 +27,19 @@ namespace KOK_Graphics
 
 		glm::mat4 GetTargetViewMatrix()
 		{
+			if(cameraFunction == ORBIT)
+			{
+				_position = _target;
+
+				glm::vec3 orbitPosition;
+				float followDistance = 5.0f;
+				orbitPosition.x = followDistance * sin(0.0) + _position.x;
+				orbitPosition.y = followDistance + _position.y;
+				orbitPosition.z = followDistance * cos(0.0) + _position.z;
+
+				return glm::lookAt(orbitPosition, _target, _up);
+			}
+
 		  return glm::lookAt(_position, _target, _up);
 		};
 

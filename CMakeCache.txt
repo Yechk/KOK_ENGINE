@@ -212,13 +212,31 @@ KOK_CORE_BINARY_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_
 KOK_CORE_SOURCE_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_CORE
 
 //Value Computed by CMake
+KOK_EXTENDS_BINARY_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_EXTENDS
+
+//Value Computed by CMake
+KOK_EXTENDS_SOURCE_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_EXTENDS
+
+//Value Computed by CMake
 KOK_GRAPHICS_BINARY_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS
 
 //Value Computed by CMake
 KOK_GRAPHICS_SOURCE_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS
 
+//Value Computed by CMake
+KOK_PHYSICS_BINARY_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS
+
+//Value Computed by CMake
+KOK_PHYSICS_SOURCE_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS
+
+//Dependencies for the target
+KOKe_LIB_DEPENDS:STATIC=general;-lm -lGL -lglfw -lGLEW -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lXinerama -lXcursor -ldl -lrt -lassimp;
+
 //Dependencies for the target
 KOKg_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libfreetype.so;general;-lm -lGL -lglfw -lGLEW -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lXinerama -lXcursor -ldl -lrt -lassimp -lnanogui;
+
+//Dependencies for the target
+KOKp_LIB_DEPENDS:STATIC=general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysX_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXCommon_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXCharacterKinematic_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXCooking_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXExtensions_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXFoundation_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXPvdSDK_static_64.a;general;-lm -lGL -lglfw -lGLEW -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lXinerama -lXcursor -ldl -lrt -lassimp;
 
 //The directory containing a CMake configuration file for PhysXREQUIRED.
 PhysXREQUIRED_DIR:PATH=PhysXREQUIRED_DIR-NOTFOUND

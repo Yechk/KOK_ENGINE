@@ -10,8 +10,10 @@ add_subdirectory(KOK_ANGEL)
 add_subdirectory(KOK_PHYSICS)
 
 include_directories(${CMAKE_SOURCE_DIR}/KOK_GRAPHICS/src)
+include_directories(${CMAKE_SOURCE_DIR}/KOK_EXTENDS/src)
 include_directories(${CMAKE_SOURCE_DIR}/KOK_CORE/src)
 include_directories(${CMAKE_SOURCE_DIR}/KOK_ANGEL/src)
+include_directories(${CMAKE_SOURCE_DIR}/KOK_PHYSICS/src)
 include_directories(${CMAKE_SOURCE_DIR}/KOK_PHYSICS/PhysX_Debug/PhysX/include)
 include_directories(${CMAKE_SOURCE_DIR}/KOK_PHYSICS/PhysX_Debug/PxShared/include)
 
@@ -19,10 +21,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -mfma4 -mavx")
 
-add_executable(test2 ./tests/gui.cpp)
+add_executable(test2 ${CMAKE_SOURCE_DIR}/KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp ${CMAKE_SOURCE_DIR}/tests/gui.cpp)
 
 target_link_libraries(test2 ${FREETYPE_LIBRARIES})
 target_link_libraries(test2 KOKg)
 target_link_libraries(test2 KOKc)
 target_link_libraries(test2 KOKa)
-target_link_libraries(test2 ${CMAKE_SOURCE_DIR}/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysX_static_64.a)
+target_link_libraries(test2 KOKp)

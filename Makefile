@@ -208,6 +208,46 @@ KOKa/fast:
 	$(MAKE) -f KOK_ANGEL/CMakeFiles/KOKa.dir/build.make KOK_ANGEL/CMakeFiles/KOKa.dir/build
 .PHONY : KOKa/fast
 
+#=============================================================================
+# Target rules for targets named KOKp
+
+# Build rule for target.
+KOKp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 KOKp
+.PHONY : KOKp
+
+# fast build rule for target.
+KOKp/fast:
+	$(MAKE) -f KOK_PHYSICS/CMakeFiles/KOKp.dir/build.make KOK_PHYSICS/CMakeFiles/KOKp.dir/build
+.PHONY : KOKp/fast
+
+KOK_EXTENDS/src/KOK_EXT_CharacterBasic.o: KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.o
+
+.PHONY : KOK_EXTENDS/src/KOK_EXT_CharacterBasic.o
+
+# target to build an object file
+KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.o:
+	$(MAKE) -f CMakeFiles/test2.dir/build.make CMakeFiles/test2.dir/KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.o
+.PHONY : KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.o
+
+KOK_EXTENDS/src/KOK_EXT_CharacterBasic.i: KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.i
+
+.PHONY : KOK_EXTENDS/src/KOK_EXT_CharacterBasic.i
+
+# target to preprocess a source file
+KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.i:
+	$(MAKE) -f CMakeFiles/test2.dir/build.make CMakeFiles/test2.dir/KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.i
+.PHONY : KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.i
+
+KOK_EXTENDS/src/KOK_EXT_CharacterBasic.s: KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.s
+
+.PHONY : KOK_EXTENDS/src/KOK_EXT_CharacterBasic.s
+
+# target to generate assembly for a file
+KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.s:
+	$(MAKE) -f CMakeFiles/test2.dir/build.make CMakeFiles/test2.dir/KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.s
+.PHONY : KOK_EXTENDS/src/KOK_EXT_CharacterBasic.cpp.s
+
 tests/gui.o: tests/gui.cpp.o
 
 .PHONY : tests/gui.o
@@ -251,6 +291,10 @@ help:
 	@echo "... KOKg"
 	@echo "... KOKc"
 	@echo "... KOKa"
+	@echo "... KOKp"
+	@echo "... KOK_EXTENDS/src/KOK_EXT_CharacterBasic.o"
+	@echo "... KOK_EXTENDS/src/KOK_EXT_CharacterBasic.i"
+	@echo "... KOK_EXTENDS/src/KOK_EXT_CharacterBasic.s"
 	@echo "... tests/gui.o"
 	@echo "... tests/gui.i"
 	@echo "... tests/gui.s"

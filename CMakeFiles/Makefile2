@@ -71,9 +71,10 @@ CMAKE_BINARY_DIR = /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1
 CMakeFiles/test2.dir/all: KOK_GRAPHICS/CMakeFiles/KOKg.dir/all
 CMakeFiles/test2.dir/all: KOK_CORE/CMakeFiles/KOKc.dir/all
 CMakeFiles/test2.dir/all: KOK_ANGEL/CMakeFiles/KOKa.dir/all
+CMakeFiles/test2.dir/all: KOK_PHYSICS/CMakeFiles/KOKp.dir/all
 	$(MAKE) -f CMakeFiles/test2.dir/build.make CMakeFiles/test2.dir/depend
 	$(MAKE) -f CMakeFiles/test2.dir/build.make CMakeFiles/test2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=61,62 "Built target test2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=63,64,65 "Built target test2"
 .PHONY : CMakeFiles/test2.dir/all
 
 # Include target in all.
@@ -83,7 +84,7 @@ all: CMakeFiles/test2.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 62
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 65
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test2.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 0
 .PHONY : CMakeFiles/test2.dir/rule
@@ -272,12 +273,12 @@ clean: KOK_ANGEL/CMakeFiles/KOKa.dir/clean
 # Directory level rules for directory KOK_PHYSICS
 
 # Convenience name for "all" pass in the directory.
-KOK_PHYSICS/all:
+KOK_PHYSICS/all: KOK_PHYSICS/CMakeFiles/KOKp.dir/all
 
 .PHONY : KOK_PHYSICS/all
 
 # Convenience name for "clean" pass in the directory.
-KOK_PHYSICS/clean:
+KOK_PHYSICS/clean: KOK_PHYSICS/CMakeFiles/KOKp.dir/clean
 
 .PHONY : KOK_PHYSICS/clean
 
@@ -285,6 +286,43 @@ KOK_PHYSICS/clean:
 KOK_PHYSICS/preinstall:
 
 .PHONY : KOK_PHYSICS/preinstall
+
+#=============================================================================
+# Target rules for target KOK_PHYSICS/CMakeFiles/KOKp.dir
+
+# All Build rule for target.
+KOK_PHYSICS/CMakeFiles/KOKp.dir/all:
+	$(MAKE) -f KOK_PHYSICS/CMakeFiles/KOKp.dir/build.make KOK_PHYSICS/CMakeFiles/KOKp.dir/depend
+	$(MAKE) -f KOK_PHYSICS/CMakeFiles/KOKp.dir/build.make KOK_PHYSICS/CMakeFiles/KOKp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles --progress-num=61,62 "Built target KOKp"
+.PHONY : KOK_PHYSICS/CMakeFiles/KOKp.dir/all
+
+# Include target in all.
+all: KOK_PHYSICS/CMakeFiles/KOKp.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+KOK_PHYSICS/CMakeFiles/KOKp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 KOK_PHYSICS/CMakeFiles/KOKp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/CMakeFiles 0
+.PHONY : KOK_PHYSICS/CMakeFiles/KOKp.dir/rule
+
+# Convenience name for target.
+KOKp: KOK_PHYSICS/CMakeFiles/KOKp.dir/rule
+
+.PHONY : KOKp
+
+# clean rule for target.
+KOK_PHYSICS/CMakeFiles/KOKp.dir/clean:
+	$(MAKE) -f KOK_PHYSICS/CMakeFiles/KOKp.dir/build.make KOK_PHYSICS/CMakeFiles/KOKp.dir/clean
+.PHONY : KOK_PHYSICS/CMakeFiles/KOKp.dir/clean
+
+# clean rule for target.
+clean: KOK_PHYSICS/CMakeFiles/KOKp.dir/clean
+
+.PHONY : clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

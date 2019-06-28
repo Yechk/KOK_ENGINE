@@ -16,6 +16,8 @@
 #include "KOK_Actor.h"
 #include "KOK_Message.h"
 
+#include <iostream>
+
 using namespace std;
 
 /* TODO:
@@ -36,7 +38,7 @@ class KOK_ScriptContext
 private:
 
   KOK_PostOffice * _cacheOffice;
-  KOK_Actor * _cacheComponents[4];
+  KOK_Actor * _cacheComponents[6];
 
   asIScriptContext * _context;
   asIScriptEngine * _engine;
@@ -99,16 +101,6 @@ public:
     _engine->RegisterEnum("MessageSubject");
     _engine->RegisterEnumValue("MessageSubject", "KOK_SUBJECT_POKE", 0);
 
-
-    /*
-      enum MessageFlag
-      {
-        BROADCAST,
-        URGENT,
-        EXPRESS,
-        MEDIA
-      };
-    */
     _engine->RegisterEnum("MessageFlag");
     _engine->RegisterEnumValue("MessageFlag", "BROADCAST", 0);
     _engine->RegisterEnumValue("MessageFlag", "URGENT", 1);
@@ -121,10 +113,23 @@ public:
     _engine->RegisterEnumValue("MessageComponentType", "KOK_COMPONENT_SKELETON", 1);
     _engine->RegisterEnumValue("MessageComponentType", "KOK_COMPONENT_CONTROLLER", 2);
     _engine->RegisterEnumValue("MessageComponentType", "KOK_COMPONENT_PHYSICS", 3);
+    _engine->RegisterEnumValue("MessageComponentType", "KOK_COMPONENT_CAMERA", 4);
+    _engine->RegisterEnumValue("MessageComponentType", "KOK_COMPONENT_AUX0", 5);
 
     _engine->RegisterGlobalFunction("void RelayMessage(MessageSubject subject, MessageComponentType component, MessageFlag flag, int data)",
       asMETHODPR(KOK_ScriptContext, RelayMessage, (MessageSubject,
         MessageComponentType, MessageFlag, int), void),
+        asCALL_THISCALL_ASGLOBAL, this); assert(r>=0);
+
+    _engine->RegisterGlobalFunction("void RelayMessage(MessageSubject subject, MessageComponentType component, MessageFlag flag, float data)",
+      asMETHODPR(KOK_ScriptContext, RelayMessage, (MessageSubject,
+        MessageComponentType, MessageFlag, float), void),
+        asCALL_THISCALL_ASGLOBAL, this); assert(r>=0);
+
+    _engine->RegisterGlobalFunction("void RelayMessage(MessageSubject subject, MessageComponentType component, MessageFlag flag, "
+      "float dataX, float dataY, float dataZ)",
+      asMETHODPR(KOK_ScriptContext, RelayMessage, (MessageSubject,
+        MessageComponentType, MessageFlag, float, float, float), void),
         asCALL_THISCALL_ASGLOBAL, this); assert(r>=0);
 
     _context = _engine->CreateContext();
@@ -132,7 +137,7 @@ public:
 
   ~KOK_ScriptContext();
 
-  asIScriptFunction * LoadScript(string path)
+  asIScriptFunction * LoadScript(string path, string headerModule="")
   {
     //test the script
     CScriptBuilder builder;
@@ -142,6 +147,14 @@ public:
       cout << "ERROR STARTING NEW MODULE" << endl;
     }
     string concatenatedPath = "./Scripts/" + path;
+    if(headerModule != "")
+    {
+      r = builder.AddSectionFromFile(headerModule.c_str());
+      if(r < 0)
+      {
+        cout << "HEADER MODULE ERROR" << endl;
+      }
+    }
     r = builder.AddSectionFromFile(concatenatedPath.c_str());
     if(r < 0)
     {
@@ -154,7 +167,7 @@ public:
     }
 
     asIScriptModule *mod = _engine->GetModule("module");
-    asIScriptFunction *func = mod->GetFunctionByDecl("void main()");
+    asIScriptFunction *func = mod->GetFunctionByDecl("void main(int hint)");
     if(func == 0)
     {
       cout << "Yo homie you better add a main() function to that script." << endl;
@@ -163,19 +176,23 @@ public:
     return func;
   };
 
-  void CacheComponents(KOK_Actor * cacheMesh, KOK_Actor * cacheSkeleton, KOK_Actor * cachePhysics)
+  void CacheComponents(KOK_Actor * cacheMesh, KOK_Actor * cacheSkeleton,
+    KOK_Actor * cachePhysics, KOK_Actor * cacheCamera, KOK_Actor * cacheAux0)
   {
     _cacheComponents[0] = cacheMesh;
     _cacheComponents[1] = cacheSkeleton;
     _cacheComponents[3] = cachePhysics;
+    _cacheComponents[4] = cacheCamera;
+    _cacheComponents[5] = cacheAux0;
   }
 
-  void RunScript(asIScriptFunction * info, KOK_PostOffice * cacheOffice, KOK_Actor * cacheController)
+  void RunScript(asIScriptFunction * info, KOK_PostOffice * cacheOffice, KOK_Actor * cacheController, int hint)
   {
     _cacheOffice = cacheOffice;
     _cacheComponents[2] = cacheController;
 
     _context->Prepare(info);
+    _context->SetArgDWord(0, hint);
 
     int rt = _context->Execute();
     if(rt != asEXECUTION_FINISHED)
@@ -222,24 +239,51 @@ class KOK_ScriptedController : public KOK_Controller
 private:
   KOK_ScriptContext * _scriptContext;
   asIScriptFunction * _initScript;
+  asIScriptFunction * _updateScript;
 
 public:
 
   KOK_ScriptedController() {};
 
-  KOK_ScriptedController(KOK_ScriptContext * scriptContext, KOK_PostOffice * _localOffice, string initPath="") : _scriptContext{scriptContext}
+  KOK_ScriptedController(KOK_ScriptContext * scriptContext, KOK_PostOffice * _localOffice,
+    string initPath="", string updatePath="", string headerModule="") : _scriptContext{scriptContext}
   {
     localOffice = _localOffice;
+    _updateScript = NULL;
 
     if(initPath != "")
     {
       _initScript = _scriptContext->LoadScript(initPath);
-      _scriptContext->RunScript(_initScript, localOffice, this);
+      _scriptContext->RunScript(_initScript, localOffice, this, 0);
+    }
+
+    if(updatePath != "")
+    {
+      _updateScript = _scriptContext->LoadScript(updatePath, headerModule);
+    }
+  };
+
+  KOK_ScriptedController(KOK_ScriptContext * scriptContext, KOK_PostOffice * _localOffice,
+     asIScriptFunction * initScript, asIScriptFunction * updateScript) : _scriptContext{scriptContext}
+  {
+    localOffice = _localOffice;
+    _updateScript = NULL;
+
+    if(initScript != NULL)
+    {
+      _initScript = initScript;
+      _scriptContext->RunScript(_initScript, localOffice, this, 0);
+    }
+
+    if(updateScript != NULL)
+    {
+      _updateScript = updateScript;
     }
   };
 
   virtual void Update(double time)
   {
+    if(_updateScript != NULL) _scriptContext->RunScript(_updateScript, localOffice, this, 0);
     KOK_Controller::Update(time);
   };
 
@@ -256,6 +300,17 @@ public:
 
   };
 
+  void ReloadInit(string path)
+  {
+    if(_initScript != NULL) _initScript->Release();
+    _initScript = _scriptContext->LoadScript(path);
+    _scriptContext->RunScript(_initScript, localOffice, this, 0);
+  }
+
+  void RunScript(GLuint hint)
+  {
+    if(_updateScript != NULL) _scriptContext->RunScript(_updateScript, localOffice, this, hint);
+  }
 };
 
 #endif

@@ -80,6 +80,14 @@ namespace KOK_Graphics
 		int screenWidth = _lightData.screenWidth;
 		int screenHeight = _lightData.screenHeight;
 
+		//draw shadows
+
+		_shadowData.Draw(glm::vec3(0,2,0));
+
+		for(GLuint i = 0; i < models.size(); i++)
+		{
+			models[i].DrawShadowPass(_shadowData.shadowShader);
+		}
 
 		//draw models
 		glBindFramebuffer(GL_FRAMEBUFFER, _deferredData.FBO);

@@ -1,0 +1,7 @@
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/CMakeFiles/install/strip.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/CMakeFiles/edit_cache.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/CMakeFiles/KOKp.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/CMakeFiles/rebuild_cache.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/CMakeFiles/list_install_components.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/CMakeFiles/install/local.dir
+/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/CMakeFiles/install.dir

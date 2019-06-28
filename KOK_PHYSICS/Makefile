@@ -68,40 +68,6 @@ install/strip/fast: preinstall/fast
 	/usr/local/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/local/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/local/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -123,6 +89,40 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/local/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/local/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -156,6 +156,48 @@ depend:
 	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+# Convenience name for target.
+KOK_PHYSICS/CMakeFiles/KOKp.dir/rule:
+	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f CMakeFiles/Makefile2 KOK_PHYSICS/CMakeFiles/KOKp.dir/rule
+.PHONY : KOK_PHYSICS/CMakeFiles/KOKp.dir/rule
+
+# Convenience name for target.
+KOKp: KOK_PHYSICS/CMakeFiles/KOKp.dir/rule
+
+.PHONY : KOKp
+
+# fast build rule for target.
+KOKp/fast:
+	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f KOK_PHYSICS/CMakeFiles/KOKp.dir/build.make KOK_PHYSICS/CMakeFiles/KOKp.dir/build
+.PHONY : KOKp/fast
+
+src/KOK_PhysicsContext.o: src/KOK_PhysicsContext.cpp.o
+
+.PHONY : src/KOK_PhysicsContext.o
+
+# target to build an object file
+src/KOK_PhysicsContext.cpp.o:
+	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f KOK_PHYSICS/CMakeFiles/KOKp.dir/build.make KOK_PHYSICS/CMakeFiles/KOKp.dir/src/KOK_PhysicsContext.cpp.o
+.PHONY : src/KOK_PhysicsContext.cpp.o
+
+src/KOK_PhysicsContext.i: src/KOK_PhysicsContext.cpp.i
+
+.PHONY : src/KOK_PhysicsContext.i
+
+# target to preprocess a source file
+src/KOK_PhysicsContext.cpp.i:
+	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f KOK_PHYSICS/CMakeFiles/KOKp.dir/build.make KOK_PHYSICS/CMakeFiles/KOKp.dir/src/KOK_PhysicsContext.cpp.i
+.PHONY : src/KOK_PhysicsContext.cpp.i
+
+src/KOK_PhysicsContext.s: src/KOK_PhysicsContext.cpp.s
+
+.PHONY : src/KOK_PhysicsContext.s
+
+# target to generate assembly for a file
+src/KOK_PhysicsContext.cpp.s:
+	cd /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1 && $(MAKE) -f KOK_PHYSICS/CMakeFiles/KOKp.dir/build.make KOK_PHYSICS/CMakeFiles/KOKp.dir/src/KOK_PhysicsContext.cpp.s
+.PHONY : src/KOK_PhysicsContext.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -163,11 +205,15 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... list_install_components"
 	@echo "... edit_cache"
+	@echo "... KOKp"
 	@echo "... rebuild_cache"
+	@echo "... list_install_components"
+	@echo "... install/local"
+	@echo "... install"
+	@echo "... src/KOK_PhysicsContext.o"
+	@echo "... src/KOK_PhysicsContext.i"
+	@echo "... src/KOK_PhysicsContext.s"
 .PHONY : help
 
 

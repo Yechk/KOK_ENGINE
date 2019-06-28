@@ -103,6 +103,16 @@ namespace KOK_Graphics
 		_scale = scale;
 	}
 
+	void KOK_Model::SetRotation(glm::quat q)
+	{
+		_rotation = q;
+	}
+
+	void KOK_Model::SetOrientation(glm::quat q)
+	{
+		_orientation = q;
+	}
+
 	void KOK_Model::SetEulerRotation(GLfloat x, GLfloat y, GLfloat z)
 	{
 		_rotation = glm::toQuat( glm::orientate3( glm::vec3(x, y, z) ) );
@@ -111,6 +121,11 @@ namespace KOK_Graphics
 	void KOK_Model::SetEulerOrientation(GLfloat x, GLfloat y, GLfloat z)
 	{
 		_orientation = glm::toQuat( glm::orientate3( glm::vec3(x, y, z) ) );
+	}
+
+	glm::vec3 KOK_Model::GetEulerRotation() const
+	{
+		return glm::eulerAngles(_rotation);
 	}
 
 	KOK_Mesh KOK_Model::GenerateQuad()

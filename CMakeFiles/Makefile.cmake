@@ -14,6 +14,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "KOK_ANGEL/CMakeLists.txt"
   "KOK_CORE/CMakeLists.txt"
   "KOK_GRAPHICS/CMakeLists.txt"
+  "KOK_PHYSICS/CMakeLists.txt"
   "/usr/local/share/cmake-3.14/Modules/CMakeCInformation.cmake"
   "/usr/local/share/cmake-3.14/Modules/CMakeCXXInformation.cmake"
   "/usr/local/share/cmake-3.14/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"
@@ -60,4 +61,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "KOK_GRAPHICS/CMakeFiles/KOKg.dir/DependInfo.cmake"
   "KOK_CORE/CMakeFiles/KOKc.dir/DependInfo.cmake"
   "KOK_ANGEL/CMakeFiles/KOKa.dir/DependInfo.cmake"
+  "KOK_PHYSICS/CMakeFiles/KOKp.dir/DependInfo.cmake"
   )

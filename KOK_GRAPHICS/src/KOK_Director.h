@@ -429,7 +429,7 @@ namespace KOK_Graphics
 			glm::vec3 texelSize = glm::vec3(resX, 1.0f, resY);
 			glm::vec3 snappedPos = floor(pos / texelSize) * texelSize;
 
-		  lightView = glm::lookAt(snappedPos, snappedPos - glm::vec3(-1.01,0.7,0.1), glm::vec3(0,1,0));
+		  lightView = glm::lookAt(snappedPos, snappedPos - glm::vec3(0.0, 0.7, 0.1), glm::vec3(0,1,0));
 			lightSpaceMatrix = lightProjection * lightView;
 
 			glViewport(0, 0, shadowWidth, shadowHeight);
@@ -476,7 +476,7 @@ namespace KOK_Graphics
 			_lightData = LightProcessData(WINDOW_WIDTH, WINDOW_HEIGHT);
 			_deferredData = DeferredLightingData(WINDOW_WIDTH, WINDOW_HEIGHT);
 			_ssaoData = SSAOData(WINDOW_WIDTH, WINDOW_HEIGHT);
-			_shadowData = ShadowData(WINDOW_WIDTH, WINDOW_HEIGHT);
+			_shadowData = ShadowData(1024, 1024);
 			_aaData = AAProcessData(MSAA, 2, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 			_ppShader = LoadShaders("./Shaders/quad.vs","./Shaders/quad.fs");
@@ -493,16 +493,26 @@ namespace KOK_Graphics
 
 		void DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap, float glossTest, float specTest);
 
-		KOK_Model * AddModel(string name)
+		KOK_Model * GetModelByIndex(GLuint i)
+		{
+			return &models[i];
+		};
+
+		void SetModelPositionByIndex(GLuint i, glm::vec3 position)
+		{
+			models[i].SetPosition(position);
+		};
+
+		GLuint AddModel(string name)
 		{
 			models.push_back(KOK_Model(name, _defaultTextureFlags));
-			return &models.back();
+			return models.size() - 1;
 		}
 
-		KOK_Model * AddModel(string name, glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation)
+		GLuint AddModel(string name, glm::vec3 position, glm::vec3 scale, glm::vec3 orientation, glm::vec3 rotation)
 		{
 			models.push_back(KOK_Model(name, position, scale, orientation, rotation, _defaultTextureFlags));
-			return &models.back();
+			return models.size() - 1;
 		}
 	};
 

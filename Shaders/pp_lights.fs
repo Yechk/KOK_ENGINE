@@ -262,7 +262,7 @@ void main()
 
 	//vec4 edgeDetection = (dot(viewDir, normal) > 0.3) ? vec4(1.0) : vec4(1.0, 0.0, 0.0, 1.0);
 
-  vec3 lt = dl + pl;
+  vec3 lt = (dl + pl) * ShadowValue(position, normal, vec3(0.0, 0.7, 0.1));
   color = vec4(lt + emissiveAmbient.rgb + ambient, 1.0 - edge(gPosition, TexCoords, vec2(1280.0, 720.0)));
 	//color = vec4(position, 1.0);
 	horizontalEmission = blurH();

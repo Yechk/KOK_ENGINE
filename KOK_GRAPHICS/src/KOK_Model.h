@@ -42,8 +42,12 @@ namespace KOK_Graphics
 
 		void SetPosition(glm::vec3 position);
 		void SetScale(glm::vec3 scale);
+		void SetRotation(glm::quat q);
+		void SetOrientation(glm::quat q);
 		void SetEulerRotation(GLfloat x, GLfloat y, GLfloat z);
 		void SetEulerOrientation(GLfloat x, GLfloat y, GLfloat z);
+
+		glm::vec3 GetEulerRotation() const;
 
 		void SetStatic(bool isStatic);
 
@@ -51,7 +55,7 @@ namespace KOK_Graphics
 
 		static KOK_Mesh GenerateQuad();
 
-	protected:
+	private:
 		void LoadModel(string path, TextureLoadFlags defaultTextureFlags);
 		KOK_Mesh ProcessMesh(aiMesh * mesh, const aiScene * scene);
 		void ProcessNode(aiNode * node, const aiScene * scene);
