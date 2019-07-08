@@ -3,6 +3,7 @@
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o: KOK_GRAPHICS/src/KOK_Camera.cpp
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o: KOK_GRAPHICS/src/KOK_Camera.h
+KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o: KOK_GRAPHICS/../KOK_CORE/src/KOK_Actor.h
 
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/KOK_Camera.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o: KOK_GRAPHICS/src/KOK_Director.cpp

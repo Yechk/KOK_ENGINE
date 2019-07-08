@@ -20,19 +20,6 @@
 
 using namespace std;
 
-/* TODO:
-  - KOK_ScriptContext class will be registered as a singleton for the script engine. Actors will
-    have a reference to it
-  - Register enums for a message sending function sendmessage(COMPONENT_TYPE_ENUM, SUBJECT_ENUM, data)
-  - completely decouples components from script engine
-
-  -properties are accessed or set from a generic struct that is passed from the singleton (so there is no need to change context)
-  -use define to add definitions at compile time for script to make get/set generic properties easier.
-
-
-*/
-//struct to hold script execution info
-
 class KOK_ScriptContext
 {
 private:
@@ -53,14 +40,14 @@ private:
     printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
   };
 
-  void RelayMessage(MessageSubject subject,
+  void RelayMessage(string subject,
     MessageComponentType component, MessageFlag flag, MessageData data)
   {
     _cacheOffice->QueueMessage(subject, data, _cacheComponents[component],
       _cacheComponents[2], flag);
   }
 
-  void RelayMessage(MessageSubject subject,
+  void RelayMessage(string subject,
     MessageComponentType component, MessageFlag flag, int data)
   {
     MessageData _data;
@@ -69,7 +56,7 @@ private:
     RelayMessage(subject, component, flag, _data);
   }
 
-  void RelayMessage(MessageSubject subject,
+  void RelayMessage(string subject,
     MessageComponentType component, MessageFlag flag, float data)
   {
     MessageData _data;
@@ -78,7 +65,7 @@ private:
     RelayMessage(subject, component, flag, _data);
   }
 
-  void RelayMessage(MessageSubject subject,
+  void RelayMessage(string subject,
     MessageComponentType component, MessageFlag flag, float dataX,
     float dataY, float dataZ)
   {
@@ -97,11 +84,6 @@ public:
               this, asCALL_THISCALL); assert(r >= 0);
     RegisterStdString(_engine);
 
-    //enum for message subject
-    _engine->RegisterEnum("MessageSubject");
-    _engine->RegisterEnumValue("MessageSubject", "KOK_SUBJECT_POKE", 0);
-    _engine->RegisterEnumValue("MessageSubject", "KOK_SUBJECT_PHYSICS_MOVE", 1);
-
     _engine->RegisterEnum("MessageFlag");
     _engine->RegisterEnumValue("MessageFlag", "BROADCAST", 0);
     _engine->RegisterEnumValue("MessageFlag", "URGENT", 1);
@@ -117,19 +99,19 @@ public:
     _engine->RegisterEnumValue("MessageComponentType", "KOK_COMPONENT_CAMERA", 4);
     _engine->RegisterEnumValue("MessageComponentType", "KOK_COMPONENT_AUX0", 5);
 
-    _engine->RegisterGlobalFunction("void RelayMessage(MessageSubject subject, MessageComponentType component, MessageFlag flag, int data)",
-      asMETHODPR(KOK_ScriptContext, RelayMessage, (MessageSubject,
+    _engine->RegisterGlobalFunction("void RelayMessage(string subject, MessageComponentType component, MessageFlag flag, int data)",
+      asMETHODPR(KOK_ScriptContext, RelayMessage, (string,
         MessageComponentType, MessageFlag, int), void),
         asCALL_THISCALL_ASGLOBAL, this); assert(r>=0);
 
-    _engine->RegisterGlobalFunction("void RelayMessage(MessageSubject subject, MessageComponentType component, MessageFlag flag, float data)",
-      asMETHODPR(KOK_ScriptContext, RelayMessage, (MessageSubject,
+    _engine->RegisterGlobalFunction("void RelayMessage(string subject, MessageComponentType component, MessageFlag flag, float data)",
+      asMETHODPR(KOK_ScriptContext, RelayMessage, (string,
         MessageComponentType, MessageFlag, float), void),
         asCALL_THISCALL_ASGLOBAL, this); assert(r>=0);
 
-    _engine->RegisterGlobalFunction("void RelayMessage(MessageSubject subject, MessageComponentType component, MessageFlag flag, "
+    _engine->RegisterGlobalFunction("void RelayMessage(string subject, MessageComponentType component, MessageFlag flag, "
       "float dataX, float dataY, float dataZ)",
-      asMETHODPR(KOK_ScriptContext, RelayMessage, (MessageSubject,
+      asMETHODPR(KOK_ScriptContext, RelayMessage, (string,
         MessageComponentType, MessageFlag, float, float, float), void),
         asCALL_THISCALL_ASGLOBAL, this); assert(r>=0);
 
@@ -138,7 +120,7 @@ public:
 
   ~KOK_ScriptContext();
 
-  asIScriptFunction * LoadScript(string path, string headerModule="")
+  asIScriptFunction * LoadScript(string path, string headerModule="", string nameSpace="")
   {
     //test the script
     CScriptBuilder builder;
@@ -147,16 +129,18 @@ public:
     {
       cout << "ERROR STARTING NEW MODULE" << endl;
     }
-    string concatenatedPath = "./Scripts/" + path;
+    string concatenatedPath = "./Scripts/";
+    string filePath = concatenatedPath + path;
+    string headerPath = concatenatedPath + headerModule;
     if(headerModule != "")
     {
-      r = builder.AddSectionFromMemory("header", headerModule.c_str(), headerModule.length());
+      r = builder.AddSectionFromFile(headerPath.c_str());
       if(r < 0)
       {
         cout << "HEADER MODULE ERROR" << endl;
       }
     }
-    r = builder.AddSectionFromFile(concatenatedPath.c_str());
+    r = builder.AddSectionFromFile(filePath.c_str());
     if(r < 0)
     {
       cout << "SCRIPT ERRORS" << endl;
@@ -168,6 +152,13 @@ public:
     }
 
     asIScriptModule *mod = _engine->GetModule("module");
+
+    if(nameSpace != "")
+    {
+      r = mod->SetDefaultNamespace(nameSpace.c_str());
+      assert( r >= 0 );
+    }
+
     asIScriptFunction *func = mod->GetFunctionByDecl("void main(int hint)");
     if(func == 0)
     {
@@ -223,7 +214,7 @@ public:
     localOffice->Update(MARCH);
   };
 
-  virtual void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
+  virtual void DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
   {
 
   };
@@ -247,20 +238,20 @@ public:
   KOK_ScriptedController() {};
 
   KOK_ScriptedController(KOK_ScriptContext * scriptContext, KOK_PostOffice * _localOffice,
-    string initPath="", string updatePath="", string headerModule="") : _scriptContext{scriptContext}
+    string initPath="", string updatePath="", string headerModule="", string sharedNameSpace="") : _scriptContext{scriptContext}
   {
     localOffice = _localOffice;
     _updateScript = NULL;
 
     if(initPath != "")
     {
-      _initScript = _scriptContext->LoadScript(initPath);
+      _initScript = _scriptContext->LoadScript(initPath, headerModule, sharedNameSpace);
       _scriptContext->RunScript(_initScript, localOffice, this, 0);
     }
 
     if(updatePath != "")
     {
-      _updateScript = _scriptContext->LoadScript(updatePath, headerModule);
+      _updateScript = _scriptContext->LoadScript(updatePath, headerModule, sharedNameSpace);
     }
   };
 
@@ -288,9 +279,15 @@ public:
     KOK_Controller::Update(time);
   };
 
-  virtual void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
+  virtual void Update(double time, int flags)
   {
-    if (subject == KOK_SUBJECT_POKE)
+    if(_updateScript != NULL) _scriptContext->RunScript(_updateScript, localOffice, this, flags);
+    KOK_Controller::Update(time);
+  };
+
+  virtual void DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
+  {
+    if (subject == "poke")
     {
       cout << "KOK_ScriptedController was poked: " << data.i << endl;
     }

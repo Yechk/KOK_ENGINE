@@ -463,6 +463,7 @@ namespace KOK_Graphics
 
 		GLuint _ppShader;
 		GLuint _skyBoxShader;
+		KOK_Camera * _camera;
 
 		TextureLoadFlags _defaultTextureFlags;
 
@@ -488,10 +489,10 @@ namespace KOK_Graphics
 		}
 
 		void Update(double time) {};
-	  void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender) {};
+	  void DeliverMessage(string subject, MessageData data, KOK_Actor* sender) {};
 	  void Draw() {};
 
-		void DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap, float glossTest, float specTest);
+		void DrawScreenQuad(glm::mat4 projection, KOK_SkyBox * cubeMap);
 
 		KOK_Model * GetModelByIndex(GLuint i)
 		{
@@ -514,6 +515,17 @@ namespace KOK_Graphics
 			models.push_back(KOK_Model(name, position, scale, orientation, rotation, _defaultTextureFlags));
 			return models.size() - 1;
 		}
+
+		void SetCamera(KOK_Camera * camera)
+		{
+			_camera = camera;
+		}
+
+	 KOK_Camera * GetCamera() const
+	 {
+		 assert(_camera != NULL);
+		 return _camera;
+	 }
 	};
 
 }

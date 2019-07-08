@@ -42,9 +42,6 @@ const int MAX_LIGHTS = 10;
 float litByEnvironment = 1.0;
 uniform int numLights;
 
-uniform float specTest;
-uniform float glossTest;
-
 
 //light information in uniform buffer binding 2
 layout (std140, binding = 2) uniform lightData

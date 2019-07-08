@@ -16,6 +16,7 @@ include_directories(${CMAKE_SOURCE_DIR}/KOK_ANGEL/src)
 include_directories(${CMAKE_SOURCE_DIR}/KOK_PHYSICS/src)
 include_directories(${CMAKE_SOURCE_DIR}/KOK_PHYSICS/PhysX_Debug/PhysX/include)
 include_directories(${CMAKE_SOURCE_DIR}/KOK_PHYSICS/PhysX_Debug/PxShared/include)
+include_directories(${CMAKE_SOURCE_DIR}/Scripts)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")

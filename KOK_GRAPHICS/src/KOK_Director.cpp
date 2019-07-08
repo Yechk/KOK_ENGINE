@@ -75,14 +75,14 @@ namespace KOK_Graphics
 		return window;
 	}
 
-	void KOK_RenderProcess::DrawScreenQuad(glm::mat4 projection, KOK_Camera * camera, KOK_SkyBox * cubeMap, float glossTest, float specTest)
+	void KOK_RenderProcess::DrawScreenQuad(glm::mat4 projection, KOK_SkyBox * cubeMap)
 	{
 		int screenWidth = _lightData.screenWidth;
 		int screenHeight = _lightData.screenHeight;
 
 		//draw shadows
 
-		_shadowData.Draw(glm::vec3(0,2,0));
+		_shadowData.Draw(_camera->GetPosition());
 
 		for(GLuint i = 0; i < models.size(); i++)
 		{
@@ -106,7 +106,7 @@ namespace KOK_Graphics
 		//loop through models and draw
 		for(GLuint i = 0; i < models.size(); i++)
 		{
-			models[i].Draw(_deferredData.shader, projection, camera->GetView());
+			models[i].Draw(_deferredData.shader, projection, _camera->GetView());
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -142,7 +142,7 @@ namespace KOK_Graphics
 
 		//draw the lights
 		GLuint lightShader = _lightData.shader;
-		glm::vec3 camPosition = camera->GetPosition();
+		glm::vec3 camPosition = _camera->GetPosition();
 		glUseProgram(lightShader);
 
 		SetUniformTexture(lightShader,"gPosition", 0);
@@ -156,9 +156,6 @@ namespace KOK_Graphics
 		SetUniformTexture(lightShader,"tex_ssao", 8);
 		SetUniformVec3(lightShader, "viewPos", camPosition.x, camPosition.y, camPosition.z);
 		SetUniformMat4(lightShader, "lightSpaceMatrix", _shadowData.lightSpaceMatrix);
-
-		SetUniformFloat(lightShader, "specTest", specTest);
-		SetUniformFloat(lightShader, "glossTest", glossTest);
 
 
 
@@ -221,7 +218,7 @@ namespace KOK_Graphics
 		//put particles hereeeee
 
 		//skybox
-		cubeMap->Draw(_skyBoxShader, projection, camera->GetView());
+		cubeMap->Draw(_skyBoxShader, projection, _camera->GetView());
 
 		_aaData.Draw();
 

@@ -69,9 +69,9 @@ namespace KOK_Physics
       _currentTime = time;
     };
 
-    virtual void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
+    virtual void DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
     {
-      if (subject == KOK_SUBJECT_PHYSICS_MOVE)
+      if (subject == "move")
       {
         Move(data.v3);
       }

@@ -5,11 +5,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "KOK_Actor.h"
+
 namespace KOK_Graphics
 {
 
 	//point camera class
-	class KOK_Camera
+	class KOK_Camera : public KOK_Actor
 	{
 	protected:
 		enum CameraFunction //different algorithms for camera control
@@ -33,9 +35,9 @@ namespace KOK_Graphics
 
 				glm::vec3 orbitPosition;
 				float followDistance = 5.0f;
-				orbitPosition.x = followDistance * sin(0.0) + _position.x;
+				orbitPosition.x = -followDistance * sin(0.0) + _position.x;
 				orbitPosition.y = followDistance + _position.y;
-				orbitPosition.z = followDistance * cos(0.0) + _position.z;
+				orbitPosition.z = -followDistance * cos(0.0) + _position.z;
 
 				return glm::lookAt(orbitPosition, _target, _up);
 			}
@@ -44,9 +46,12 @@ namespace KOK_Graphics
 		};
 
 	public:
+		KOK_Camera();
 		KOK_Camera(glm::vec3 position, glm::vec3 target);
 
-		void Update();
+		virtual void Update(double time);
+		virtual void DeliverMessage(string subject, MessageData data, KOK_Actor* sender) {};
+		virtual void Draw() {};
 
 		//camera position
 		glm::vec3 GetPosition() const {return _position;};

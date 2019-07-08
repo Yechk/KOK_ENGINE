@@ -4,6 +4,7 @@
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Camera.cpp.o
  /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Camera.cpp
  /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Camera.h
+ KOK_GRAPHICS/../KOK_CORE/src/KOK_Actor.h
 KOK_GRAPHICS/CMakeFiles/KOKg.dir/src/KOK_Director.cpp.o
  /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Camera.h
  /home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_GRAPHICS/src/KOK_Director.cpp

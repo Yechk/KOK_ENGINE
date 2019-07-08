@@ -23,24 +23,6 @@ union MessageData
   glm::quat q;
 };
 
-enum MessageSubject
-{
-  KOK_SUBJECT_POKE                       = 0,
-
-  KOK_SUBJECT_PHYSICS_MOVE               = 1,
-
-  KOK_SUBJECT_WIDGET_LABEL_STRING        = 2,
-
-	KOK_SUBJECT_WIDGET_LABEL_DOUBLE        = 3,
-  KOK_SUBJECT_WIDGET_SLIDER_VALUE_UINT   = 3,
-
-  KOK_SUBJECT_WIDGET_SLIDER_VALUE_FLOAT  = 4,
-
-  KOK_SUBJECT_WIDGET_SLIDER_VALUE_RETURN = 5,
-
-  KOK_SUBJECT_WIDGET_LABEL_UINT          = 10,
-};
-
 enum MessageComponentType
 {
   KOK_COMPONENT_MESH,
@@ -60,7 +42,7 @@ public:
   KOK_Actor(string l) : KOK_Actor() { label = l;};
 
   virtual void Update(double time) = 0;
-  virtual void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender) = 0;
+  virtual void DeliverMessage(string subject, MessageData data, KOK_Actor* sender) = 0;
   virtual void Draw() = 0;
 };
 

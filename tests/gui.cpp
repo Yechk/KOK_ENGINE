@@ -67,8 +67,6 @@ int main()
 	const GLuint WINDOW_HEIGHT = 720;
 	const std::string VERSION = "0.0 (test)";
 
-	KOK_Camera * camera = new KOK_Camera(glm::vec3(10.0f,5.0f,10.0f), glm::vec3(0.0f,0.0f,0.0f));
-
 	char dd[] = "An urgent message. Should come first.";
 	char ddd[64];
 
@@ -136,8 +134,10 @@ int main()
 	KOK_Physics::KOK_PhysicsContext * physicsContext = new KOK_Physics::KOK_PhysicsContext();
 
 	PxRigidDynamic * dynamicSphere = physicsContext->AddDynamicActor(0.5f);
-	KOK_EXT_CharacterBasic * mainCharacter = new KOK_EXT_CharacterBasic(renderProcess, physicsContext, scriptContext, &office);
-	mainCharacter->InitCharacter("spider0", glm::vec3(0), glm::vec3(0), glm::vec3(1.0f));
+	KOK_CharacterBasic::KOK_EXT_CharacterBasic * mainCharacter = new KOK_CharacterBasic::KOK_EXT_CharacterBasic(renderProcess, physicsContext, scriptContext, &office);
+	mainCharacter->InitCharacter("spider0", glm::vec3(0), glm::vec3(0), glm::vec3(0.5f));
+
+	renderProcess->SetCamera(mainCharacter->GetCamera());
 
 	while(!glfwWindowShouldClose( window ) )
 	{
@@ -160,8 +160,8 @@ int main()
 
 		glfwGetCursorPos(window, &posX, &posY);
 
-		office.QueueMessage(5, 0, testSlider, testLabel, EXPRESS);
-		office.QueueMessage(5, 0, testSlider2, testLabel2, EXPRESS);
+		//office.QueueMessage(5, 0, testSlider, testLabel, EXPRESS);
+		//office.QueueMessage(5, 0, testSlider2, testLabel2, EXPRESS);
 
 
 		//update shit
@@ -170,19 +170,15 @@ int main()
 		//
 		physicsContext->StepPhysics(1.0f/60.0f);
 
-		//camera->SetTarget(glm::vec3(spiderT.p.x, spiderT.p.y +0.25f, spiderT.p.z));
-
 		mainCharacter->Update(currentTime);
-
-		camera->Update();
 
 		office.Update(MARCH);
 		windowTester.UpdateGUI();
 
-		float glossValue = (float)stoi(testLabel->label) / 100.0f;
-		float specValue = (float)stoi(testLabel2->label) / 100.0f;
+		//float glossValue = (float)stoi(testLabel->label) / 100.0f;
+		//float specValue = (float)stoi(testLabel2->label) / 100.0f;
 
-		renderProcess->DrawScreenQuad(projection, camera, skyBox, glossValue, specValue);
+		renderProcess->DrawScreenQuad(projection, skyBox);
 
 		if ( GLFW_PRESS == glfwGetKey( window, GLFW_KEY_ESCAPE ) )
 		{
@@ -193,7 +189,7 @@ int main()
 		glDisable (GL_CULL_FACE);
 
 
-		physicsContext->DrawDebugPhysics(projection, camera->GetView());
+		physicsContext->DrawDebugPhysics(projection, renderProcess->GetCamera()->GetView());
 		//draw version
 		stringstream ss;
 		ss << currentFrames;

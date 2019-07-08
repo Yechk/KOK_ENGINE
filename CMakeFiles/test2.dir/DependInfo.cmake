@@ -19,6 +19,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "KOK_PHYSICS/src"
   "KOK_PHYSICS/PhysX_Debug/PhysX/include"
   "KOK_PHYSICS/PhysX_Debug/PxShared/include"
+  "Scripts"
   )
 
 # Targets to which this target links.

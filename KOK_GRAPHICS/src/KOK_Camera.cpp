@@ -6,6 +6,13 @@
 
 namespace KOK_Graphics
 {
+	KOK_Camera::KOK_Camera()
+	{
+		_position = glm::vec3(0.0f);
+		_target = glm::vec3(0.0f);
+		_up = glm::vec3(0,1,0);
+		_view = GetTargetViewMatrix();
+	}
 
 	KOK_Camera::KOK_Camera(glm::vec3 position, glm::vec3 target)
 	{
@@ -16,7 +23,7 @@ namespace KOK_Graphics
 	}
 
 	//updates
-	void KOK_Camera::Update()
+	void KOK_Camera::Update(double time)
 	{
 		_view = GetTargetViewMatrix();
 	}

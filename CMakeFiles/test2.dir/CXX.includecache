@@ -283,6 +283,8 @@ glm/glm.hpp
 -
 glm/gtc/matrix_transform.hpp
 -
+KOK_Actor.h
+KOK_GRAPHICS/src/KOK_Actor.h
 
 KOK_GRAPHICS/src/KOK_Director.h
 GL/glew.h

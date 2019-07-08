@@ -210,7 +210,7 @@ namespace KOK_Graphics
 		}
 	}
 
-	void KOK_WM_Window::DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
+	void KOK_WM_Window::DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
 	{
 		//prints message data
 
@@ -258,9 +258,9 @@ namespace KOK_Graphics
 
 	}
 
-	void KOK_WM_Widget::DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
+	void KOK_WM_Widget::DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
 	{
-		if(subject == 2) //change label to string
+		if(subject == "label_to_string") //change label to string
 		{
 			memcpy(&label, data.p, 64);
 		}
@@ -300,14 +300,14 @@ namespace KOK_Graphics
 		manager->DrawText(label, posX, posY, 0.5f, _parent->colorLight);
 	}
 
-	void KOK_WM_Widget_Label::DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
+	void KOK_WM_Widget_Label::DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
 	{
-		if(subject == 3) //change label to double
+		if(subject == "label_to_double") //change label to double
 		{
 			label = to_string(data.d);//
 		}
 
-		if(subject == 10) //change label to uint
+		if(subject == "label_to_int") //change label to uint
 		{
 			label = to_string(data.ui);//
 		}
@@ -335,21 +335,21 @@ namespace KOK_Graphics
 			KOK_WindowManager::Textures::circle16, glm::vec4(_parent->colorLight, 1.0f));
 	}
 
-	void KOK_WM_Widget_Slider::DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender)
+	void KOK_WM_Widget_Slider::DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
 	{
-		if(subject == 3) //change value from uint
+		if(subject == "value_from_uint") //change value from uint
 		{
 			_value = (double)data.ui;//
 		}
 
-		if(subject == 4) //change value from float
+		if(subject == "value_from_float") //change value from float
 		{
 			_value = (double)(data.f * 255);//
 		}
 
-		if(subject == 5) //return value
+		if(subject == "value_return") //return value
 		{
-			_parent->office->QueueMessage(10, (uint)_value, sender, this, MEDIA);
+			_parent->office->QueueMessage("value", (uint)_value, sender, this, MEDIA);
 		}
 	}
 

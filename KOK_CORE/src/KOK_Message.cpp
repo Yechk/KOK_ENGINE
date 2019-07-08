@@ -19,7 +19,7 @@ bool KOK_MailBox::DeliverNextMessage()
   return true;
 }
 
-void KOK_PostOffice::QueueMessage(uint64_t subject, MessageData data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
+void KOK_PostOffice::QueueMessage(string subject, MessageData data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
 {
   KOK_Message m = KOK_Message(subject, data, target, sender);
   if (flags == BROADCAST) _broadcast.push(m);
@@ -28,7 +28,7 @@ void KOK_PostOffice::QueueMessage(uint64_t subject, MessageData data, KOK_Actor*
   if (flags == MEDIA) _media.AddMessage(m);
 }
 
-void KOK_PostOffice::QueueMessage(uint64_t subject, float data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
+void KOK_PostOffice::QueueMessage(string subject, float data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
 {
   MessageData t;
   t.f = data;
@@ -36,7 +36,7 @@ void KOK_PostOffice::QueueMessage(uint64_t subject, float data, KOK_Actor* targe
   QueueMessage(subject, t, target, sender, flags);
 }
 
-void KOK_PostOffice::QueueMessage(uint64_t subject, double data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
+void KOK_PostOffice::QueueMessage(string subject, double data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
 {
   MessageData t;
   t.d = data;
@@ -44,7 +44,7 @@ void KOK_PostOffice::QueueMessage(uint64_t subject, double data, KOK_Actor* targ
   QueueMessage(subject, t, target, sender, flags);
 }
 
-void KOK_PostOffice::QueueMessage(uint64_t subject, int data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
+void KOK_PostOffice::QueueMessage(string subject, int data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
 {
   MessageData t;
   t.i = data;
@@ -52,7 +52,7 @@ void KOK_PostOffice::QueueMessage(uint64_t subject, int data, KOK_Actor* target,
   QueueMessage(subject, t, target, sender, flags);
 }
 
-void KOK_PostOffice::QueueMessage(uint64_t subject, uint data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
+void KOK_PostOffice::QueueMessage(string subject, uint data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
 {
   MessageData t;
   t.ui = data;
@@ -60,7 +60,7 @@ void KOK_PostOffice::QueueMessage(uint64_t subject, uint data, KOK_Actor* target
   QueueMessage(subject, t, target, sender, flags);
 }
 
-void KOK_PostOffice::QueueMessage(uint64_t subject, void* data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
+void KOK_PostOffice::QueueMessage(string subject, void* data, KOK_Actor* target, KOK_Actor* sender, MessageFlag flags)
 {
   MessageData t;
   t.p = data;

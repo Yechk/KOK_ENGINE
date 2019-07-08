@@ -51,7 +51,7 @@ namespace KOK_Graphics
 
 		void Draw();
 		virtual void Draw(KOK_TextManager * manager);
-		void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender);
+		void DeliverMessage(string subject, MessageData data, KOK_Actor* sender);
 		void Update(double time);
 
 		inline void SetParent(KOK_WM_Window * p) {_parent = p;};
@@ -66,7 +66,7 @@ namespace KOK_Graphics
 		KOK_WM_Widget_Label(string l) : KOK_WM_Widget(l) {_type = LABEL;};
 		void Draw();
 		void Draw(KOK_TextManager * manager);
-		void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender);
+		void DeliverMessage(string subject, MessageData data, KOK_Actor* sender);
 		void Update(double time);
 	};
 
@@ -80,7 +80,7 @@ namespace KOK_Graphics
 		KOK_WM_Widget_Slider(string l) : KOK_WM_Widget(l) {_type = SLIDER;};
 		void Draw() {};
 		void Draw(KOK_TextManager * manager);
-		void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender);
+		void DeliverMessage(string subject, MessageData data, KOK_Actor* sender);
 		void Update(double time);
 	};
 
@@ -146,7 +146,7 @@ namespace KOK_Graphics
 
 		void Draw();
 		void Draw(KOK_TextManager * manager);
-		void DeliverMessage(uint64_t subject, MessageData data, KOK_Actor* sender);
+		void DeliverMessage(string subject, MessageData data, KOK_Actor* sender);
 		void Update(double time);
 
 		KOK_WM_Widget * AddWidget(WidgetType w, string l, GLfloat offsetX, GLfloat offsetY, bool grid);
