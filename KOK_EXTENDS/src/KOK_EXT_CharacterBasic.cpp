@@ -34,11 +34,14 @@ using namespace std;
 
 namespace KOK_CharacterBasic
 {
+  int KOK_EXT_CharacterBasic::currentInputFlags = 0;
+
+
   KOK_EXT_CharacterBasic::KOK_EXT_CharacterBasic(
     KOK_Graphics::KOK_RenderProcess * renderProcess,
     KOK_Physics::KOK_PhysicsContext * physicsContext,
     KOK_ScriptContext * scriptContext,
-    KOK_PostOffice * globalOffice)
+    KOK_PostOffice * globalOffice, GLFWwindow * window)
   {
     _physicsCharacter = new KOK_Physics::KOK_PhysicsCharacter(physicsContext);
     _renderProcess = renderProcess;
@@ -46,9 +49,17 @@ namespace KOK_CharacterBasic
     _localOffice = new KOK_PostOffice(32);
     _scriptContext = scriptContext;
 
-    _camera = new KOK_Graphics::KOK_Camera();
+    glfwSetKeyCallback(window, KeyCallback);
+    currentInputFlags = 0;
 
-    _controller = new KOK_ScriptedController(scriptContext, _localOffice, "playerInit.as", "playerUpdate.as",
+    _camera = new KOK_Graphics::KOK_Camera();
+    _up = glm::vec3(0,1,0);
+    _camera->SetUp(_up);
+
+    _forward = glm::vec3(0,0,1);
+    _right = glm::vec3(-1,0,0);
+
+    _controller = new KOK_ScriptedController(scriptContext, _localOffice, "playerUpdate.as",
       CHARACTER_HEADER_MODULE, "KOK_CharacterBasic");
   }
 
@@ -56,21 +67,41 @@ namespace KOK_CharacterBasic
   {
     _characterModel = _renderProcess->AddModel(modelPath, location, scale, glm::vec3(0), rotation);
     _physicsCharacter->SetPosition(location);
+
+    KOK_Graphics::KOK_Model * thisModel = _renderProcess->GetModelByIndex(_characterModel);
+    _scriptContext->CacheComponents(thisModel, NULL,
+      _physicsCharacter, _camera, NULL);
+
+    _controller->RunInit();
   };
 
   void KOK_EXT_CharacterBasic::Update(double time)
   {
-    _scriptContext->CacheComponents(_renderProcess->GetModelByIndex(_characterModel), NULL,
+    KOK_Graphics::KOK_Model * thisModel = _renderProcess->GetModelByIndex(_characterModel);
+    _scriptContext->CacheComponents(thisModel, NULL,
       _physicsCharacter, _camera, NULL);
 
     glm::vec3 currentPhysicsPosition = _physicsCharacter->GetPosition();
 
+    glm::quat modelRot = thisModel->GetRotation();
+
+    _forwardVector = _forward * modelRot;
+    _rightVector = _right * modelRot;
+
+    glm::vec3 camPosition = _forwardVector;
+    float camFollowDistance = 5.0f;
+    camPosition.x *= -camFollowDistance;
+    camPosition.y += camFollowDistance;
+    camPosition.z *= -camFollowDistance;
+
     _camera->SetTarget(glm::vec3(currentPhysicsPosition.x, currentPhysicsPosition.y +0.25f, currentPhysicsPosition.z));
+    _camera->SetPosition(currentPhysicsPosition + camPosition);
     _camera->Update(time);
+    _physicsCharacter->SetDirectionVectors(_forwardVector, _rightVector, _up);
     _physicsCharacter->Update(time);
-    _controller->Update(time, LOOP | INPUT_UP);
+    _controller->Update(time, currentInputFlags);
+
     _renderProcess->SetModelPositionByIndex(_characterModel, currentPhysicsPosition);
-    _localOffice->Update(DUMP);
   };
 
   void KOK_EXT_CharacterBasic::DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
@@ -82,5 +113,60 @@ namespace KOK_CharacterBasic
   {
 
   };
+
+  void KOK_EXT_CharacterBasic::KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mods)
+  {
+    if(action == GLFW_PRESS)
+    {
+      switch (key)
+      {
+        case GLFW_KEY_W:
+          currentInputFlags |= INPUT_FORWARD;
+          break;
+
+        case GLFW_KEY_S:
+          currentInputFlags |= INPUT_BACK;
+          break;
+
+        case GLFW_KEY_A:
+          currentInputFlags |= INPUT_LEFT;
+          break;
+
+        case GLFW_KEY_D:
+          currentInputFlags |= INPUT_RIGHT;
+          break;
+
+        case GLFW_KEY_SPACE:
+          currentInputFlags |= INPUT_JUMP;
+          break;
+      }
+    }
+
+    if(action == GLFW_RELEASE)
+    {
+      switch (key)
+      {
+        case GLFW_KEY_W:
+          currentInputFlags &= ~INPUT_FORWARD;
+          break;
+
+        case GLFW_KEY_S:
+          currentInputFlags &= ~INPUT_BACK;
+          break;
+
+        case GLFW_KEY_A:
+          currentInputFlags &= ~INPUT_LEFT;
+          break;
+
+        case GLFW_KEY_D:
+          currentInputFlags &= ~INPUT_RIGHT;
+          break;
+
+        case GLFW_KEY_SPACE:
+          currentInputFlags &= ~INPUT_JUMP;
+          break;
+      }
+    }
+  }
 
 }

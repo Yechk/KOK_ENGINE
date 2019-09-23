@@ -14,12 +14,6 @@ namespace KOK_Graphics
 	class KOK_Camera : public KOK_Actor
 	{
 	protected:
-		enum CameraFunction //different algorithms for camera control
-		{
-			TARGET,
-			DIRECTIONAL,
-			ORBIT
-		} cameraFunction = ORBIT;
 
 		glm::vec3 _position;
 		glm::vec3 _target;
@@ -29,25 +23,11 @@ namespace KOK_Graphics
 
 		glm::mat4 GetTargetViewMatrix()
 		{
-			if(cameraFunction == ORBIT)
-			{
-				_position = _target;
-
-				glm::vec3 orbitPosition;
-				float followDistance = 5.0f;
-				orbitPosition.x = -followDistance * sin(0.0) + _position.x;
-				orbitPosition.y = followDistance + _position.y;
-				orbitPosition.z = -followDistance * cos(0.0) + _position.z;
-
-				return glm::lookAt(orbitPosition, _target, _up);
-			}
-
 		  return glm::lookAt(_position, _target, _up);
 		};
 
 	public:
 		KOK_Camera();
-		KOK_Camera(glm::vec3 position, glm::vec3 target);
 
 		virtual void Update(double time);
 		virtual void DeliverMessage(string subject, MessageData data, KOK_Actor* sender) {};
@@ -65,6 +45,8 @@ namespace KOK_Graphics
 		//camera target
 		glm::vec3 GetTarget() const {return _target;};
 		void SetTarget(glm::vec3 target) {_target = target;};
+
+		void SetUp(glm::vec3 up){_up = up;};
 
 		//camera view
 		glm::mat4 GetView() const {return _view;};

@@ -120,7 +120,7 @@ public:
 
   ~KOK_ScriptContext();
 
-  asIScriptFunction * LoadScript(string path, string headerModule="", string nameSpace="")
+  void LoadScript(string path, asIScriptFunction **funcUpdate, asIScriptFunction **funcInit, string headerModule="", string nameSpace="")
   {
     //test the script
     CScriptBuilder builder;
@@ -159,13 +159,8 @@ public:
       assert( r >= 0 );
     }
 
-    asIScriptFunction *func = mod->GetFunctionByDecl("void main(int hint)");
-    if(func == 0)
-    {
-      cout << "Yo homie you better add a main() function to that script." << endl;
-    }
-
-    return func;
+    *funcUpdate = mod->GetFunctionByDecl("void Update(int hint)");
+    *funcInit = mod->GetFunctionByDecl("void Init(int hint)");
   };
 
   void CacheComponents(KOK_Actor * cacheMesh, KOK_Actor * cacheSkeleton,
@@ -237,21 +232,16 @@ public:
 
   KOK_ScriptedController() {};
 
-  KOK_ScriptedController(KOK_ScriptContext * scriptContext, KOK_PostOffice * _localOffice,
-    string initPath="", string updatePath="", string headerModule="", string sharedNameSpace="") : _scriptContext{scriptContext}
+  KOK_ScriptedController(KOK_ScriptContext * scriptContext, KOK_PostOffice * _localOffice, string path="",
+    string headerModule="", string sharedNameSpace="") : _scriptContext{scriptContext}
   {
     localOffice = _localOffice;
     _updateScript = NULL;
+    _initScript = NULL;
 
-    if(initPath != "")
+    if(path != "")
     {
-      _initScript = _scriptContext->LoadScript(initPath, headerModule, sharedNameSpace);
-      _scriptContext->RunScript(_initScript, localOffice, this, 0);
-    }
-
-    if(updatePath != "")
-    {
-      _updateScript = _scriptContext->LoadScript(updatePath, headerModule, sharedNameSpace);
+      _scriptContext->LoadScript(path, &_updateScript, &_initScript, headerModule, sharedNameSpace);
     }
   };
 
@@ -264,7 +254,6 @@ public:
     if(initScript != NULL)
     {
       _initScript = initScript;
-      _scriptContext->RunScript(_initScript, localOffice, this, 0);
     }
 
     if(updateScript != NULL)
@@ -298,11 +287,9 @@ public:
 
   };
 
-  void ReloadInit(string path)
+  void RunInit()
   {
-    if(_initScript != NULL) _initScript->Release();
-    _initScript = _scriptContext->LoadScript(path);
-    _scriptContext->RunScript(_initScript, localOffice, this, 0);
+    if(_initScript != NULL) _scriptContext->RunScript(_initScript, localOffice, this, 1);
   }
 
   void RunScript(GLuint hint)

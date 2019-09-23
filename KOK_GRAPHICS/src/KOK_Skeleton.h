@@ -112,10 +112,10 @@ namespace KOK_Graphics
 
     void TransformBone(NodeAnim * nodeAnim, float animationTime);
 
-    void TransformBone(const BoneNode& node, const glm::mat4& ParentTransform, glm::mat4 globalInverse,
+    void TransformBone(const BoneNode& node, glm::mat4 ParentTransform, glm::mat4 globalInverse,
       vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping);
 
-    void TransformBone(const BoneNode& node, const glm::mat4& ParentTransform, glm::mat4 globalInverse,
+    void TransformBone(const BoneNode& node, glm::mat4 ParentTransform, glm::mat4 globalInverse,
       vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping, GLfloat factor, Animation * nextAnim);
   };
 
@@ -130,15 +130,15 @@ namespace KOK_Graphics
 
     void SwitchAnimation(string name, GLfloat timeInSeconds);
 
-    void AddBoneData(const GLuint& boneID, const float& weight, const GLuint& vertexID);
+    void AddBoneData(GLuint boneID, float weight, GLuint vertexID);
     void BoneTransform(GLfloat timeInSeconds);
     static void CalcInterpolatedScaling(glm::vec3& out, float animationTime, NodeAnim * nodeAnim);
     static void CalcInterpolatedRotation(glm::quat& out, float animationTime, NodeAnim * nodeAnim);
     static void CalcInterpolatedPosition(glm::vec3& out, float animationTime, NodeAnim * nodeAnim);
 
-    static GLuint FindRotation(const float& animationTime, NodeAnim * nodeAnim);
-    static GLuint FindScaling(const float& animationTime, NodeAnim * nodeAnim);
-    static GLuint FindPosition(const float& animationTime, NodeAnim * nodeAnim);
+    static GLuint FindRotation(float animationTime, NodeAnim * nodeAnim);
+    static GLuint FindScaling(float animationTime, NodeAnim * nodeAnim);
+    static GLuint FindPosition(float animationTime, NodeAnim * nodeAnim);
 
     void VertexTransforms();
 

@@ -4,12 +4,14 @@
 #include "string.h"
 
 #include <queue>
+#include <iostream>
 
 using namespace std;
 
 bool KOK_MailBox::DeliverNextMessage()
 {
   if(_messages.empty()) return false;
+
 
   KOK_Message m = _messages.front();
 

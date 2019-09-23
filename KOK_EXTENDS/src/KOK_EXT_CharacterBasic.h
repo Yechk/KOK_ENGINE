@@ -41,16 +41,29 @@ namespace KOK_CharacterBasic
     KOK_ScriptContext * _scriptContext;
     KOK_Graphics::KOK_Camera * _camera;
 
+    glm::vec3 _forward;
+    glm::vec3 _right;
+    glm::vec3 _up;
+
+    glm::vec3 _forwardVector;
+    glm::vec3 _rightVector;
+
   public:
+    static int currentInputFlags;
+
     KOK_EXT_CharacterBasic(KOK_Graphics::KOK_RenderProcess * renderProcess,
       KOK_Physics::KOK_PhysicsContext * physicsContext,
-      KOK_ScriptContext * scriptContext, KOK_PostOffice * globalOffice);
+      KOK_ScriptContext * scriptContext, KOK_PostOffice * globalOffice, GLFWwindow * window);
 
     void InitCharacter(string modelPath, glm::vec3 location, glm::vec3 rotation, glm::vec3 scale);
 
     void Update(double time);
     void DeliverMessage(string subject, MessageData data, KOK_Actor* sender);
     void Draw();
+
+    //this is the input map for the character, can be changed
+    // TODO: make sure this map is set in a script
+    static void KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mods);
 
     KOK_Graphics::KOK_Camera * GetCamera() const
     {

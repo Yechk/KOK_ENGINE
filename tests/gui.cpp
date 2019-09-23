@@ -134,13 +134,16 @@ int main()
 	KOK_Physics::KOK_PhysicsContext * physicsContext = new KOK_Physics::KOK_PhysicsContext();
 
 	PxRigidDynamic * dynamicSphere = physicsContext->AddDynamicActor(0.5f);
-	KOK_CharacterBasic::KOK_EXT_CharacterBasic * mainCharacter = new KOK_CharacterBasic::KOK_EXT_CharacterBasic(renderProcess, physicsContext, scriptContext, &office);
-	mainCharacter->InitCharacter("spider0", glm::vec3(0), glm::vec3(0), glm::vec3(0.5f));
+	KOK_CharacterBasic::KOK_EXT_CharacterBasic * mainCharacter = new KOK_CharacterBasic::KOK_EXT_CharacterBasic(renderProcess, physicsContext,
+																																scriptContext, &office, window);
 
 	renderProcess->SetCamera(mainCharacter->GetCamera());
 
+	mainCharacter->InitCharacter("ybot", glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0), glm::vec3(0.01f));
+
 	while(!glfwWindowShouldClose( window ) )
 	{
+		glfwPollEvents();
 		//calculate frame ms
 		double currentTime = glfwGetTime();
 		nbFrames++;
@@ -165,14 +168,12 @@ int main()
 
 
 		//update shit
-		glfwPollEvents();
 
 		//
+		mainCharacter->Update(currentTime);
 		physicsContext->StepPhysics(1.0f/60.0f);
 
-		mainCharacter->Update(currentTime);
 
-		office.Update(MARCH);
 		windowTester.UpdateGUI();
 
 		//float glossValue = (float)stoi(testLabel->label) / 100.0f;
@@ -215,8 +216,7 @@ int main()
 		textManager->DrawText(strm, 25.0, 580.0, 0.5f, K_COLOR_WHITE);
 
 		//windowTester.DrawGUI();
-
-
+		office.Update(MARCH);
 		glfwSwapBuffers(window);
 	}
 

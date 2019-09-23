@@ -93,6 +93,11 @@ namespace KOK_Graphics
 		}
 	}
 
+	void KOK_Model::Update(double time)
+	{
+
+	};
+
 	void KOK_Model::SetPosition(glm::vec3 position)
 	{
 		_position = position;
@@ -126,6 +131,11 @@ namespace KOK_Graphics
 	glm::vec3 KOK_Model::GetEulerRotation() const
 	{
 		return glm::eulerAngles(_rotation);
+	}
+
+	glm::quat KOK_Model::GetRotation() const
+	{
+		return _rotation;
 	}
 
 	KOK_Mesh KOK_Model::GenerateQuad()
@@ -270,17 +280,22 @@ namespace KOK_Graphics
 
 		//path for model
 		string basePath = "./Models/" + path + "/";
-		string modelPath = basePath + path + ".obj";
+		string modelPath = basePath + path;
+
 		texturePath = basePath + "default/" + path + "_";
 
 		Assimp::Importer import;
 		const aiScene * _m_Scene;
-		_m_Scene = import.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_OptimizeGraph);
+		_m_Scene = import.ReadFile(modelPath + ".obj", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_OptimizeGraph);
 
 		if(!_m_Scene || _m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !_m_Scene->mRootNode)
 		{
-			cout << "ERROR WITH ASSIMP::" << import.GetErrorString() << endl;
-			return;
+			_m_Scene = import.ReadFile(modelPath + ".fbx", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_OptimizeGraph);
+			if(!_m_Scene || _m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !_m_Scene->mRootNode)
+			{
+				cout << "ERROR WITH ASSIMP::" << import.GetErrorString() << endl;
+				return;
+			}
 		}
 
 		ProcessNode(_m_Scene->mRootNode, _m_Scene);

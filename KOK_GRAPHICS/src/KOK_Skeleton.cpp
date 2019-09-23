@@ -110,7 +110,7 @@ namespace KOK_Graphics
     KOK_Skeleton::CalcInterpolatedPosition(nodeAnim->translation, animationTime, nodeAnim);
   }
 
-  void Animation::TransformBone(const BoneNode& node, const glm::mat4& ParentTransform, glm::mat4 globalInverse,
+  void Animation::TransformBone(const BoneNode& node, glm::mat4 ParentTransform, glm::mat4 globalInverse,
     vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping)
   {
     glm::mat4 trans = node.transformation;
@@ -146,7 +146,7 @@ namespace KOK_Graphics
   }
 
   //transform for interpolation
-  void Animation::TransformBone(const BoneNode& node, const glm::mat4& ParentTransform, glm::mat4 globalInverse,
+  void Animation::TransformBone(const BoneNode& node, glm::mat4 ParentTransform, glm::mat4 globalInverse,
     vector<BoneInfo>& _m_BoneInfo, map<string,uint>& _m_BoneMapping,
     GLfloat factor, Animation * currentAnim)
   {
@@ -251,7 +251,7 @@ namespace KOK_Graphics
 
   }
 
-  void KOK_Skeleton::AddBoneData(const GLuint& boneID, const float& weight, const GLuint& vertexID)
+  void KOK_Skeleton::AddBoneData(GLuint boneID, float weight, GLuint vertexID)
   {
     if(_VBD.size() == 0) _VBD.resize(_meshData->_vertices.size());
 
@@ -266,7 +266,7 @@ namespace KOK_Graphics
     }
   }
 
-  GLuint KOK_Skeleton::FindRotation(const float& animationTime, NodeAnim * nodeAnim)
+  GLuint KOK_Skeleton::FindRotation(float animationTime, NodeAnim * nodeAnim)
   {
       assert(nodeAnim->RotationKeys.size() > 0);
 
@@ -281,7 +281,7 @@ namespace KOK_Graphics
       return 0;
   }
 
-  GLuint KOK_Skeleton::FindScaling(const float& animationTime, NodeAnim * nodeAnim)
+  GLuint KOK_Skeleton::FindScaling(float animationTime, NodeAnim * nodeAnim)
   {
 
       assert(nodeAnim->ScaleKeys.size() > 0);
@@ -297,7 +297,7 @@ namespace KOK_Graphics
       return 0;
   }
 
-  GLuint KOK_Skeleton::FindPosition(const float& animationTime, NodeAnim * nodeAnim)
+  GLuint KOK_Skeleton::FindPosition(float animationTime, NodeAnim * nodeAnim)
   {
       for (GLuint i = 0 ; i < nodeAnim->PositionKeys.size() - 1 ; i++) {
           if (animationTime < (float)nodeAnim->PositionKeys[i + 1].time) {

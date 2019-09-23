@@ -28,10 +28,27 @@ namespace KOK_Physics
     PxController * _controller;
     double _currentTime;
     double _lastMoveTime;
+    double _lastFrameTime;
+    float _deltaTime;
+
+    //need physics info for kinematic body
+    glm::vec3 _velocity;
+    glm::vec3 _acceleration;
+    glm::vec3 _maxVelocity;
+    glm::vec3 _friction;
+
+    glm::vec3 _forwardVector;
+    glm::vec3 _rightVector;
+    glm::vec3 _upVector;
 
   public:
     KOK_PhysicsCharacter(KOK_PhysicsContext * physicsContext) : _physicsContext{physicsContext}
     {
+      _velocity = glm::vec3();
+      _acceleration = glm::vec3();
+      _maxVelocity = glm::vec3();
+      _friction = glm::vec3();
+
       PxCapsuleControllerDesc desc;
       desc.height = 1.0f;
       desc.radius = 0.25f;
@@ -43,6 +60,7 @@ namespace KOK_Physics
       cDesc->position = PxExtendedVec3(0.0f,1.0f,0.0f);
 
       _lastMoveTime = 0.0;
+      _lastFrameTime = 0.0;
 
       _controller = _physicsContext->characterManager->createController(*cDesc);
     };
@@ -51,6 +69,13 @@ namespace KOK_Physics
     {
       _controller->setPosition(PxExtendedVec3(position.x, position.y, position.z));
     };
+
+    void SetDirectionVectors(glm::vec3 forwardVector, glm::vec3 rightVector, glm::vec3 upVector)
+    {
+      _forwardVector = forwardVector;
+      _rightVector = rightVector;
+      _upVector = upVector;
+    }
 
     glm::vec3 GetPosition() const
     {
@@ -64,16 +89,90 @@ namespace KOK_Physics
       _lastMoveTime = _currentTime;
     };
 
+
+
     virtual void Update(double time)
     {
+      if (_lastMoveTime == 0.0) _lastMoveTime = time;
+      _lastFrameTime = _currentTime;
       _currentTime = time;
+      _deltaTime = (float)(_currentTime - _lastFrameTime);
+
+      _velocity += _deltaTime * _acceleration;
+      _velocity *= _friction;
+      _velocity = glm::clamp(_velocity, -_maxVelocity, _maxVelocity);
+      Move(_velocity * _deltaTime);
     };
 
     virtual void DeliverMessage(string subject, MessageData data, KOK_Actor* sender)
     {
-      if (subject == "move")
-      {
+      if(subject == "translate")
         Move(data.v3);
+      if(subject == "set velocity")
+        _velocity = data.v3;
+
+      if(subject == "apply velocity")
+        _velocity += data.v3;
+
+      if(subject == "apply x velocity")
+      {
+        _velocity += _rightVector * data.f;
+      }
+
+      if(subject == "apply y velocity")
+      {
+        _velocity += _upVector * data.f;
+      }
+
+      if(subject == "apply z velocity")
+      {
+        _velocity += _forwardVector * data.f;
+      }
+
+      if(subject == "set acceleration")
+        _acceleration = data.v3;
+
+      if(subject == "apply acceleration")
+        _acceleration += data.v3;
+
+      if(subject == "apply x acceleration")
+      {
+        _acceleration += _rightVector * data.f;
+      }
+
+      if(subject == "apply y acceleration")
+      {
+        _acceleration += _upVector * data.f;
+      }
+
+      if(subject == "apply z acceleration")
+      {
+        _acceleration += _forwardVector * data.f;
+      }
+
+      if(subject == "set x acceleration")
+      {
+        _acceleration = _rightVector * data.f;
+      }
+
+      if(subject == "set y acceleration")
+      {
+        _acceleration = _upVector * data.f;
+      }
+
+      if(subject == "set z acceleration")
+      {
+        _acceleration = _forwardVector * data.f;
+      }
+
+      if(subject == "set max velocity")
+      {
+        _maxVelocity = data.v3;
+      }
+
+      if(subject == "set friction")
+      {
+        _friction = data.v3;
       }
     };
 

@@ -19,6 +19,8 @@ struct KOK_Message
 class KOK_MailBox
 {
 public:
+  KOK_MailBox() {};
+
   bool DeliverNextMessage();
   inline void AddMessage(KOK_Message m)
   {

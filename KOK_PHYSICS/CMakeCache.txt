@@ -207,7 +207,7 @@ KOK_PHYSICS_BINARY_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/K
 KOK_PHYSICS_SOURCE_DIR:STATIC=/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS
 
 //Dependencies for the target
-KOKp_LIB_DEPENDS:STATIC=general;./PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysX_static_64.a;general;-lm -lGL -lglfw -lGLEW -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lXinerama -lXcursor -ldl -lrt -lassimp;
+KOKp_LIB_DEPENDS:STATIC=general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysX_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXCommon_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXCharacterKinematic_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXCooking_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXExtensions_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXFoundation_static_64.a;general;/home/bodhi/KOK_ENGINE/KOK_ENGINE/KOK_ENGINE_0_1/KOK_PHYSICS/KOK_PHYSICS/PhysX_Debug/PhysX/bin/linux.clang/debug/libPhysXPvdSDK_static_64.a;general;-lm -lGL -lglfw -lGLEW -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lXinerama -lXcursor -ldl -lrt -lassimp;
 
 
 ########################

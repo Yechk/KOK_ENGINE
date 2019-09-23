@@ -11,7 +11,6 @@ struct VertexBoneData
 
 struct Vertex
 {
-	vec3 transPosition;
 	vec3 position;
 	vec3 normal;
 	vec2 texCoords;

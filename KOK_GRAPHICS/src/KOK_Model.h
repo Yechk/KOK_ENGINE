@@ -37,7 +37,8 @@ namespace KOK_Graphics
 		void Draw(GLuint shader, glm::mat4 projection, glm::mat4 view);
 		void DrawShadowPass(GLuint shader);
 
-		void Update(double time) {};
+		void Update(double time);
+
 		void DeliverMessage(string subject, MessageData data, KOK_Actor* sender) {};
 
 		void SetPosition(glm::vec3 position);
@@ -48,6 +49,7 @@ namespace KOK_Graphics
 		void SetEulerOrientation(GLfloat x, GLfloat y, GLfloat z);
 
 		glm::vec3 GetEulerRotation() const;
+		glm::quat GetRotation() const;
 
 		void SetStatic(bool isStatic);
 

@@ -38,8 +38,8 @@ namespace KOK_Physics
     KOK_VisualDebug visualDebug;
 
   public:
-PxControllerManager * characterManager;
-PxMaterial * defaultMaterial;
+    PxControllerManager * characterManager;
+    PxMaterial * defaultMaterial;
 
     KOK_PhysicsContext();
 
